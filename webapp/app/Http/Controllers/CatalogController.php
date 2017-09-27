@@ -14,10 +14,15 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        $catalogList = Catalog::all();
-        return view('catalog.index',["catalogList" => $catalogList]); 
+        return view('catalog.index'); 
     }
 
+    public function indexDataTable()
+    {
+        $catalogList = Catalog::all();
+        return response()->json($catalogList);
+    } 
+ 
     /**
      * Show the form for creating a new resource.
      *
