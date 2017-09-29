@@ -1,11 +1,11 @@
 <nav class="menu">
                             <ul class="sidebar-menu metismenu" id="sidebar-menu">
                                 <li class="@yield('menu_dashboard','')">
-                                    <a href="index.html">
-                                        <i class="fa fa-home"></i> Dashboard </a>
+                                    <a href="{{ url('/home') }}">
+                                        <i class="fa fa-home"></i> Inicio </a>
                                 </li>
 								<li class="@yield('menu_catalog','')">
-                                    <a href="index.html">
+                                    <a href="{{ url('/catalog') }}">
                                         <i class="fa fa-home"></i> Catalogos </a>
                                 </li>
                                 <li class="@yield('menu_manager','')">
@@ -156,9 +156,6 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="https://github.com/modularcode/modular-admin-html">
-                                        <i class="fa fa-github-alt"></i> Theme Docs </a>
-                                </li>
+
                             </ul>
                         </nav>
