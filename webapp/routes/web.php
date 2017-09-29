@@ -16,5 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/catalog', 'CatalogController@index');
-
 Route::get('/catalog/dataTable', 'CatalogController@indexDataTable');
+
+//HomeController
+Route::get('/home', 'HomeController@index');
