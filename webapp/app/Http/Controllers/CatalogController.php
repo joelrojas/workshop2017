@@ -19,7 +19,10 @@ class CatalogController extends Controller
 
     public function indexDataTable()
     {
-        $catalogList = Catalog::all();
+
+        //$catalogList = Catalog::all()->forPage(1,3);
+        $catalogList = Catalog::all()->take(3)->offset(3);
+
         return response()->json($catalogList);
     } 
  

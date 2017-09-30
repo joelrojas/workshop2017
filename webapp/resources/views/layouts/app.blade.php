@@ -236,7 +236,7 @@
                         <p class="title-description"> @yield('title-description') </p>
                     </div>
                     @yield('content')
-                    <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir producto</button>
+
                     <div id="orderModal" class="modal fade" role="dialog">
                         <div class="modal-dialog">
 
