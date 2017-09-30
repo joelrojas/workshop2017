@@ -20,3 +20,6 @@ Route::get('/catalog/dataTable', 'CatalogController@indexDataTable');
 
 //HomeController
 Route::get('/home', 'HomeController@index');
+
+Route::get('/kardex','KardexController@index');
+Route::get('/order','OrderController@index');

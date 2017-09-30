@@ -8,33 +8,31 @@
                                     <a href="{{ url('/catalog') }}">
                                         <i class="fa fa-home"></i> Catalogos </a>
                                 </li>
-                                <li class="@yield('menu_manager','')">
+                                <li class="@yield('menu_kardex','')">
                                     <a href="">
-                                        <i class="fa fa-th-large"></i> Items Manager
+                                        <i class="fa fa-th-large"></i> Productos
                                         <i class="fa arrow"></i>
                                     </a>
                                     <ul class="sidebar-nav">
                                         <li>
-                                            <a href="items-list.html"> Items List </a>
+                                            <a href="/pedidos"> Pedido de productos</a>
                                         </li>
                                         <li>
-                                            <a href="item-editor.html"> Item Editor </a>
+                                            <a href="/proveedores">Proveedores</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/ventas">Venta de productos</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/kardex">Kardex de inventarios</a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="">
-                                        <i class="fa fa-bar-chart"></i> Charts
-                                        <i class="fa arrow"></i>
-                                    </a>
-                                    <ul class="sidebar-nav">
-                                        <li>
-                                            <a href="charts-flot.html"> Flot Charts </a>
-                                        </li>
-                                        <li>
-                                            <a href="charts-morris.html"> Morris Charts </a>
-                                        </li>
-                                    </ul>
+                                <li class="@yield('menu_manager','')">
+                                    <a href="index.html">
+                                        <i class="fa fa-home"></i> Kardex de inventario </a>
                                 </li>
                                 <li>
                                     <a href="">

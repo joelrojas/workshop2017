@@ -11,3 +11,19 @@ $(document).ready(function() {
         ]
     });
 });
+
+$(document).ready(function() {
+    $('#orderTable').DataTable({
+        ajax: {
+            url: '/order/dataTable',
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'id' },
+            { data: 'name' },
+            { data: 'description' },
+        ]
+    });
+});
+
+

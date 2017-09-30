@@ -236,6 +236,27 @@
                         <p class="title-description"> @yield('title-description') </p>
                     </div>
                     @yield('content')
+                    <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir producto</button>
+                    <div id="orderModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    @yield('modal-head')
+                                </div>
+                                <div class="modal-body">
+                                    @yield('modal-bod')
+                                </div>
+                                <div class="modal-footer">
+                                    @yield('modal-foot')
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </article>
                 <footer class="footer">
                     <div class="footer-block buttons">
@@ -263,6 +284,7 @@
                 <div class="color-secondary"></div>
             </div>
         </div>
+
         @yield('js')
     </body>
 </html>
