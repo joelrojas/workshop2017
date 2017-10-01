@@ -23,3 +23,10 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/kardex','KardexController@index');
 Route::get('/order','OrderController@index');
+
+
+//ReservationController
+Route::get('/reservation', 'ReservationController@index');
+
+//TableController
+Route::post('/searchTable', 'TableController@searchTable');
