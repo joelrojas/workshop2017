@@ -30,3 +30,6 @@ Route::get('/reservation', 'ReservationController@index');
 
 //TableController
 Route::post('/searchTable', 'TableController@searchTable');
+//Tasks Asignment Controller
+Route::get('/taskAsignment', 'TaskController@index');
+Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
