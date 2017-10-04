@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Reservation;
 use Illuminate\Http\Request;
-use App\Supplier;
-class SupplierController extends Controller
+
+class ReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,16 +14,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
-        return view('supplier.index');
+        return view('reservation.index');
     }
-
-public function listSupplier()
-{
-    $supplier = Supplier::all();
-
-    return response()->json($supplier);
-}
 
     /**
      * Show the form for creating a new resource.
@@ -43,25 +36,15 @@ public function listSupplier()
     public function store(Request $request)
     {
         //
-        $supplier=new Supplier;
-        $supplier->companyName = $request->companyName;
-        $supplier->contactName = $request->contactName;
-        $supplier->address = $request->address;
-        $supplier->productSupplied = $request->productSupplied;
-        $supplier->phono =$request->phono;
-        $supplier->save();
-        return response()->json($supplier);
-
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Reservation $reservation)
     {
         //
     }
@@ -69,10 +52,10 @@ public function listSupplier()
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Reservation $reservation)
     {
         //
     }
@@ -81,10 +64,10 @@ public function listSupplier()
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Reservation $reservation)
     {
         //
     }
@@ -92,10 +75,10 @@ public function listSupplier()
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Reservation  $reservation
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Reservation $reservation)
     {
         //
     }

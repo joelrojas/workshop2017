@@ -2,14 +2,14 @@
 @section('menu_kardex', 'open active')
 @section('title', 'Kardex de inventarios')
 @section('title-description', 'Inventario relacionado a los proveedores')
-
+{{ csrf_field() }}
 @section('content')
     <button id="supplierModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir proveedor</button>
     <section class="section">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <table id="orderTable">
+                    <table id="supplierTable">
                         <thead>
                         <tr>
                             <td>Nro. Proveedor</td>
@@ -33,8 +33,9 @@
 @endsection
 
 @section('modal-bod')
+
     <form role="form">
-        {{ csrf_field() }}
+
         <div class="form-group has-success">
             <label class="control-label" for="inputSuccess1">Nombre compañia</label>
             <input type="text" class="form-control underlined" name="companyName">

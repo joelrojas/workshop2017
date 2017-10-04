@@ -8,8 +8,7 @@ $(document).ready(function() {
             { data: 'id' },
             { data: 'companyName' },
             { data: 'contactName' },
-            { defaultContent: "<button  id='orderModalButton' type='button' class='btn btn-primary btn-lg' data-toggle='modal' data-target='#orderModal'>Añadir producto</button>"}
-
+            { data: 'productSupplied' }
         ],
 
     });
@@ -17,11 +16,19 @@ $(document).ready(function() {
 
 
 $('#createSupplierButton').click(function () {
+    //alert($('input[name=companyName]').val());
+    //alert($('input[name=phone]').val())
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $.ajax({
-        type: 'post',
-        URL: '/supplier/addsupplier',
+        type: 'POST',
+        url: "/addsupplier",
         data:{
-            '_token': $('input[name=_token]').val(),
+            '_token':$('input[name=_token]').val(),
             'companyName':$('input[name=companyName]').val(),
             'contactName':$('input[name=contactName]').val(),
             'address':$('input[name=address]').val(),
@@ -33,4 +40,4 @@ $('#createSupplierButton').click(function () {
         }
     })
 
-})
+    })

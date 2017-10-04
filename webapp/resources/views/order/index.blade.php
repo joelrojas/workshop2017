@@ -31,6 +31,7 @@
 @endsection
 
 @section('modal-bod')
+    {{ csrf_field() }}
     <form role="form">
         <div class="form-group has-success">
             <label class="control-label" for="inputSuccess1">Producto</label>

@@ -25,4 +25,4 @@ Route::get('/kardex','KardexController@index');
 Route::get('/order','OrderController@index');
 Route::get('/supplier','SupplierController@index');
 Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
-Route::post('/supplier/addsupplier','SupplierController@store');
+Route::post('/addsupplier','SupplierController@store');
