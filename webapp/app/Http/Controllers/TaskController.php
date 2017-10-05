@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -47,7 +48,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $users_tasks=new users_tasks();
+        $users_tasks->name        = $request->name;
+        $users_tasks->lastName    = $request->lastName;
+        $users_tasks->task_id       = $request->task_id;
+        $users_tasks->user_id         = $request->user_id;
+        $users_tasks->dateBegin = $request->dateBegin;
+        $users_tasks->dateEnd         = $request->dateEnd;
+        $users_tasks->save();
+
     }
 
     /**
@@ -94,4 +103,28 @@ class TaskController extends Controller
     {
         //
     }
+
+    public function autocompleteEmpleado(Request $request)
+    {
+        $term = $request->term;
+        $data = DB::table('users')
+            ->join('people', 'users.people_id', '=', 'people.id')
+            ->where('people.name','LIKE','%'.$term.'%')
+            ->orWhere('people.lastName','LIKE','%'.$term.'%')
+            ->orWhere('people.ci','LIKE','%'.$term.'%')
+            ->take(5)
+            ->get();
+        $result = array();
+        foreach ($data as $key => $value)
+        {
+            $result[] = ['value' =>'Cliente : '.$value->lastName.' '.$value->name.' | NITCI: '.$value->ci];
+        }
+        return response()->json($result);
+    }
+    /**
+     * Buscar y autocompletar el nombre del empleado
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
 }
