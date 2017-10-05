@@ -119,6 +119,8 @@
                 "serverSide": true,
                 "ajax": "{{ route('api.reservations.index') }}",
                 "columns": [
+                    { data: 'id'},
+                    { data: 'name'},
                     { data: 'creationDate' },
                     { data: 'reservationDate' },
                     { data: 'peopleQuantity' },

@@ -4,6 +4,10 @@
                                     <a href="{{ url('/home') }}">
                                         <i class="fa fa-home"></i> Inicio </a>
                                 </li>
+                                <li class="@yield('menu_reservas','')">
+                                    <a href="{{ url('/reservation') }}">
+                                        <i class="fa fa-calendar"></i> Reservas </a>
+                                </li>
 								<li class="@yield('menu_catalog','')">
                                     <a href="{{ url('/catalog') }}">
                                         <i class="fa fa-home"></i> Catalogos </a>
@@ -34,10 +38,7 @@
                                     <a href="index.html">
                                         <i class="fa fa-home"></i> Kardex de inventario </a>
                                 </li>
-                                <li class="@yield('menu_reservas','')">
-                                    <a href="{{ url('/reservation') }}">
-                                        <i class="fa fa-home"></i> Reservas </a>
-                                </li>
+
 
                                 <li>
                                     <a href="">
