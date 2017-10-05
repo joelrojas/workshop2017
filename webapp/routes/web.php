@@ -37,3 +37,8 @@ Route::post('/customerHistory', 'CustomerController@customerHistory');
 
 //TableController
 Route::post('/searchTable', 'TableController@searchTable');
+
+
+Route::get('/supplier','SupplierController@index');
+Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
+Route::post('/addsupplier','SupplierController@store');
