@@ -30,5 +30,20 @@
 	<script src="js/vendor.js"></script>
 	<script src="js/app-template.js"></script>
 	<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script src="js/main.js"></script>
+    <!--<script src="js/main.js"></script>-->
+	<script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#mainTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ route('api.catalogs.index') }}",
+                "columns": [
+                    { data: 'id' },
+                    { data: 'name' },
+                    { data: 'description' },
+                ]
+            });
+        });
+    </script>
 @endsection

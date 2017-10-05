@@ -27,6 +27,13 @@ Route::get('/order','OrderController@index');
 
 //ReservationController
 Route::get('/reservation', 'ReservationController@index');
+Route::post('/reservation/register', 'ReservationController@registerReservation');
+Route::post('/reservation/create', 'ReservationController@store');
+Route::get('/reservation/{idReservation}', 'ReservationController@show');
+
+//CustomerController
+Route::get('/searchCustomer', 'CustomerController@autocompleCustomerByPhone');
+Route::post('/customerHistory', 'CustomerController@customerHistory');
 
 //TableController
 Route::post('/searchTable', 'TableController@searchTable');

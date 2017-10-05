@@ -46,7 +46,7 @@
                         <h3 class="title"> <b>Busqueda de Mesas</b> </h3>
                     </div>
                     <section class="example">
-                        <form id="SearchTable">
+                        <form id="SearchTable" method="post" action="/reservation/register">
                             {{csrf_field()}}
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-1 form-control-label">Cantidad de personas</label>
@@ -60,6 +60,9 @@
                                 <!--<div class="col-sm-3">
                                     <button type="submit" class="btn btn-success">Buscar mesa</button>
                                 </div>-->
+                                <input type="hidden" value="" id="id-table" name="id-table">
+                                <input type="hidden" value="" id="quantityChairs-table" name="quantityChairs-table">
+                                <input type="hidden" value="" id="dateReservation-table" name="dateReservation-table">
                             </div>
                             <div class="box-footer">
                                 <div class="pull-right">
@@ -115,36 +118,39 @@
     <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
     <script type="text/javascript">
         $(function() {
-            $('.datepicker1').datepicker({
+            $('.datepicker1').datepicker( {
                 todayHighlight: true,
                 autoclose: true,
                 format: 'dd-mm-yyyy',
                 startDate: new Date(),
-                // endDate : new Date('2014-08-08'),
             }).on('changeDate', function (selected) {
-                var date1	= $(".datepicker1").datepicker('getDate')
-                if(!date1){
-                    Materialize.toast('<b>Error - La fecha de salida debe ser mayor que la fecha de entrada!!</b>', 4000, 'red');
-                    $('.datepicker2').val('');
-                    $('.datepicker2').focus();
-                }else{
+                var date1 = $(".datepicker1").datepicker('getDate')
+                if(date1){
                     check_availbility();
                 }
+                else{
+                    $.toaster({ priority : 'danger', title : 'Fallo', message : 'Ingrese la fecha de la reserva'});
+                }
             });
-            function check_availbility(){
-                //call_loader();
+            function check_availbility() {
                 $.ajax({
                     url: '{{ url('/searchTable') }}',
                     type:'POST',
                     data:$('#SearchTable').serialize(),
                     success:function(result){
                         var obj = result.x;
-                        var search = result.search;
+                        var data = result.search;
+                        var dateReservation = result.dateReservation;
                         if(obj==1)
                         {
-                            $('#orderdata').html(search);
+                            $('#orderdata').html(data);
                             $('#next').show();
                             $.toaster({ priority : 'success', title : 'Éxito', message : 'Mesa disponible'});
+
+                            document.getElementById("id-table").value = data.id;
+                            document.getElementById("quantityChairs-table").value = data.quantityChair;
+                            document.getElementById("dateReservation-table").value = dateReservation;
+
                         }
                         else
                         {
