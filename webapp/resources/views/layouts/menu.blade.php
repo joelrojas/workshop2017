@@ -34,47 +34,11 @@
                                     <a href="index.html">
                                         <i class="fa fa-home"></i> Kardex de inventario </a>
                                 </li>
-                                <li>
-                                    <a href="">
-                                        <i class="fa fa-table"></i> Tables
-                                        <i class="fa arrow"></i>
-                                    </a>
-                                    <ul class="sidebar-nav">
-                                        <li class="active">
-                                            <a href="static-tables.html"> Static Tables </a>
-                                        </li>
-                                        <li>
-                                            <a href="responsive-tables.html"> Responsive Tables </a>
-                                        </li>
-                                    </ul>
+                                <li class="@yield('menu_reservas','')">
+                                    <a href="{{ url('/reservation') }}">
+                                        <i class="fa fa-home"></i> Reservas </a>
                                 </li>
-                                <li>
-                                    <a href="forms.html">
-                                        <i class="fa fa-pencil-square-o"></i> Forms </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="fa fa-desktop"></i> UI Elements
-                                        <i class="fa arrow"></i>
-                                    </a>
-                                    <ul class="sidebar-nav">
-                                        <li>
-                                            <a href="buttons.html"> Buttons </a>
-                                        </li>
-                                        <li>
-                                            <a href="cards.html"> Cards </a>
-                                        </li>
-                                        <li>
-                                            <a href="typography.html"> Typography </a>
-                                        </li>
-                                        <li>
-                                            <a href="icons.html"> Icons </a>
-                                        </li>
-                                        <li>
-                                            <a href="grid.html"> Grid </a>
-                                        </li>
-                                    </ul>
-                                </li>
+
                                 <li>
                                     <a href="">
                                         <i class="fa fa-file-text-o"></i> Pages
@@ -101,56 +65,6 @@
                                         </li>
                                         <li>
                                             <a href="error-500-alt.html"> Error 500 Global </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <i class="fa fa-sitemap"></i> Menu Levels
-                                        <i class="fa arrow"></i>
-                                    </a>
-                                    <ul class="sidebar-nav">
-                                        <li>
-                                            <a href="#"> Second Level Item
-                                                <i class="fa arrow"></i>
-                                            </a>
-                                            <ul class="sidebar-nav">
-                                                <li>
-                                                    <a href="#"> Third Level Item </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"> Third Level Item </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Second Level Item </a>
-                                        </li>
-                                        <li>
-                                            <a href="#"> Second Level Item
-                                                <i class="fa arrow"></i>
-                                            </a>
-                                            <ul class="sidebar-nav">
-                                                <li>
-                                                    <a href="#"> Third Level Item </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"> Third Level Item </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"> Third Level Item
-                                                        <i class="fa arrow"></i>
-                                                    </a>
-                                                    <ul class="sidebar-nav">
-                                                        <li>
-                                                            <a href="#"> Fourth Level Item </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#"> Fourth Level Item </a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
                                         </li>
                                     </ul>
                                 </li>
