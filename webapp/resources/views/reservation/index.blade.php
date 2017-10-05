@@ -81,7 +81,7 @@
                         <h3 class="title"> <b>Listado de Reservas</b> </h3>
                     </div>
                     <section class="example">
-                        <table class="table table-sm ">
+                        <table id="mainTable" class="table table-sm ">
                             <thead class="thead-inverse">
                             <tr>
                                 <th>Codigo Reserva</th>
@@ -92,14 +92,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Ver</td>
-                            </tr>
-
                             </tbody>
                         </table>
                     </section>
@@ -116,7 +108,24 @@
     <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <!--<script src="js/main.js"></script>-->
+
     <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#mainTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ route('api.reservations.index') }}",
+                "columns": [
+                    { data: 'creationDate' },
+                    { data: 'reservationDate' },
+                    { data: 'peopleQuantity' },
+                ]
+            });
+        });
+
         $(function() {
             $('.datepicker1').datepicker( {
                 todayHighlight: true,

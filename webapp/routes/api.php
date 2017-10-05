@@ -18,3 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/api/v1/catalogs', 'APIController@getCatalogs')->name('api.catalogs.index');
+
+Route::get('/api/v1/reservations', 'APIController@getReservations')->name('api.reservations.index');
+
+
