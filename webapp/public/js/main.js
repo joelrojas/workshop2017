@@ -11,6 +11,8 @@ $(document).ready(function() {
     });
 });
 
+
+
 $(document).ready(function() {
     $('#orderTable').DataTable({
         ajax: {
@@ -25,20 +27,6 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
-    $('#taskTable').DataTable({
-        ajax: {
-            url: '/taskAsignment/dataTable',
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'id' },
-            { data: 'name' },
-            { data: 'task' },
-            { data: 'dateBegin' }
-        ]
-    });
-});
 
 
 

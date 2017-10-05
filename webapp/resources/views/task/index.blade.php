@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('css')
+<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
+@endsection
 @section('menu_kardex', 'open active')
 @section('title', 'Asignacion de Tareas')
 @section('title-description', 'Tabla de Tareas')
@@ -15,7 +18,6 @@
                             <td>Empleado</td>
                             <td>Tarea</td>
                             <td>Fecha</td>
-                            <td>Opciones</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -61,12 +63,27 @@
 @endsection
 @section('js')
     <script src="js/vendor.js"></script>
+    <script src="js/app-template.js"></script>
     <script src="js/task.js"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="js/main.js"></script>
     <script src="assets/js/jquery-ui.js"></script>
     <script src="assets/js/jquery.validate.js"></script>
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#taskTable").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ route('api.tasks.index') }}",
+                "columns": [
+                    { data: 'id' },
+                    { data: 'state' },
+                    { data: 'dateBegin' },
+                    { data: 'dateEnd' },
+                ]
+            });
+        });
+
         $('#empleado').autocomplete({
             source: '{!! url('/buscarEmpleado') !!}',
             minlength:1,

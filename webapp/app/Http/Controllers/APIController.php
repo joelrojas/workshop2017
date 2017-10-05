@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Catalog;
 use App\Reservation;
+use App\users_tasks;
 use Illuminate\Http\Request;
 
 class APIController extends Controller
@@ -19,6 +20,10 @@ class APIController extends Controller
         $query = Reservation::select('id', 'creationDate', 'reservationDate', 'peopleQuantity');
         return datatables($query)->make(true);
     }
-
+    public function getTasks()
+    {
+        $query = users_tasks::select('id', 'state', 'dateBegin', 'dateEnd');
+        return datatables($query)->make(true);
+    }
 
 }
