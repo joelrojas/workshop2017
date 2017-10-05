@@ -9,7 +9,7 @@
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <!-- Place favicon.ico in the root directory -->
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-        <link rel="stylesheet" href="css/vendor.css">
+        <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
 
         @yield('css')
         <!-- Theme initialization -->
@@ -17,14 +17,9 @@
             var themeSettings = (localStorage.getItem('themeSettings')) ? JSON.parse(localStorage.getItem('themeSettings')) :
             {};
             var themeName = themeSettings.themeName || '';
-            if (themeName)
-            {
-                document.write('<link rel="stylesheet" id="theme-style" href="css/app-' + themeName + '.css">');
-            }
-            else
-            {
-                document.write('<link rel="stylesheet" id="theme-style" href="css/app.css">');
-            }
+
+                document.write('<link rel="stylesheet" id="theme-style" href="{{ asset('css/app.css') }}">');
+
         </script>
     </head>
     <body>
