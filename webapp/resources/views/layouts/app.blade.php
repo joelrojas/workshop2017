@@ -274,6 +274,64 @@
                     </div>
                 </footer>
 
+
+                <div id="SupplierModalEdit" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                @yield('modal-head2')
+                            </div>
+                            <div class="modal-body">
+                                @yield('modal-bod2')
+                            </div>
+                            <div class="modal-footer">
+                                @yield('modal-foot2')
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="SupplierModalDelete" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                @yield('modal-head3')
+                            </div>
+                            <div class="modal-body">
+                                @yield('modal-bod3')
+                            </div>
+                            <div class="modal-footer">
+                                @yield('modal-foot3')
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                </article>
+                <footer class="footer">
+                    <div class="footer-block buttons">
+                        <!--<iframe class="footer-github-btn" src="https://ghbtns.com/github-btn.html?user=modularcode&repo=modular-admin-html&type=star&count=true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe>-->
+                    </div>
+                    <div class="footer-block author">
+                        <!--<ul>
+                            <li> created by
+                                <a href="https://github.com/modularcode">ModularCode</a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/modularcode/modular-admin-html#get-in-touch">get in touch</a>
+                            </li>
+                        </ul>-->
+                    </div>
+                </footer>
+
             </div>
         </div>
         <!-- Reference block for JS -->

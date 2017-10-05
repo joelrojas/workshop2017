@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Supplier;
+use DB;
 class SupplierController extends Controller
 {
     /**
@@ -84,9 +85,20 @@ public function listSupplier()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+
+
+             DB::table('suppliers')
+            ->where('id', $request->id)
+            ->update(['companyName' => $request->companyName,
+                'contactName'=> $request->contactName,
+                'productSupplied'=>$request->productSupplied,
+                'address'=>$request->address,
+                'phono'=>$request->phono]);
+
+
     }
 
     /**
@@ -95,8 +107,9 @@ public function listSupplier()
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        DB::table('suppliers')->where('id', '=', $request->id)->delete();
     }
 }

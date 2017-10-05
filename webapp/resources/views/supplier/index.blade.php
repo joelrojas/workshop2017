@@ -3,6 +3,7 @@
 @section('title', 'Kardex de inventarios')
 @section('title-description', 'Inventario relacionado a los proveedores')
 {{ csrf_field() }}
+
 @section('content')
     <button id="supplierModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir proveedor</button>
     <section class="section">
@@ -15,7 +16,7 @@
                             <td>Nro. Proveedor</td>
                             <td>Proveedor</td>
                             <td>Productos</td>
-                            <td>Telefono</td>
+                            <td>Contacto</td>
                             <td>Opciones</td>
                         </tr>
                         </thead>
@@ -69,6 +70,70 @@
             <button id="createSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
 
 @endsection
+
+
+
+
+
+@section('modal-head2')
+    <h4 class="modal-title">Editar proveedor</h4>
+@endsection
+
+@section('modal-bod2')
+
+    <form role="form">
+        <input type="hidden" name="country" id="idsupplier">
+        <div class="form-group has-success">
+            <label class="control-label" for="inputSuccess1">Nombre compañia</label>
+            <input type="text" class="form-control underlined" name="companyName" id="companyNameEdit">
+            <span class="has-success"></span>
+        </div>
+        <div class="form-group has-success  has-feedback">
+            <label class="control-label" for="inputSuccess2">Producto</label>
+            <input type="text" class="form-control underlined" name="product" id="productEdit">
+            <span class="fa fa-check form-control-feedback"></span>
+        </div>
+        <div class="form-group has-error">
+            <label class="control-label" for="inputError1">Nombre contacto</label>
+            <input type="text" class="form-control underlined" name="contactName" id="contactNameEdit">
+            <span class="has-error">Error message.</span>
+        </div>
+        <div class="form-group has-success  has-feedback">
+            <label class="control-label" for="inputSuccess2">Direccion</label>
+            <input type="text" class="form-control underlined" name="address" id="addressEdit">
+            <span class="fa fa-check form-control-feedback"></span>
+        </div>
+        <div class="form-group has-success  has-feedback">
+            <label class="control-label" for="inputSuccess2">Telefono</label>
+            <input type="text" class="form-control underlined" name="phone" id="phoneEdit">
+            <span class="fa fa-check form-control-feedback"></span>
+        </div>
+
+    </form>
+@endsection
+@section('modal-foot2')
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    <button id="EditSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+
+@endsection
+
+
+
+
+
+@section('modal-head3')
+    <h4 class="modal-title">Eliminar proveedor</h4>
+@endsection
+
+@section('modal-bod3')
+<h2 id="providerName">¿Desea eliminar a este proveedor?</h2>
+@endsection
+@section('modal-foot3')
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    <button id="DeleteSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+
+@endsection
+
 @section('js')
     <script src="js/vendor.js"></script>
     <script src="js/app-template.js"></script>

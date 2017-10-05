@@ -26,3 +26,5 @@ Route::get('/order','OrderController@index');
 Route::get('/supplier','SupplierController@index');
 Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
 Route::post('/addsupplier','SupplierController@store');
+Route::post('/editsupplier','SupplierController@update');
+Route::post('/deletesupplier','SupplierController@destroy');

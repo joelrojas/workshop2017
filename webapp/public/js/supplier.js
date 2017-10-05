@@ -1,5 +1,6 @@
+
 $(document).ready(function() {
-    $('#supplierTable').DataTable({
+    var table = $('#supplierTable').DataTable({
         ajax: {
             url: '/supplier/dataTable',
             dataSrc: ''
@@ -7,13 +8,43 @@ $(document).ready(function() {
         columns: [
             { data: 'id' },
             { data: 'companyName' },
-            { data: 'contactName' },
-            { data: 'productSupplied' }
+            { data: 'productSupplied' },
+            { data: 'contactName'},
+            { defaultContent: "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalEdit'>Editar</button>" + " "+ "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalDelete'>Eliminar</button>"}
         ],
 
     });
-});
 
+    $('#supplierTable tbody').on( 'click', 'button', function () {
+
+        var data = table.row( $(this).parents('tr') ).data();
+        $('#idsupplier').val(data['id']);
+
+        $('#productEdit').val(data['productSupplied']);
+
+        $('#companyNameEdit').val(data['companyName']);
+        $('#contactNameEdit').val(data['address']);
+        //$('#description').val($(this).data('description'));
+        $('#addressEdit').val(data['address']);
+        $('#phoneEdit').val(data['phono']);
+    } );
+
+    $('#supplierTable tbody').on( 'click', 'button', function () {
+
+        var data = table.row( $(this).parents('tr') ).data();
+        $('#idsupplier').val(data['id']);
+
+        $('#productEdit').val(data['productSupplied']);
+
+        $('#companyNameEdit').val(data['companyName']);
+        $('#contactNameEdit').val(data['contactName']);
+        //$('#description').val($(this).data('description'));
+        $('#addressEdit').val(data['address']);
+        $('#phoneEdit').val(data['phono']);
+    } );
+
+
+});
 
 $('#createSupplierButton').click(function () {
     //alert($('input[name=companyName]').val());
@@ -40,4 +71,45 @@ $('#createSupplierButton').click(function () {
         }
     })
 
+    });
+
+$('#EditSupplierButton').click(function () {
+
+    $.ajax({
+        type: 'POST',
+        url: '/editsupplier',
+        data:{
+            '_token': $('input[name=_token]').val(),
+            'id':$('#idsupplier').val(),
+            'companyName': $('#companyNameEdit').val(),
+            'contactName': $('#contactNameEdit').val(),
+            'address': $('#addressEdit').val(),
+            'productSupplied':$('#productEdit').val(),
+            'phono':$('#phoneEdit').val()
+        },
+        success:function () {
+            alert('Se modificaron los datos con exito');
+        }
     })
+
+});
+
+$('#SupplierModalDelete').click(function () {
+   $('#providerName').val('¿Desea eliminar a este proveedor?');
+});
+$('#DeleteSupplierButton').click(function () {
+
+    $.ajax({
+        type: 'POST',
+        url: '/deletesupplier',
+        data:{
+            '_token': $('input[name=_token]').val(),
+            'id':$('#idsupplier').val()
+        },
+        success:function () {
+            alert('Se eliminaron los datos con exito');
+        }
+    })
+
+});
+
