@@ -49,3 +49,8 @@ Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
 Route::post('/addsupplier','SupplierController@store');
 Route::post('/editsupplier','SupplierController@update');
 Route::post('/deletesupplier','SupplierController@destroy');
+
+//Auth LARAVEL
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
