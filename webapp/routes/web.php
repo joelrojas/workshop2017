@@ -41,7 +41,7 @@ Route::post('/searchTable', 'TableController@searchTable');
 Route::get('/taskAsignment', 'TaskController@index');
 Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
-Route::post('/task/store','TaskController@store');
+Route::post('/addtask','TaskController@store');
 
 
 Route::get('/supplier','SupplierController@index');
@@ -49,3 +49,7 @@ Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
 Route::post('/addsupplier','SupplierController@store');
 Route::post('/editsupplier','SupplierController@update');
 Route::post('/deletesupplier','SupplierController@destroy');
+
+//Users
+Route::get('/users', 'UserController@index');
+Route::post('/adduser','UserController@store');

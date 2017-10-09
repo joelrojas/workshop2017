@@ -20,6 +20,10 @@
             filter: alpha(opacity=80);
             -moz-opacity: 0.6;
             z-index: 10000;
+
+        }
+        .ui-autocomplete {
+            z-index:2147483647;
         }
     </style>
 @endsection
