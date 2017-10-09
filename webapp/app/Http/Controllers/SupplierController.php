@@ -25,6 +25,8 @@ public function listSupplier()
     return response()->json($supplier);
 }
 
+
+
     /**
      * Show the form for creating a new resource.
      *

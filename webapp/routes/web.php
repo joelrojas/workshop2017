@@ -22,7 +22,7 @@ Route::get('/catalog/dataTable', 'CatalogController@indexDataTable');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/kardex','KardexController@index');
-Route::get('/order','OrderController@index');
+Route::get('/order','KardexController@indexOrders');
 
 
 //ReservationController
@@ -43,9 +43,12 @@ Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
 Route::post('/task/store','TaskController@store');
 
-
+//Proveedores
 Route::get('/supplier','SupplierController@index');
 Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
 Route::post('/addsupplier','SupplierController@store');
 Route::post('/editsupplier','SupplierController@update');
 Route::post('/deletesupplier','SupplierController@destroy');
+//Ordenes de compra
+Route::get('/order/dataTable', 'SupplierController@listOrder');
+Route::get('/createOrder','KardexController@createOrder');

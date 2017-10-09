@@ -4,7 +4,71 @@
 @section('title-description', 'Inventario relacionado a los proveedores')
 {{ csrf_field() }}
 @section('content')
-    <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir producto</button>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="header-block">
+                        <p class="title">Comprar producto</p>
+                    </div>
+                </div>
+                <div class="card-block">
+                    {{ csrf_field() }}
+                    <form role="form">
+                        <div class="row">
+                        <div class="col-xl-6">
+                        <div class="form-group">
+                            <label class="control-label" for="inputSuccess1">Proveedor</label>
+                            @foreach($suppliers as $supplier)
+                                <select class="form-control form-control-sm" id="supplier">
+                                    <option value="{{$supplier->id}}">{{ $supplier->companyName }}</option>
+
+                            @endforeach
+                                 </select>
+
+                        </div>
+                        </div>
+
+                            <div class="col-xl-6">
+
+                                <div class="form-group has-success">
+                                <div class="col-xl-12">
+                                    <label for="inputEmail3" >Producto</label>
+
+
+                                    <input type="text" class="form-control" id="product" name="product" placeholder="Cantidad">
+                                </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                        <div class="col-xl-6 col-md-6">
+                            <div class="form-group has-error">
+                                <label for="inputEmail3">Precio</label>
+
+                                <input type="text" class="form-control" id="priceProduct" name="priceProduct" placeholder="Precio">
+
+                        </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                            <div class="form-group has-success  has-feedback">
+                                <label for="inputEmail3">Cantidad</label>
+
+                                <input type="text" class="form-control" id="quantityProduct" name="quantityProduct" placeholder="Cantidad">
+
+                        </div>
+                        </div>
+                        </div>
+                        <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir producto</button>
+                </div>
+
+                <div class="box-footer">
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
     <section class="section">
         <div class="row">
             <div class="col-md-12">
@@ -26,45 +90,20 @@
         </div>
     </section>
 @endsection
+
 @section('modal-head')
-    <h4 class="modal-title">Comprar producto</h4>
+    <h4 class="modal-title">Confirmar compra</h4>
 @endsection
 
 @section('modal-bod')
-    {{ csrf_field() }}
-    <form role="form">
-        <div class="form-group has-success">
-            <label class="control-label" for="inputSuccess1">Producto</label>
-            <input type="text" class="form-control underlined" id="inputSuccess1">
-            <span class="has-success"></span>
-        </div>
-        <div class="form-group">
-            <label class="control-label" for="inputSuccess1">Proveedor</label>
-            <select class="form-control form-control-sm">
-                <option>Proveedor 1</option>
-                <option>Proveedor 2</option>
-                <option>Proveedor 3</option>
-                <option>Proveedor 4</option>
-            </select>
-        </div>
-        <div class="form-group has-error">
-            <label class="control-label" for="inputError1">Precio Unitario</label>
-            <input type="text" class="form-control underlined" id="inputError1">
-            <span class="has-error">Error message.</span>
-        </div>
-        <div class="form-group has-success  has-feedback">
-            <label class="control-label" for="inputSuccess2">Cantidad</label>
-            <input type="text" class="form-control underlined" id="inputSuccess2">
-            <span class="fa fa-check form-control-feedback"></span>
-        </div>
-
-
+   <div id="infoOrder"></div>
 @endsection
 @section('modal-foot')
     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-    <button type="button" class="btn btn-primary">Agregar</button>
-    </form>
-        @endsection
+    <button id="createOrderButton" type="button" class="btn btn-primary" data-dismiss="modal">Confirmar</button>
+
+@endsection
+
 @section('js')
     <script src="js/vendor.js"></script>
     <script src="js/app-template.js"></script>
