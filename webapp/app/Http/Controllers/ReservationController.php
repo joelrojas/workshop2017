@@ -155,13 +155,13 @@ class ReservationController extends Controller
         $idReservation = $id;
 
        $reservation = DB::table('reservations')
-            ->join('users', 'reservations.users_id', '=', 'users.id')
-            ->join('people', 'people.id' , '=', 'users.people_id')
-            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
-            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
-            ->where('reservations.id', '=', $idReservation)
-            ->first();
-
+           ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
+           ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
+           ->join('customers', 'reservations.customers_id', '=', 'customers.id')
+           ->join('people', 'customers.people_id', '=', 'people.id')
+           ->where('reservations.id', '=', $idReservation)
+           ->first();
+        //dd($reservation);
         //return view('reservation.registered', compact(['idReservation']));
         return view('reservation.registered', compact(['reservation']));
     }
