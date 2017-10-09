@@ -5,8 +5,16 @@
                                         <i class="fa fa-home"></i> Inicio </a>
                                 </li>
                                 <li class="@yield('menu_reservas','')">
-                                    <a href="{{ url('/reservation') }}">
-                                        <i class="fa fa-calendar"></i> Reservas </a>
+                                    <a href="">
+                                        <i class="fa fa-calendar"></i> Reservas
+                                        <i class="fa arrow"></i>
+                                    </a>
+                                    <ul class="sidebar-nav">
+                                        <li>
+                                            <a href="{{ url('/reservation/create') }}">Añadir reserva</a>
+                                            <a href="{{ url('/reservation') }}">Lista de reservas</a>
+                                        </li>
+                                    </ul>
                                 </li>
 								<li class="@yield('menu_catalog','')">
                                     <a href="{{ url('/catalog') }}">

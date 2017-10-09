@@ -9,10 +9,21 @@
 @section('menu_dashboard', 'open active')
 @section('title', 'Inicio')
 @section('title-description', 'Página Principal')
-@section('css')
 
 @section('content')
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                 <b>Bienvenido al Club Gitanas</b>
 
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('js')

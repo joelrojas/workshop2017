@@ -24,23 +24,71 @@ class CustomerController extends Controller
         return response()->json(['x'=> $result,'search'=>$search ]);
     }
 
-    public function autocompleCustomerByPhone(Request $request)
+    /*
+     * Autocomplete de clientes por celular
+     */
+    public function autocompleteCustomerByPhone(Request $request)
     {
-        $term = $request->term;
+        $term   = $request->term;
+        $column = 'phone';
+        $result = $this->searchCustomer($column, $term);
+        return response()->json($result);
+    }
 
-        $data = DB::table('people')
+    /*
+    * Autocomplete de clientes por nombre
+    */
+    public function autocompleteCustomerByName(Request $request)
+    {
+        $term   = $request->term;
+        $column = 'name';
+        $result = $this->searchCustomer($column,$term);
+        return response()->json($result);
+    }
+
+    /*
+    * Autocomplete de clientes por carnet de identidad
+    */
+    public function autocompleteCustomerByCi(Request $request)
+    {
+        $term   = $request->term;
+        $column = 'ci';
+        $result = $this->searchCustomer($column, $term);
+        return response()->json($result);
+    }
+
+    /*
+     * Creamos esta función para realizar busqueda de cliente
+     * donde pasamos dos parametros
+     * @PARAMETROS
+     * $column  es la nombre del campo o columna a buscar
+     * $term    es la variable a buscar
+     * @RETURN
+     * retornamos en un array los datos encontrados.
+     */
+    private function searchCustomer($column, $term)
+    {
+        $query = DB::table('people')
             ->join('customers', 'people.id', '=', 'customers.people_id')
             ->select('people.*', 'customers.*')
-            ->where('people.phone', 'LIKE', '%'.$term.'%')
+            ->where('people.'.$column, 'LIKE', '%'.$term.'%')
             ->take(5)
             ->get();
-
         $result = array();
-        foreach ($data as $key => $value)
+        foreach ($query as $key => $value)
         {
-            $result[] = ['value' =>''.$value->phone, 'id'=>$value->id, 'name' => $value->name, 'lastname'=>$value->lastName, 'birthday'=>$value->birthday, 'address'=> $value->address];
+            $result[] = [
+                'value' =>''.$value->$column,
+                'id'        =>  $value->id,
+                'ci'        =>  $value->ci,
+                'name'      =>  $value->name,
+                'lastname'  =>  $value->lastName,
+                'birthday'  =>  $value->birthday,
+                'phone'     =>  $value->phone,
+                'address'   =>  $value->address,
+                ];
         }
-        return response()->json($result);
+        return $result;
     }
 
 }

@@ -53,44 +53,58 @@ $('.modal-footer').on('click', '.edit', function() {
 // add function
 
 
+$('#createTaskButton').click(function () {
+    //alert($('input[name=companyName]').val());
+    //alert($('input[name=phone]').val())
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-$("#createtaskbutton").click(function () {
-    $('#createtaskmodal').openModal(true);
-});
-$("#crumbutton").click(function() {
+    var values = $('#multiple').val();
+
 
     $.ajax({
-        type: 'post',
-        url: '/addTask',
-        data: {
-            '_token': $('input[name=_token]').val(),
-            'name': $('input[name=namec]').val(),
-            'lastName': $('input[name=lastNamec]').val(),
-            'task':$('input[name=taskc]').val(),
-            'dateBegin':$('input[name=dateBeginc]').val(),
-            'dateEnd':$('input[name=dateEndc]').val()
+        type: 'POST',
+        url: "/addtask",
+        data:{
+            '_token':$('input[name=_token]').val(),
+            'date':$('input[name=date]').val(),
+            'dateEnd':$('input[name=dateEnd]').val(),
+            'dateBegin':$('input[name=dateBegin]').val(),
+            'users_id':$('input[name=id-person]').val(),
+            'tasks_id':values
         },
-        /*
-        success: function(data) {
-            if ((data.errors)) {
-                $('.error').removeClass('hidden');
-                $('.error').text(data.errors.title);
-                $('.error').text(data.errors.description);
-            } else {
-                $('.error').remove();
-                $('#userstable').append("<tr class='item" + data.id_person + "'><td>" + data.id_person + "</td><td>" + data.name + "</td><td>" + data.last_name + "</td><td>" + data.phone + "</td><td>" + data.nationality + "</td>" +
-                    "<td>" +
-                    "<button class='btn btn-warning btn-detail edit-modal' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'> <i class='material-icons dp48'>settings</i></button> " +
-                    "<button class='waves-effect waves-light btn red delete-modal' data-id='" + data.id + "' data-title='" + data.title + "' data-description='" + data.description + "'><i class='material-icons dp48'>delete</i></button></td></tr>");
-            }
+        success:function () {
+            alert('Se guardaron los datos :)');
+        }
+    })
 
-
-        },
-        */
-    });
-    $('#title').val('');
-    $('#description').val('');
 });
+
+$('#EditSupplierButton').click(function () {
+
+    $.ajax({
+        type: 'POST',
+        url: '/editsupplier',
+        data:{
+            '_token': $('input[name=_token]').val(),
+            'id':$('#idsupplier').val(),
+            'companyName': $('#companyNameEdit').val(),
+            'contactName': $('#contactNameEdit').val(),
+            'address': $('#addressEdit').val(),
+            'productSupplied':$('#productEdit').val(),
+            'phono':$('#phoneEdit').val()
+        },
+        success:function () {
+            alert('Se modificaron los datos con exito');
+        }
+    })
+
+});
+
+
 
 //delete function
 $(document).on('click', '.create-modal', function() {

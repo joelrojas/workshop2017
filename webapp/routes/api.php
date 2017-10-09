@@ -23,4 +23,6 @@ Route::get('/api/v1/reservations', 'APIController@getReservations')->name('api.r
 
 Route::get('/api/v1/tasks', 'APIController@getTasks')->name('api.tasks.index');
 
+Route::get('/api/v1/users', 'APIController@getUsers')->name('api.users.index');
+
 

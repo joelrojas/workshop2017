@@ -27,12 +27,15 @@ Route::get('/order','KardexController@indexOrders');
 
 //ReservationController
 Route::get('/reservation', 'ReservationController@index');
-Route::post('/reservation/register', 'ReservationController@registerReservation');
-Route::post('/reservation/create', 'ReservationController@store');
+Route::get('/reservation/create', 'ReservationController@create');
+Route::post('/reservation/store', 'ReservationController@store');
 Route::get('/reservation/{idReservation}', 'ReservationController@show');
 
 //CustomerController
-Route::get('/searchCustomer', 'CustomerController@autocompleCustomerByPhone');
+Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
+Route::get('/search/customer/name', 'CustomerController@autocompleteCustomerByName')->name('search.customer.name');
+Route::get('/search/customer/ci', 'CustomerController@autocompleteCustomerByCi')->name('search.customer.ci');
+
 Route::post('/customerHistory', 'CustomerController@customerHistory');
 
 //TableController
@@ -41,7 +44,7 @@ Route::post('/searchTable', 'TableController@searchTable');
 Route::get('/taskAsignment', 'TaskController@index');
 Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
-Route::post('/task/store','TaskController@store');
+Route::post('/addtask','TaskController@store');
 
 //Proveedores
 Route::get('/supplier','SupplierController@index');
@@ -52,3 +55,13 @@ Route::post('/deletesupplier','SupplierController@destroy');
 //Ordenes de compra
 Route::get('/order/dataTable', 'SupplierController@listOrder');
 Route::get('/createOrder','KardexController@createOrder');
+
+
+//Users
+Route::get('/users', 'UserController@index');
+Route::post('/adduser','UserController@store');
+
+//Auth LARAVEL
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

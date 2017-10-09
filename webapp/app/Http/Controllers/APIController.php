@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Catalog;
 use App\Reservation;
+use App\Users_task;
 use App\users_tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,16 @@ class APIController extends Controller
     }
     public function getTasks()
     {
-        $query = users_tasks::select('id', 'state', 'dateBegin', 'dateEnd');
+        $query = Users_task::select('id', 'state', 'dateBegin', 'dateEnd');
+        return datatables($query)->make(true);
+    }
+
+    public function getUsers()
+    {
+        $query = DB::table('users')
+            ->join('people', 'people.id', '=', 'users.people_id')
+            ->select('people.*', 'users.*')
+            ->get();
         return datatables($query)->make(true);
     }
 

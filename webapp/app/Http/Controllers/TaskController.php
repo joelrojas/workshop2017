@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Users_task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -48,14 +49,16 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $users_tasks=new users_tasks();
-        $users_tasks->name        = $request->name;
-        $users_tasks->lastName    = $request->lastName;
-        $users_tasks->task_id       = $request->task_id;
-        $users_tasks->user_id         = $request->user_id;
-        $users_tasks->dateBegin = $request->dateBegin;
-        $users_tasks->dateEnd         = $request->dateEnd;
-        $users_tasks->save();
+        $role = "incompleto";
+        $task=new Users_task;
+        $task->date = $request->date;
+        $task->state = $role;
+        $task->dateEnd = $request->dateEnd;
+        $task->dateBegin = $request->dateBegin;
+        $task->users_id =$request->users_id;
+        $task->tasks_id =$request->tasks_id;
+        $task->save();
+        return response()->json($task);
 
     }
 
@@ -107,17 +110,18 @@ class TaskController extends Controller
     public function autocompleteEmpleado(Request $request)
     {
         $term = $request->term;
-        $data = DB::table('users')
-            ->join('people', 'users.people_id', '=', 'people.id')
-            ->where('people.name','LIKE','%'.$term.'%')
-            ->orWhere('people.lastName','LIKE','%'.$term.'%')
-            ->orWhere('people.ci','LIKE','%'.$term.'%')
+        $data = DB::table('people')
+            ->join('users', 'people.id', '=', 'users.people_id')
+            ->select('people.*', 'users.*')
+            ->where('people.name', 'LIKE', '%'.$term.'%')
+            //->orWhere('people.lastName','LIKE','%'.$term.'%')
+            // ->orWhere('people.ci','LIKE','%'.$term.'%')
             ->take(5)
             ->get();
         $result = array();
         foreach ($data as $key => $value)
         {
-            $result[] = ['value' =>'Cliente : '.$value->lastName.' '.$value->name.' | NITCI: '.$value->ci];
+            $result[] = ['value' =>'Cliente : '.$value->lastName.' '.$value->name.' | NITCI: '.$value->ci,  'id'=>$value->id];
         }
         return response()->json($result);
     }
