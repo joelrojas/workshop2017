@@ -80,7 +80,6 @@
                     <div class="card-title-block">
                         <h3 class="title"> <b>Listado de Reservas</b> </h3>
                     </div>
-                    <section class="example">
                         <table id="mainTable" class="table table-sm ">
                             <thead class="thead-inverse">
                             <tr>
@@ -94,7 +93,6 @@
                             <tbody>
                             </tbody>
                         </table>
-                    </section>
                 </div>
             </div>
         </div>
@@ -121,9 +119,8 @@
                 "columns": [
                     { data: 'id'},
                     { data: 'name'},
-                    { data: 'creationDate' },
-                    { data: 'reservationDate' },
-                    { data: 'peopleQuantity' },
+                    { data: 'created_at' },
+                    { data: 'typeTable' }
                 ]
             });
         });
