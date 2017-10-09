@@ -104,8 +104,18 @@
                                     <a class="dropdown-item" href="#">
                                         <i class="fa fa-gear icon"></i> Settings </a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="login.html">
-                                        <i class="fa fa-power-off icon"></i> Logout </a>
+
+                            @if (Route::has('login'))
+                                @auth
+                                    <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-power-off icon"></i>Cerrar Sesión</a>
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                @else
+                                    <a href="{{ route('login') }}">Login</a>
+                                    <a href="{{ route('register') }}">Register</a>
+                                @endauth
+                                    @endif
                                 </div>
                             </li>
                         </ul>

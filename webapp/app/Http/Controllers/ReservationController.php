@@ -6,6 +6,7 @@ use App\Customer;
 use App\People;
 use App\Reservation;
 
+use App\Table;
 use App\TableReservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -30,12 +31,13 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        $tables = Table::all();
+        return view('reservation.create', compact('tables'));
     }
 
     // Controlador del registro de reserva.
 
-    public function registerReservation(Request $request)
+    /*public function registerReservation(Request $request)
     {
         $idTable            = $request->input('id-table');
         $quantityPeople     = $request->input('quantityChairs-table');
@@ -43,7 +45,7 @@ class ReservationController extends Controller
         $dateView           = $request->checkDate;
 
         return view('reservation.create', compact(['idTable', 'quantityPeople', 'reservationDate', 'dateView']));
-    }
+    }*/
 
 
     /**
@@ -55,18 +57,19 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         //  Obteniendo los datos del cliente
-        $phone      =   $request->input('phone');
-        $birthday   =   $request->input('birthday');
-        $name       =   $request->input('first-name');
-        $lastName   =   $request->input('last-name');
-        $address    =   $request->input('address');
+        $phone      = $request->input('phone');
+        $birthday   = $request->input('birthday');
+        $name       = $request->input('first-name');
+        $lastName   = $request->input('last-name');
+        $address    = $request->input('address');
+        $ci         = $request->input('ci');
 
         //  Obteniendo los datos de la mesa a ser reservada
-        $dayReservation     =   $request->input('day-reservation');
-        $idCustomer         =   $request->input('id-customer');
-        $idTable            =   $request->input('id-table');
-        $quantityPeople     =   $request->input('quantityChairs-table');
-        $reservationDate    =   $request->input('dateReservation-table');
+        $dayReservation     = $request->input('day-reservation');
+        $idCustomer         = $request->input('id-customer');
+        $idTable            = $request->input('id-table');
+        //$quantityPeople     = $request->input('quantityChairs-table');
+        $reservationDate    = $request->input('checkDate');
 
         // Helper
         $helper = $request->input('helper');
@@ -77,15 +80,14 @@ class ReservationController extends Controller
 
         // ###################### TRANSACCIONES #################################
 
-        /* DB::beginTransaction();
-        try{ */
-
+         DB::beginTransaction();
+        try{
         if ($helper != 1){
 
             $clientType = 'nuevo';
             // Guardamos los datos personales del cliente a la tabla 'PEOPLE'
             $people = new People();
-            $people->ci         = '';           //MODIFICAR
+            $people->ci         = $ci;           //MODIFICAR
             $people->name       = $name;
             $people->lastName   = $lastName;
             $people->birthday   = $birthday;
@@ -112,9 +114,7 @@ class ReservationController extends Controller
 
         // Guardamos la reservacion con las llaves foraneas de 'CUSTOMERS' , 'USERS'
         $reservation = new Reservation();
-        $reservation->creationDate      = $dayReservation;
         $reservation->reservationDate   = $reservationDate;
-        $reservation->peopleQuantity    = $quantityPeople;
         $reservation->users_id           = '1';      ///MODIFICAR
         $reservation->customers_id       = $idCustomer;
         $reservation->save();
@@ -132,17 +132,16 @@ class ReservationController extends Controller
         $tableReservation->reservations_id      = $idReservation;
         $tableReservation->stateTable           = 'No disponible';      //MODIFICAR
         $tableReservation->save();
-
+            DB::commit();
          return redirect('/reservation/'.$idReservation);
-       /*
-        }catch (ValidationException $e){
 
+        }catch (ValidationException $e){
             DB::rollback();
             return view('reservation.index');
 
         }
-        DB::comit();*/
-        ////
+
+
     }
 
     /**
@@ -155,14 +154,16 @@ class ReservationController extends Controller
     {
         $idReservation = $id;
 
-       /* $reservation = DB::table('reservations')
-            ->join('users', 'users.id', '=', 'reservations.user_id')
+       $reservation = DB::table('reservations')
+            ->join('users', 'reservations.users_id', '=', 'users.id')
             ->join('people', 'people.id' , '=', 'users.people_id')
+            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
+            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
             ->where('reservations.id', '=', $idReservation)
-            ->first();*/
+            ->first();
 
-        return view('reservation.registered', compact(['idReservation']));
-        //return view('reservation.registered', compact(['reservation']));
+        //return view('reservation.registered', compact(['idReservation']));
+        return view('reservation.registered', compact(['reservation']));
     }
 
     /**

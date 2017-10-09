@@ -27,12 +27,15 @@ Route::get('/order','OrderController@index');
 
 //ReservationController
 Route::get('/reservation', 'ReservationController@index');
-Route::post('/reservation/register', 'ReservationController@registerReservation');
-Route::post('/reservation/create', 'ReservationController@store');
+Route::get('/reservation/create', 'ReservationController@create');
+Route::post('/reservation/store', 'ReservationController@store');
 Route::get('/reservation/{idReservation}', 'ReservationController@show');
 
 //CustomerController
-Route::get('/searchCustomer', 'CustomerController@autocompleCustomerByPhone');
+Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
+Route::get('/search/customer/name', 'CustomerController@autocompleteCustomerByName')->name('search.customer.name');
+Route::get('/search/customer/ci', 'CustomerController@autocompleteCustomerByCi')->name('search.customer.ci');
+
 Route::post('/customerHistory', 'CustomerController@customerHistory');
 
 //TableController
@@ -53,3 +56,8 @@ Route::post('/deletesupplier','SupplierController@destroy');
 //Users
 Route::get('/users', 'UserController@index');
 Route::post('/adduser','UserController@store');
+
+//Auth LARAVEL
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
