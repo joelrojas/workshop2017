@@ -38,6 +38,19 @@ $('#EditSupplierButton').click(function () {
         type: 'POST',
         url: '/editsupplier',
         data:{
+            '_token':$('input[name=_token]').val(),
+            'ci':$('input[name=ci]').val(),
+            'name':$('input[name=name]').val(),
+            'lastName':$('input[name=lastName]').val(),
+            'birthday':$('input[name=birthday]').val(),
+            'phone':$('input[name=phone]').val(),
+            'sex':sexo,
+            'address':$('input[name=address]').val(),
+            'email':$('input[name=email]').val(),
+            'username':$('input[name=username]').val(),
+            'password':$('input[name=password]').val(),
+            'userType':tipo
+
             '_token': $('input[name=_token]').val(),
             'id':$('#idsupplier').val(),
             'companyName': $('#companyNameEdit').val(),
