@@ -10,6 +10,7 @@ use App\Table;
 use App\TableReservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 
 class ReservationController extends Controller
@@ -68,7 +69,6 @@ class ReservationController extends Controller
         $dayReservation     = $request->input('day-reservation');
         $idCustomer         = $request->input('id-customer');
         $idTable            = $request->input('id-table');
-        //$quantityPeople     = $request->input('quantityChairs-table');
         $reservationDate    = $request->input('checkDate');
 
         // Helper
@@ -76,72 +76,58 @@ class ReservationController extends Controller
 
         // registrar datos del cliente => TRUE
         // no registrar datos del cliente => FALSE
-
-
         // ###################### TRANSACCIONES #################################
-
          DB::beginTransaction();
         try{
         if ($helper != 1){
-
             $clientType = 'nuevo';
-            // Guardamos los datos personales del cliente a la tabla 'PEOPLE'
-            $people = new People();
-            $people->ci         = $ci;           //MODIFICAR
-            $people->name       = $name;
-            $people->lastName   = $lastName;
-            $people->birthday   = $birthday;
-            $people->phone      = $phone;
-            $people->sex        = '';           //MODIFICAR
-            $people->address    = $address;
-            $people->save();
 
+            // Guardamos los datos personales del cliente a la tabla 'PEOPLE'
+            DB::table('people')->insert([
+                'ci'        => $ci,
+                'name'      => $name,
+                'lastName'  => $lastName,
+                'birthday'  => $birthday,
+                'phone'     => $phone,
+                'sex'       => '',
+                'address'   => $address
+                ]);
             //Hacemos una consulta para obtener la llave primaria de 'Customers'
-           // $idPeople = People::all()->last();
-            $idPeople = $people->id;
+            $idPeople = People::all()->last()->id;
 
             // Guardamos al cliente como usuario nuevo y con cero puntos en la tabla 'CUSTOMERS'
-            $customer = new Customer();
-            $customer->clientType   = $clientType;
-            $customer->points       =  '0';
-            $customer->people_id    = $idPeople;
-            $customer->save();
-
-           // $idCustomer = Customer::all()->last();
-            $idCustomer = $customer->id;
-
+            DB::table('customers')->insert([
+                'clientType'    => $clientType,
+                'points'        => '0',
+                'people_id'     => $idPeople
+            ]);
+            $idCustomer = Customer::all()->last()->id;
         }
 
         // Guardamos la reservacion con las llaves foraneas de 'CUSTOMERS' , 'USERS'
-        $reservation = new Reservation();
-        $reservation->reservationDate   = $reservationDate;
-        $reservation->users_id           = '1';      ///MODIFICAR
-        $reservation->customers_id       = $idCustomer;
-        $reservation->save();
+        DB::table('reservations')->insert([
+           'reservationDate'    => $reservationDate,
+           'users_id'           => '1',             ///MODIFICAR
+           'customers_id'       => $idCustomer
+        ]);
 
         // Obtenemos el id de la reserva registrada anteriormente.
-
-        //$idReservation = Reservation::all()->last();
-        $idReservation = $reservation->id;
-
+        $idReservation = Reservation::all()->last()->id;
 
         // Guardamos la mesa de la reserva.
-        $tableReservation = new TableReservation();
-        $tableReservation->tableReservationDate = $reservationDate;
-        $tableReservation->tables_id            = $idTable;
-        $tableReservation->reservations_id      = $idReservation;
-        $tableReservation->stateTable           = 'No disponible';      //MODIFICAR
-        $tableReservation->save();
+        DB::table('tables_reservations')->insert([
+            'tableReservationDate'  => $reservationDate,
+            'tables_id'             => $idTable,
+            'reservations_id'       => $idReservation,
+            'stateTable'            => 'No disponible'
+        ]);
             DB::commit();
          return redirect('/reservation/'.$idReservation);
 
-        }catch (ValidationException $e){
+        }catch (Exception $e){
             DB::rollback();
             return view('reservation.index');
-
         }
-
-
     }
 
     /**

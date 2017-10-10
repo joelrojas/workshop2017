@@ -120,7 +120,8 @@
                     { data: 'id'},
                     { data: 'name'},
                     { data: 'created_at' },
-                    { data: 'typeTable' }
+                    { data: 'typeTable' },
+                    { defaultContent: "<button class=\"btn btn-primary\"> Editar</button> ~ <button class=\"btn btn-danger\"> Editar</button>" }
                 ]
             });
         });
