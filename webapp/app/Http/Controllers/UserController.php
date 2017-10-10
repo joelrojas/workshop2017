@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\People;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -86,9 +87,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        DB::table('people')
+            ->where('id', $request->id)
+            ->update(['ci' => $request->ci,
+                'name'=> $request->name,
+                'lastName'=>$request->lastName,
+                'birthday'=>$request->birthday,
+                'phone'=>$request->phono,
+                'sex'=>$request->sex,
+                'address'=>$request->address]);
+        DB::table('users')
+            ->where('people_id', $request->id)
+            ->update(['userType' => $request->userType,
+                'email'=> $request->email,
+                'username'=>$request->username]);
     }
 
     /**

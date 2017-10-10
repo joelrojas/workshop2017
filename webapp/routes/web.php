@@ -57,6 +57,7 @@ Route::post('/deletesupplier','SupplierController@destroy');
 //Users
 Route::get('/users', 'UserController@index');
 Route::post('/adduser','UserController@store');
+Route::post('/edituser','UserController@update');
 
 //Auth LARAVEL
 Auth::routes();

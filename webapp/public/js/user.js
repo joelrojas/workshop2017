@@ -32,32 +32,26 @@ $('#createUserButton').click(function () {
 
 });
 
-$('#EditSupplierButton').click(function () {
-
+$('#EditUserButton').click(function () {
+    var sexo = $('#sexEdit').val();
+    var tipo = $('#userTypeEdit').val();
     $.ajax({
         type: 'POST',
-        url: '/editsupplier',
+        url: '/edituser',
         data:{
             '_token':$('input[name=_token]').val(),
-            'ci':$('input[name=ci]').val(),
-            'name':$('input[name=name]').val(),
-            'lastName':$('input[name=lastName]').val(),
-            'birthday':$('input[name=birthday]').val(),
-            'phone':$('input[name=phone]').val(),
+            'id':$('#iduser').val(),
+            'ci': $('#ciEdit').val(),
+            'name': $('#nameEdit').val(),
+            'lastName': $('#lastNameEdit').val(),
+            'birthday':$('#birthdayEdit').val(),
+            'phone':$('#phoneEdit').val(),
             'sex':sexo,
-            'address':$('input[name=address]').val(),
-            'email':$('input[name=email]').val(),
-            'username':$('input[name=username]').val(),
-            'password':$('input[name=password]').val(),
+            'adress': $('#addressEdit').val(),
+            'email':$('#emailEdit').val(),
+            'username':$('#usernameEdit').val(),
+            'password':$('#passwordEdit').val(),
             'userType':tipo
-
-            '_token': $('input[name=_token]').val(),
-            'id':$('#idsupplier').val(),
-            'companyName': $('#companyNameEdit').val(),
-            'contactName': $('#contactNameEdit').val(),
-            'address': $('#addressEdit').val(),
-            'productSupplied':$('#productEdit').val(),
-            'phono':$('#phoneEdit').val()
         },
         success:function () {
             alert('Se modificaron los datos con exito');
