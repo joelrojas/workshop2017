@@ -91,7 +91,7 @@
 
 @section('modal-bod2')
 
-    <form role="form">
+    <form role="form" id="socio">
         {{ csrf_field() }}
         <input type="hidden" name="country" id="idpeople">
         <div class="form-group">
@@ -139,7 +139,7 @@
 @endsection
 @section('modal-foot2')
     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-    <button id="EditUserButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+    <button id="EditUserButton" type="submit" class="btn btn-primary" data-dismiss="modal">Modificar</button>
 
 @endsection
 

@@ -33,28 +33,11 @@ $('#createUserButton').click(function () {
 });
 
 $('#EditUserButton').click(function () {
-    var sexo = $('#sexEdit').val();
-    var tipo = $('#userTypeEdit').val();
     $.ajax({
-        type: 'POST',
+        type: 'PUT',
         url: '/edituser',
-        data:{
-            '_token':$('input[name=_token]').val(),
-            'id':$('#iduser').val(),
-            'ci': $('#ciEdit').val(),
-            'name': $('#nameEdit').val(),
-            'lastName': $('#lastNameEdit').val(),
-            'birthday':$('#birthdayEdit').val(),
-            'phone':$('#phoneEdit').val(),
-            'sex':sexo,
-            'adress': $('#addressEdit').val(),
-            'email':$('#emailEdit').val(),
-            'username':$('#usernameEdit').val(),
-            'password':$('#passwordEdit').val(),
-            'userType':tipo
-        },
+        data: $('#socio').serialize(),
         success:function () {
-            alert('Se modificaron los datos con exito');
         }
     })
 

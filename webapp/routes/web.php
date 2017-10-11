@@ -61,7 +61,7 @@ Route::get('/createOrder','KardexController@createOrder');
 //Users
 Route::get('/users', 'UserController@index');
 Route::post('/adduser','UserController@store');
-Route::post('/edituser','UserController@update');
+Route::put('/edituser','UserController@update');
 
 //Auth LARAVEL
 Auth::routes();

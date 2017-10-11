@@ -36,11 +36,11 @@ $('#EditTaskButton').click(function () {
         data:{
             '_token': $('input[name=_token]').val(),
             'id':$('#idtask').val(),
-            'date': $('#date').val(),
-            'dateEnd': $('#dateEnd').val(),
-            'dateBegin': $('#dateBegin').val(),
-            'users_id':$('#id-person').val(),
-            'tasks_id':$('#multiple').val()
+            'date': $('#dateEdit').val(),
+            'dateEnd': $('#dateEndEdit').val(),
+            'dateBegin': $('#dateBeginEdit').val(),
+            'users_id':$('#id-personEdit').val(),
+            'tasks_id':$('#multipleEdit').val()
         },
         success:function () {
             alert('Se modificaron los datos con exito');

@@ -44,7 +44,7 @@ class APIController extends Controller
             ->join('people', 'people.id', '=', 'users.people_id')
             ->select('people.*', 'users.*')
             ->get();
-        return datatables($query)->make(true);
+        return datatables($query)->toJson();
     }
 
 }
