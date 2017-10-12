@@ -10,7 +10,7 @@ class CustomerController extends Controller
 {
     public function customerHistory(Request $request)
     {
-        $idCustomer = $request->input('id-customer');
+        $idCustomer = $request->input('id_customer');
 
         $search = Customer::find($idCustomer);
 

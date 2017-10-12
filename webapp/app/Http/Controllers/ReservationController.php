@@ -67,7 +67,7 @@ class ReservationController extends Controller
 
         //  Obteniendo los datos de la mesa a ser reservada
         $dayReservation     = $request->input('day-reservation');
-        $idCustomer         = $request->input('id-customer');
+        $idCustomer         = $request->input('id_customer');
         $idTable            = $request->input('id-table');
         $reservationDate    = $request->input('checkDate');
 
