@@ -39,42 +39,9 @@
 
 @section('content')
     <div class="row">
+
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-block">
-                    <div class="card-title-block">
-                        <h3 class="title"> <b>Busqueda de Mesas</b> </h3>
-                    </div>
-                    <section class="example">
-                        <form id="SearchTable" method="post" action="/reservation/register">
-                            {{csrf_field()}}
-                            <div class="form-group row">
-                                <label for="inputEmail3" class="col-sm-1 form-control-label">Cantidad de personas</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="quantityPeople" name="quantityPeople" placeholder="ingrese la cantidad de personas">
-                                </div>
-                                <label for="inputPassword3" class="col-sm-1 form-control-label">Fecha de reserva</label>
-                                <div class="col-sm-4">
-                                    <input type="text" id="checkDate" name="checkDate" class="form-control datepicker1" placeholder="ingrese la fecha de la reserva" autocomplete="off" />
-                                </div>
-                                <!--<div class="col-sm-3">
-                                    <button type="submit" class="btn btn-success">Buscar mesa</button>
-                                </div>-->
-                                <input type="hidden" value="" id="id-table" name="id-table">
-                                <input type="hidden" value="" id="quantityChairs-table" name="quantityChairs-table">
-                                <input type="hidden" value="" id="dateReservation-table" name="dateReservation-table">
-                            </div>
-                            <div class="box-footer">
-                                <div class="pull-right">
-                                    <input class="btn btn-primary" type="submit" value="Completar reserva" style="display:none" id="next" />
-                                </div>
-                            </div>
-                        </form>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
+            <a href="{{ url('/reservation/create') }}" class="btn btn-primary">Registrar reserva</a>
             <div class="card">
                 <div class="card-block">
                     <div class="card-title-block">
@@ -99,65 +66,66 @@
     </div>
     <!-- Bootstrap modal -->
     <div class="modal fade" id="modal_form" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title">Person Form</h3>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
+                    <h3 class="modal-title">Información de la reserva</h3>
                 </div>
                 <div class="modal-body form">
                     <form action="#" id="form" class="form-horizontal">
-                        <input type="hidden" value="" name="id"/>
-                        <div class="form-body">
-                            <div class="form-group">
-                                <label class="control-label col-md-3">First Name</label>
-                                <div class="col-md-9">
-                                    <input name="firstName" placeholder="First Name" class="form-control" type="text">
-                                    <span class="help-block"></span>
-                                </div>
+                        <h5 class="modal-title"><b>Detalle de la Reserva</b></h5>
+                        <hr>
+                        <div class="form-row">
+                            <input type="hidden" value="" name="idpeople" id="idpeople"/>
+                            <div class="form-group col-md-6">
+                                <label for="" class="control-label">Codigo de la reserva</label>
+                                <input type="text" class="form-control" id="idReservation" name="idReservation" disabled>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Last Name</label>
-                                <div class="col-md-9">
-                                    <input name="lastName" placeholder="Last Name" class="form-control" type="text">
-                                    <span class="help-block"></span>
-                                </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Fecha de la reserva</label>
+                                <input type="text" class="form-control" id="created_at" name="created_at" disabled>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Gender</label>
-                                <div class="col-md-9">
-                                    <select name="gender" class="form-control">
-                                        <option value="">--Select Gender--</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                    </select>
-                                    <span class="help-block"></span>
-                                </div>
+                            <div class="form-group col-md-6">
+                                <label for="" class="control-label">Tipo de cliente</label>
+                                <input type="text" class="form-control" id="clientType" name="clientType" disabled>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Address</label>
-                                <div class="col-md-9">
-                                    <textarea name="address" placeholder="Address" class="form-control"></textarea>
-                                    <span class="help-block"></span>
-                                </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Tipo de mesa</label>
+                                <input type="text" class="form-control" id="typeTable" name="typeTable" disabled>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-3">Date of Birth</label>
-                                <div class="col-md-9">
-                                    <input name="dob" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
-                                    <span class="help-block"></span>
-                                </div>
+                        </div>
+
+                        <div class="form-row">
+                            <input type="hidden" value="" name="idpeople" id="idpeople"/>
+                            <input type="hidden" value="" name="idReservation" id="idReservation"/>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Apellido completo </label>
+                                <input type="text" class="form-control" id="lastName" name="lastName" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label" >Nombre completo</label>
+                                <input type="text" class="form-control" id="name" name="name" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Carnet de identidad</label>
+                                <input type="text" class="form-control" id="ci" name="ci" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="" class="control-label">Telefono</label>
+                                <input type="text" class="form-control" id="phone" name="phone" disabled>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="btnSave" onclick="save()" class="btn btn-danger">Cancelar reserva</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    </div>
+    <!-- /.modal -->
 @endsection
 
 @section('js')
@@ -172,18 +140,45 @@
     <script type="text/javascript">
 
         $(document).ready(function() {
-            $('#mainTable').DataTable({
+            var table = $('#mainTable').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ route('api.reservations.index') }}",
                 "columns": [
                     { data: 'id'},
                     { data: 'name'},
-                    { data: 'created_at' },
+                    { data: 'reservationDate' },
                     { data: 'typeTable' },
-                    { defaultContent: "<button class=\"btn btn-primary open_modal\"> Editar </button> ~ <button class=\"btn btn-danger\"> Editar</button>" }
+
+                    { defaultContent: "<button type=\"button\" class=\"btn btn-primary btn-detail open_modal\"> ver detalle</button> <button class=\"btn btn-danger\"> Cancelar</button>" }
                 ]
             });
+
+            $('#mainTable tbody').on( 'click', 'button', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                $.ajax({
+                   type: 'GET',
+                   url: '/getReservation',
+                   data: data,
+                    success: function (data) {
+                        console.log(data);
+                        $('#idReservation').val(data['reservations_id']);
+                        $('#idpeople').val(data['id']);
+                        $('#ci').val(data['ci']);
+                        $('#name').val(data['name']);
+                        $('#lastName').val(data['lastName']);
+                        $('#reservationDate').val(data['reservationDate']);
+                        $('#phone').val(data['phone']);
+                        $('#clientType').val(data['clientType']);
+                        $('#typeTable').val(data['typeTable']);
+                        $('#created_at').val(data['created_at']);
+
+                        $('#modal_form').modal('show');
+                    }
+                });
+
+            } );
+
         });
 
         $(function() {
@@ -228,22 +223,6 @@
                     }
                 });
             }
-        });
-
-
-        $(document).on('click','.open_modal',function(){
-            var product_id = $(this).val();
-            url = '/reservation/';
-
-            $.get(url + '/' + product_id, function (data) {
-                //success data
-                console.log(data);
-                $('#product_id').val(data.id);
-                $('#name').val(data.name);
-                $('#details').val(data.details);
-                $('#btn-save').val("update");
-                $('#modal_form').modal('show');
-            })
         });
     </script>
 @endsection

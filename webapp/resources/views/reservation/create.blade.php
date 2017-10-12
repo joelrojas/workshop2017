@@ -117,9 +117,9 @@
                         </div>
                         <div class="box-footer">
                             <div class="pull-right">
+                                <input class="btn btn-primary" type="submit" value="Completar"/>
+                                <a href="/reservation" class="btn btn-danger">Cancelar</a>
                                 <button type="button" onclick="resetForm()" class="btn btn-warning">Limpiar</button>
-                                <input class="btn btn-success" type="submit" value="Completar"/>
-                                <button type="button" class="btn btn-danger">Cancelar</button>
                             </div>
                         </div>
                     </form>
@@ -141,18 +141,7 @@
                         <p id="lastDate"><b>Ultima visita: </b></p>
                     </div>
                 </div>
-                <div class="card card-danger">
-                    <div class="card-header">
-                        <div class="header-block">
-                            <p class="title">RESERVAS PASADAS</p>
-                        </div>
-                    </div>
-                    <div class="card-block" id="customer-history">
-                        <p id="client-type"><b>Tipo de cliente: </b></p>
-                        <p id="points"><b>Puntos: </b></p>
-                        <p id="lastDate"><b>Ultima visita: </b></p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -165,14 +154,11 @@
     <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
     <script type="text/javascript">
         function resetForm() {
-            //$('#dataPeople')[0].reset();
-            //document.getElementById("dataPeople").reset();
-           // $("input[type='hidden']", $(this)).val('');
             $("#id_customer").val("");  // Get
-            // Clear
             $("#helper").val("");
             document.getElementById("dataPeople").reset();
         }
+
         $('.datepicker1').datepicker( {
             autoclose: true,
             changeMonth: true,
@@ -187,34 +173,6 @@
             todayHighlight: true,
             startDate: new Date(),
         });
-        /*$('#first-name').autocomplete({
-            source: '{{ route('search.customer.name') }}',
-            minlength:1,
-            select:function (event, ui) {
-                $('#id-customer').val(ui.item.id);
-                $('#birthday').val(ui.item.birthday);
-                $('#phone').val(ui.item.phone);
-                $('#last-name').val(ui.item.lastname);
-                $('#ci').val(ui.item.ci);
-                $('#address').val(ui.item.address);
-                $('#helper').val(1);
-                customerHistory();
-            }
-        });
-        $('#phone').autocomplete({
-            source: '{{ route('search.customer.phone') }}',
-            minlength:1,
-            select:function (event, ui) {
-                $('#id-customer').val(ui.item.id);
-                $('#birthday').val(ui.item.birthday);
-                $('#first-name').val(ui.item.name);
-                $('#last-name').val(ui.item.lastname);
-                $('#ci').val(ui.item.ci);
-                $('#address').val(ui.item.address);
-                $('#helper').val(1);
-                customerHistory();
-            }
-        });*/
         $('#ci').autocomplete({
             source: '{{ route('search.customer.ci') }}',
             minlength:1,

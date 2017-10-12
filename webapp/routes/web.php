@@ -30,7 +30,8 @@ Route::get('/reservation', 'ReservationController@index');
 Route::get('/reservation/create', 'ReservationController@create');
 Route::post('/reservation/store', 'ReservationController@store');
 Route::get('/reservation/{idReservation}', 'ReservationController@show');
-
+Route::put('/reservationEdit', 'ReservationController@update');
+Route::get('/getReservation', 'ReservationController@getReservation');
 //CustomerController
 Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
 Route::get('/search/customer/name', 'CustomerController@autocompleteCustomerByName')->name('search.customer.name');
