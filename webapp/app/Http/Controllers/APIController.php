@@ -34,15 +34,22 @@ class APIController extends Controller
     }
     public function getTasks()
     {
-        $query = Users_task::select('id', 'state', 'dateBegin', 'dateEnd');
-        return datatables($query)->make(true);
+        $query = DB::table('users_tasks')
+            ->join('users', 'users.id', '=', 'users_tasks.users_id')
+            ->join('tasks', 'users_tasks.tasks_id', '=', 'tasks.id')
+            ->join('people', 'users.people_id', '=', 'people.id')
+            ->select('users.*', 'users_tasks.*', 'tasks.*', 'people.*','users_tasks.id as idtask')
+            ->get();
+
+        return datatables($query)->toJson();
+
     }
 
     public function getUsers()
     {
-        $query = DB::table('users')
-            ->join('people', 'people.id', '=', 'users.people_id')
-            ->select('people.*', 'users.*')
+        $query = DB::table('people')
+            ->join('users', 'people.id', '=', 'users.people_id')
+            ->select('people.*', 'users.*','people.id as idpeople')
             ->get();
         return datatables($query)->toJson();
     }

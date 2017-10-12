@@ -91,15 +91,34 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        DB::table('users_tasks')
-            ->where('id', $request->id)
-            ->update(['date' => $request->date,
-                'dateBegin'=>$request->dateBegin,
-                'dateEnd'=>$request->dateEnd,
-                'users_id'=>$request->users_id,
-                'tasks_id'=>$request->tasks_id]);
+        $idtask    = $request->input('idtask');
+
+        $date      = $request->input('date');
+        $state   = $request->input('state');
+        $dateEnd       = $request->input('dateEnd');
+        $dateBegin   = $request->input('dateBegin');
+        $tasks_id = $request->input('multiple');
+        $users_id = $request->input('empleado');
+
+        $tasks = DB::table('users_tasks')
+            ->where('id', $idtask)
+            ->update([
+                'date' => $date,
+                'state'=> $state,
+                'dateEnd'=>$dateEnd,
+                'dateBegin'=>$dateBegin,
+                'tasks_id'=>$tasks_id,
+                'users_id'=>$users_id
+            ]);
+        if($tasks){
+            return response()->json(['x'=> 'se regssitro users y people' ]);
+        }
+        else{
+            return response()->json(['x'=> 'no se registro people' ]);
+        }
+
     }
 
     /**

@@ -28,25 +28,15 @@ $('#createTaskButton').click(function () {
 
 });
 
-$('#EditTaskButton').click(function () {
 
+$('#EditTaskButton').click(function () {
     $.ajax({
-        type: 'POST',
+        type: 'PUT',
         url: '/edittask',
-        data:{
-            '_token': $('input[name=_token]').val(),
-            'id':$('#idtask').val(),
-            'date': $('#dateEdit').val(),
-            'dateEnd': $('#dateEndEdit').val(),
-            'dateBegin': $('#dateBeginEdit').val(),
-            'users_id':$('#id-personEdit').val(),
-            'tasks_id':$('#multipleEdit').val()
-        },
+        data: $('#socioOne').serialize(),
         success:function () {
-            alert('Se modificaron los datos con exito');
         }
     })
-
 });
 
 

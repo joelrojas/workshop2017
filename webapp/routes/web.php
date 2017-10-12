@@ -45,7 +45,7 @@ Route::get('/taskAsignment', 'TaskController@index');
 Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
 Route::post('/addtask','TaskController@store');
-Route::post('/edittask','TaskController@update');
+Route::put('/edittask','TaskController@update');
 
 //Proveedores
 Route::get('/supplier','SupplierController@index');
