@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\People;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -86,9 +87,55 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $userType      = $request->input('userType');
+        $email   = $request->input('email');
+        $username       = $request->input('username');
+        $password   = $request->input('password');
+        $people_id    = $request->input('idpeople');
+
+        $users = DB::table('users')
+        ->where('people_id', $people_id)
+        ->update([
+            'userType' => $userType,
+            'email'=> $email,
+            'username'=>$username,
+            'password'=>$password
+        ]);
+
+
+      $ci      = $request->input('ci');
+      $name   = $request->input('name');
+      $lastName       = $request->input('lastName');
+      $birthday   = $request->input('birthday');
+      $phone    = $request->input('phone');
+      $sex    =   $request->input('sex');
+      $address    =   $request->input('address');
+
+        if($users){
+
+            $people = DB::table('people')
+                ->where('id' , $people_id)
+                ->update([
+                   'ci' => $ci,
+                   'name' => $name,
+                    'lastName' => $lastName,
+                    'birthday' => $birthday,
+                    'phone' => $phone,
+                    'sex' => $sex,
+                    'address' => $address
+                ]);
+            if($people){
+                return response()->json(['x'=> 'se regssitro users y people' ]);
+            }
+            else{
+                return response()->json(['x'=> 'no se registro people' ]);
+            }
+        }
+        else{
+            return response()->json(['x'=> 'no se regssitro users' ]);
+        }
     }
 
     /**

@@ -54,6 +54,10 @@
                             <div class="card-block">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
+                                        <label class="control-label">Carnet de identidad</label>
+                                        <input type="text" class="form-control" id="ci" name="ci" placeholder="buscar el carnet de identidad">
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label class="control-label">Apellido completo </label>
                                         <input type="text" class="form-control" id="last-name" name="last-name" placeholder="ingrese el apellido completo">
                                     </div>
@@ -61,11 +65,6 @@
                                         <label class="control-label">Nombre completo</label>
                                         <input type="text" class="form-control" id="first-name" name="first-name" placeholder="ingrese el nombre completo">
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="control-label">Carnet de identidad</label>
-                                        <input type="text" class="form-control" id="ci" name="ci" placeholder="ingrese el carnet de identidad">
-                                    </div>
-
                                     <div class="form-group col-md-6">
                                         <label for="" class="control-label">Telefono</label>
                                         <input type="text" class="form-control" id="phone" name="phone" placeholder="ingrese el numero de celular">
@@ -80,14 +79,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-
                                     <!--<label for="inputPassword3" class="col-sm-2 form-control-label">Sexo</label>
                                     <div class="col-sm-4">
                                         <input type="text" id="sex" name="sex" class="form-control datepicker1" placeholder="ingrese la fecha de la reserva" autocomplete="off" />
                                     </div>-->
-                                    <input type="hidden" value="" id="id-customer" name="id-customer">
-                                    <input type="hidden" value="" id="helper" name="helper">
-                                    <input type="hidden" value="{{ date('d-m-Y') }}" id="day-reservation" name="day-reservation">
                                 </div>
                             </div>
                         <div class="card card-primary">
@@ -100,10 +95,8 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label for="" class="form-control-label">Tipo de mesa</label>
-                                        <!-- <input type="text" class="form-control" id="quantityPeople" name="quantityPeople" placeholder="Seleccione el tipo de mesa"> -->
                                         <select class="form-control" name="id-table" id="id-table">
                                             <option selected disabled>Seleccione un tipo de mesa</option>
-
                                             @foreach($tables as $table)
                                                 <option value="{{ $table->id }}">{{ $table->typeTable }}</option>
                                             @endforeach
@@ -112,18 +105,21 @@
                                     <div class="form-group col-md-6">
                                         <label for="" class="form-control-label">Fecha de reserva</label>
                                         <input type="text" id="checkDate" name="checkDate" class="form-control datepicker2" placeholder="ingrese la fecha de la reserva" autocomplete="off" />
-
                                         <!-- <input type="hidden" value="" id="id-table" name="id-table"> -->
                                         <!-- <input type="hidden" value="" id="quantityChairs-table" name="quantityChairs-table"> -->
                                         <input type="hidden" value="" id="dateReservation-table" name="dateReservation-table">
                                     </div>
+                                    <input type="hidden" value="" id="id_customer" name="id_customer">
+                                    <input type="hidden" value="" id="helper" name="helper">
+                                    <input type="hidden" value="{{ date('d-m-Y') }}" id="day-reservation" name="day-reservation">
                                 </div>
                             </div>
                         </div>
                         <div class="box-footer">
                             <div class="pull-right">
                                 <input class="btn btn-primary" type="submit" value="Completar"/>
-                                <button type="button" class="btn btn-danger">Cancelar</button>
+                                <a href="/reservation" class="btn btn-danger">Cancelar</a>
+                                <button type="button" onclick="resetForm()" class="btn btn-warning">Limpiar</button>
                             </div>
                         </div>
                     </form>
@@ -145,18 +141,7 @@
                         <p id="lastDate"><b>Ultima visita: </b></p>
                     </div>
                 </div>
-                <div class="card card-danger">
-                    <div class="card-header">
-                        <div class="header-block">
-                            <p class="title">RESERVAS PASADAS</p>
-                        </div>
-                    </div>
-                    <div class="card-block" id="customer-history">
-                        <p id="client-type"><b>Tipo de cliente: </b></p>
-                        <p id="points"><b>Puntos: </b></p>
-                        <p id="lastDate"><b>Ultima visita: </b></p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -168,6 +153,11 @@
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
     <script type="text/javascript">
+        function resetForm() {
+            $("#id_customer").val("");  // Get
+            $("#helper").val("");
+            document.getElementById("dataPeople").reset();
+        }
 
         $('.datepicker1').datepicker( {
             autoclose: true,
@@ -183,39 +173,11 @@
             todayHighlight: true,
             startDate: new Date(),
         });
-        $('#first-name').autocomplete({
-            source: '{{ route('search.customer.name') }}',
-            minlength:1,
-            select:function (event, ui) {
-                $('#id-customer').val(ui.item.id);
-                $('#birthday').val(ui.item.birthday);
-                $('#phone').val(ui.item.phone);
-                $('#last-name').val(ui.item.lastname);
-                $('#ci').val(ui.item.ci);
-                $('#address').val(ui.item.address);
-                $('#helper').val(1);
-                customerHistory();
-            }
-        });
-        $('#phone').autocomplete({
-            source: '{{ route('search.customer.phone') }}',
-            minlength:1,
-            select:function (event, ui) {
-                $('#id-customer').val(ui.item.id);
-                $('#birthday').val(ui.item.birthday);
-                $('#first-name').val(ui.item.name);
-                $('#last-name').val(ui.item.lastname);
-                $('#ci').val(ui.item.ci);
-                $('#address').val(ui.item.address);
-                $('#helper').val(1);
-                customerHistory();
-            }
-        });
         $('#ci').autocomplete({
             source: '{{ route('search.customer.ci') }}',
             minlength:1,
             select:function (event, ui) {
-                $('#id-customer').val(ui.item.id);
+                $('#id_customer').val(ui.item.id);
                 $('#birthday').val(ui.item.birthday);
                 $('#first-name').val(ui.item.name);
                 $('#last-name').val(ui.item.lastname);

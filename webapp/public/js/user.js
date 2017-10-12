@@ -6,8 +6,7 @@ $('#createUserButton').click(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    var sexo = $('#sex').val();
-    var tipo = $('#userType').val();
+    var tipo = $('#userType1').val();
     $.ajax({
         type: 'POST',
         url: "/adduser",
@@ -18,12 +17,12 @@ $('#createUserButton').click(function () {
             'lastName':$('input[name=lastName]').val(),
             'birthday':$('input[name=birthday]').val(),
             'phone':$('input[name=phone]').val(),
-            'sex':sexo,
+            'sex':$('select[name=sex]').val(),
             'address':$('input[name=address]').val(),
             'email':$('input[name=email]').val(),
             'username':$('input[name=username]').val(),
             'password':$('input[name=password]').val(),
-            'userType':tipo
+            'userType':$('select[name=userType]').val()
         },
         success:function () {
             alert('Se guardaron los datos :)');
@@ -32,25 +31,14 @@ $('#createUserButton').click(function () {
 
 });
 
-$('#EditSupplierButton').click(function () {
-
+$('#EditUserButton').click(function () {
     $.ajax({
-        type: 'POST',
-        url: '/editsupplier',
-        data:{
-            '_token': $('input[name=_token]').val(),
-            'id':$('#idsupplier').val(),
-            'companyName': $('#companyNameEdit').val(),
-            'contactName': $('#contactNameEdit').val(),
-            'address': $('#addressEdit').val(),
-            'productSupplied':$('#productEdit').val(),
-            'phono':$('#phoneEdit').val()
-        },
+        type: 'PUT',
+        url: '/edituser',
+        data: $('#socio').serialize(),
         success:function () {
-            alert('Se modificaron los datos con exito');
         }
     })
-
 });
 
 $('#SupplierModalDelete').click(function () {
