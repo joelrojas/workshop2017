@@ -36,19 +36,6 @@ class ReservationController extends Controller
         return view('reservation.create', compact('tables'));
     }
 
-    // Controlador del registro de reserva.
-
-    /*public function registerReservation(Request $request)
-    {
-        $idTable            = $request->input('id-table');
-        $quantityPeople     = $request->input('quantityChairs-table');
-        $reservationDate    = $request->input('dateReservation-table');
-        $dateView           = $request->checkDate;
-
-        return view('reservation.create', compact(['idTable', 'quantityPeople', 'reservationDate', 'dateView']));
-    }*/
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -147,42 +134,21 @@ class ReservationController extends Controller
            ->join('people', 'customers.people_id', '=', 'people.id')
            ->where('reservations.id', '=', $idReservation)
            ->first();
-        //dd($reservation);
-        //return view('reservation.registered', compact(['idReservation']));
         return view('reservation.registered', compact(['reservation']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reservation $reservation)
+    public function getReservation(Request $request)
     {
-        //
+        $idReservation = $request->input('id');
+        $reservation = DB::table('reservations')
+            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
+            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
+            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
+            ->join('people', 'customers.people_id', '=', 'people.id')
+            ->where('reservations.id', '=', $idReservation)
+            ->first();
+
+        return response()->json($reservation);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Reservation  $reservation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
-    }
 }

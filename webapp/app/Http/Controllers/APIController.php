@@ -27,7 +27,7 @@ class APIController extends Controller
             ->join('customers', 'reservations.customers_id', '=', 'customers.id')
             ->join('users', 'reservations.users_id', '=', 'users.id')
             ->join('people', 'customers.people_id', '=', 'people.id')
-            ->select('reservations.*', 'tables_reservations.*', 'tables.*', 'customers.*', 'people.*')
+            ->select('reservations.*', 'tables_reservations.tableReservationDate', 'tables.typeTable', 'people.name')
             ->get();
 
         return datatables($query)->toJson();
