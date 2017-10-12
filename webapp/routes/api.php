@@ -25,4 +25,6 @@ Route::get('/api/v1/tasks', 'APIController@getTasks')->name('api.tasks.index');
 
 Route::get('/api/v1/users', 'APIController@getUsers')->name('api.users.index');
 
+Route::get('/api/v1/orders', 'APIController@getOrders')->name('api.orders.index');
 
+Route::get('/api/v1/kardex', 'APIController@getKardex')->name('api.kardex.index');

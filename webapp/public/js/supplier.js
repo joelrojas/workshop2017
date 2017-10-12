@@ -67,7 +67,7 @@ $('#createSupplierButton').click(function () {
             'phono':$('input[name=phone]').val()
         },
         success:function () {
-            alert('Se guardaron los datos :)');
+            $.toaster({ priority : 'success', title : 'Proveedor creado', message : 'Se guardaron los datos correctamente'});
         }
     })
 
@@ -88,7 +88,7 @@ $('#EditSupplierButton').click(function () {
             'phono':$('#phoneEdit').val()
         },
         success:function () {
-            alert('Se modificaron los datos con exito');
+            $.toaster({ priority : 'success', title : 'Modificado', message : 'Se modificaron los datos correctamente'});
         }
     })
 
