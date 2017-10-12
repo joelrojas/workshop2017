@@ -20,6 +20,14 @@
                                     <a href="{{ url('/catalog') }}">
                                         <i class="fa fa-home"></i> Catalogos </a>
                                 </li>
+                                <li class="@yield('menu_user','')">
+                                    <a href="{{ url('/users') }}">
+                                        <i class="fa fa-user"></i> Usuarios </a>
+                                </li>
+                                <li class="@yield('menu_task','')">
+                                    <a href="{{ url('/taskAsignment') }}">
+                                        <i class="fa fa-tasks"></i> Asignacion de Tareas </a>
+                                </li>
                                 <li class="@yield('menu_kardex','')">
                                     <a href="">
                                         <i class="fa fa-th-large"></i> Productos
@@ -42,6 +50,7 @@
                                         </li>
                                     </ul>
                                 </li>
+
                                 <li class="@yield('menu_manager','')">
                                     <a href="index.html">
                                         <i class="fa fa-home"></i> Kardex de inventario </a>
