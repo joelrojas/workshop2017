@@ -2,6 +2,7 @@
 @section('menu_task', 'open active')
 @section('title', 'Control de Usuarios')
 @section('title-description', 'Tabla de Usuarios')
+{{ csrf_field() }}
 @section('content')
     <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir Tarea</button>
     <section class="section">
@@ -93,7 +94,7 @@
 
     <form role="form" id="socio">
         {{ csrf_field() }}
-        <input type="hidden" name="country" id="idpeople">
+        <input type="hidden" name="idpeople" id="idpeople">
         <div class="form-group">
             <label class="control-label" for="ci">Carnet de Identidad</label>
             <input type="text" class="form-control" name="ci" id="ciEdit"></div>
@@ -126,8 +127,8 @@
             <label class="control-label" for="username">Usuario</label>
             <input type="text" class="form-control" name="username" id="usernameEdit"></div>
         <div class="form-group">
-            <label class="control-label" for="password">Contraseña</label>
-            <input type="text" class="form-control" name="password" id="passwordEdit"></div>
+            <!--<label class="control-label" for="password">Contraseña</label>-->
+            <input type="hidden" class="form-control" name="password" id="passwordEdit"></div>
         <div class="form-group">
             <label class="control-label" for="formGroupExampleInput">Seleccione Tipo de Usuario</label>
             <select class="form-control" name="userType" id="userTypeEdit" >
@@ -171,7 +172,7 @@
             $('#userTable tbody').on( 'click', 'button', function () {
 
                 var data = table.row( $(this).parents('tr') ).data();
-                $('#idpeople').val(data['id']);
+                $('#idpeople').val(data['idpeople']);
                 $('#ciEdit').val(data['ci']);
                 $('#nameEdit').val(data['name']);
                 $('#lastNameEdit').val(data['lastName']);

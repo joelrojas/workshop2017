@@ -6,8 +6,7 @@ $('#createUserButton').click(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    var sexo = $('#sex').val();
-    var tipo = $('#userType').val();
+    var tipo = $('#userType1').val();
     $.ajax({
         type: 'POST',
         url: "/adduser",
@@ -18,12 +17,12 @@ $('#createUserButton').click(function () {
             'lastName':$('input[name=lastName]').val(),
             'birthday':$('input[name=birthday]').val(),
             'phone':$('input[name=phone]').val(),
-            'sex':sexo,
+            'sex':$('select[name=sex]').val(),
             'address':$('input[name=address]').val(),
             'email':$('input[name=email]').val(),
             'username':$('input[name=username]').val(),
             'password':$('input[name=password]').val(),
-            'userType':tipo
+            'userType':$('select[name=userType]').val()
         },
         success:function () {
             alert('Se guardaron los datos :)');
@@ -40,7 +39,6 @@ $('#EditUserButton').click(function () {
         success:function () {
         }
     })
-
 });
 
 $('#SupplierModalDelete').click(function () {

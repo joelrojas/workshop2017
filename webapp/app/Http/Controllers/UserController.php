@@ -89,60 +89,53 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-
-        $ci      = $request->input('ci');
-        $name   = $request->input('email');
-        $lastName       = $request->input('username');
-        $birthday   = $request->input('password');
-        $phone    = $request->input('people_id');
-        $sex    =   $request->input('sex');
-        $address    =   $request->input('address');
-
         $userType      = $request->input('userType');
         $email   = $request->input('email');
         $username       = $request->input('username');
         $password   = $request->input('password');
         $people_id    = $request->input('idpeople');
 
+        $users = DB::table('users')
+        ->where('people_id', $people_id)
+        ->update([
+            'userType' => $userType,
+            'email'=> $email,
+            'username'=>$username,
+            'password'=>$password
+        ]);
 
-        /*$users = Users::find($request->people_id);
-        $users->userType       = $request->userType;
-        $users->email  = $request->last_name;
-        $users->username      = $request->phone;
-        $users->password        = $request->sex;
-        $users->save();
-        return response()->json($users);*/
 
-        $updateUsers = DB::table('users')
-            ->where('people_id', $people_id)
-            ->update(['userType' => $userType,
-                'email'=> $email,
-                 'username'=>$username,
-                'password'=>$password]);
-        if($updateUsers){
-            $updatePeople = DB::table('people')
-                ->where('id', $request->id)
+      $ci      = $request->input('ci');
+      $name   = $request->input('name');
+      $lastName       = $request->input('lastName');
+      $birthday   = $request->input('birthday');
+      $phone    = $request->input('phone');
+      $sex    =   $request->input('sex');
+      $address    =   $request->input('address');
+
+        if($users){
+
+            $people = DB::table('people')
+                ->where('id' , $people_id)
                 ->update([
-                    'ci' => $ci,
-                    'name'=> $name,
-                    'lastName'=>$lastName,
-                    'birthday'=>$birthday,
-                    'phone'=>$phone,
-                    'sex'=>$sex,
-                    'address'=>$address]);
-            if($updatePeople){
-                return response()->json(['x'=> 'registro editado' ]);
+                   'ci' => $ci,
+                   'name' => $name,
+                    'lastName' => $lastName,
+                    'birthday' => $birthday,
+                    'phone' => $phone,
+                    'sex' => $sex,
+                    'address' => $address
+                ]);
+            if($people){
+                return response()->json(['x'=> 'se regssitro users y people' ]);
             }
             else{
-                return response()->json(['x'=> 'no se actualizo personas' ]);
+                return response()->json(['x'=> 'no se registro people' ]);
             }
         }
         else{
             return response()->json(['x'=> 'no se regssitro users' ]);
         }
-
-
-
     }
 
     /**

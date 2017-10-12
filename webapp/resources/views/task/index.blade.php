@@ -12,7 +12,6 @@
 @section('menu_task', 'open active')
 @section('title', 'Asignacion de Tareas')
 @section('title-description', 'Tabla de Tareas')
-
 {{ csrf_field() }}
 @section('content')
     <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir Tarea</button>
@@ -24,6 +23,8 @@
                         <thead>
                         <tr>
                             <td>Codigo</td>
+                            <td>Empleado</td>
+                            <td>Tarea</td>
                             <td>Empleado</td>
                             <td>Tarea</td>
                             <td>Fecha</td>
@@ -43,7 +44,7 @@
 @endsection
 @section('modal-bod')
     <form role="form">
-            <label class="control-label" for="empleado">Buscar Empleado</label>
+        <label class="control-label" for="empleado">Buscar Empleado</label>
             <input type="text" class="form-control" name="empleado" id="empleado">
             <input type="hidden" id="id-person" name="id-person">
         <div class="form-group">
@@ -78,14 +79,22 @@
 
 @section('modal-bod2')
 
-    <form role="form">
+    <form role="form" id="socioOne">
+        {{ csrf_field() }}
         <input type="hidden" name="idtask" id="idtask">
         <label class="control-label" for="empleado">Buscar Empleado</label>
-        <input type="text" class="form-control" name="empleado" id="empleado">
+        <input type="text" class="form-control" name="empleado" id="empleadoEdit">
         <input type="hidden" id="id-personEdit" name="id-person">
         <div class="form-group">
             <label class="control-label" for="formGroupExampleInput">Fecha de Creacion de la Tarea</label>
             <input type="date" name="date" id="dateEdit" class="form-control datepicker1" autocomplete="off" /></div>
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Seleccione Tarea</label>
+            <select class="form-control" id="stateEdit" name="state">
+                <option value="" disabled="" selected="">Estado...</option>
+                <option value="completo">Completo</option>
+                <option value="incompleto">Incompleto</option>
+            </select></div>
         <div class="form-group">
             <label class="control-label" for="formGroupExampleInput">Seleccione Tarea</label>
             <select class="form-control" id="multipleEdit" name="multiple">
@@ -105,7 +114,21 @@
 @endsection
 @section('modal-foot2')
     <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-    <button id="EditTaskButton" type="submit" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+    <button id="EditTaskButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+
+@endsection
+
+
+@section('modal-head3')
+    <h4 class="modal-title">Eliminar tarea</h4>
+@endsection
+
+@section('modal-bod3')
+    <h2 id="task">¿Desea eliminar a este tarea?</h2>
+@endsection
+@section('modal-foot3')
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    <button id="DeleteTaskButton" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
 
 @endsection
 
@@ -114,6 +137,7 @@
 
 @section('js')
     <script src=" {{ asset('js/vendor.js') }}"></script>
+    <script src=" {{ asset('js/app-template.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
@@ -127,7 +151,9 @@
                 "serverSide": true,
                 "ajax": "{{ route('api.tasks.index') }}",
                 "columns": [
-                    { data: 'id' },
+                    { data: 'idtask' },
+                    { data: 'task' },
+                    { data: 'lastName' },
                     { data: 'state' },
                     { data: 'dateBegin' },
                     { data: 'dateEnd' },
@@ -137,12 +163,13 @@
             $('#taskTable tbody').on( 'click', 'button', function () {
 
                 var data = table.row( $(this).parents('tr') ).data();
-                $('#idtask').val(data['id']);
+                $('#idtask').val(data['idtask']);
                 $('#dateEdit').val(data['date']);
                 $('#dateEndEdit').val(data['dateEnd']);
                 $('#dateBeginEdit').val(data['dateBegin']);
+                $('#stateEdit').val(data['state']);
                 $('#multipleEdit').val(data['tasks_id']);
-                $('#id-personEdit').val(data['users_id']);
+                $('#empleadoEdit').val(data['users_id']);
             } );
         });
 
@@ -154,5 +181,13 @@
                 $('#id-person').val(ui.item.id);
             }
         });
+        $('#empleadoEdit').autocomplete({
+            source: '{!! url('/buscarEmpleado') !!}',
+            minlength:1,
+            select:function (event, ui) {
+                $('#id-personEdit').val(ui.item.id);
+            }
+        });
+
     </script>
 @endsection

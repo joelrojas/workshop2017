@@ -28,46 +28,34 @@ $('#createTaskButton').click(function () {
 
 });
 
+
 $('#EditTaskButton').click(function () {
+    $.ajax({
+        type: 'PUT',
+        url: '/edittask',
+        data: $('#socioOne').serialize(),
+        success:function () {
+        }
+    })
+});
+
+
+
+$('#SupplierModalDelete').click(function () {
+    $('#task').val('¿Desea eliminar a esta tarea?');
+});
+$('#DeleteTaskButton').click(function () {
 
     $.ajax({
         type: 'POST',
-        url: '/edittask',
+        url: '/deletetask',
         data:{
             '_token': $('input[name=_token]').val(),
-            'id':$('#idtask').val(),
-            'date': $('#dateEdit').val(),
-            'dateEnd': $('#dateEndEdit').val(),
-            'dateBegin': $('#dateBeginEdit').val(),
-            'users_id':$('#id-personEdit').val(),
-            'tasks_id':$('#multipleEdit').val()
+            'idtask':$('#idtask').val()
         },
         success:function () {
-            alert('Se modificaron los datos con exito');
+            alert('Se eliminaron los datos con exito');
         }
     })
 
-});
-
-
-
-//delete function
-$(document).on('click', '.create-modal', function() {
-    $('#modal2').openModal(true);
-});
-
-$('.modal-footer').on('click', '.delete', function() {
-    $.ajax({
-        type: 'post',
-        url: '/deleteUser',
-        data: {
-            '_token': $('input[name=_token]').val(),
-            'id':           $("#id").val(),
-            'id_person': $('#id_person').val(),
-        },
-        success: function(data) {
-            $('.item' + $('#id_person').val()).remove();
-            swal("Eliminado!", "Se ha eliminado correctamente", "success");
-        }
-    });
 });
