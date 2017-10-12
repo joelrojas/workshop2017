@@ -119,6 +119,20 @@
 @endsection
 
 
+@section('modal-head3')
+    <h4 class="modal-title">Eliminar tarea</h4>
+@endsection
+
+@section('modal-bod3')
+    <h2 id="task">¿Desea eliminar a este tarea?</h2>
+@endsection
+@section('modal-foot3')
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    <button id="DeleteTaskButton" type="button" class="btn btn-primary" data-dismiss="modal">Eliminar</button>
+
+@endsection
+
+
 
 
 @section('js')

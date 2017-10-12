@@ -127,8 +127,8 @@
             <label class="control-label" for="username">Usuario</label>
             <input type="text" class="form-control" name="username" id="usernameEdit"></div>
         <div class="form-group">
-            <label class="control-label" for="password">Contraseña</label>
-            <input type="text" class="form-control" name="password" id="passwordEdit"></div>
+            <!--<label class="control-label" for="password">Contraseña</label>-->
+            <input type="hidden" class="form-control" name="password" id="passwordEdit"></div>
         <div class="form-group">
             <label class="control-label" for="formGroupExampleInput">Seleccione Tipo de Usuario</label>
             <select class="form-control" name="userType" id="userTypeEdit" >

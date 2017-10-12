@@ -41,23 +41,21 @@ $('#EditTaskButton').click(function () {
 
 
 
-//delete function
-$(document).on('click', '.create-modal', function() {
-    $('#modal2').openModal(true);
+$('#SupplierModalDelete').click(function () {
+    $('#task').val('¿Desea eliminar a esta tarea?');
 });
+$('#DeleteTaskButton').click(function () {
 
-$('.modal-footer').on('click', '.delete', function() {
     $.ajax({
-        type: 'post',
-        url: '/deleteUser',
-        data: {
+        type: 'POST',
+        url: '/deletetask',
+        data:{
             '_token': $('input[name=_token]').val(),
-            'id':           $("#id").val(),
-            'id_person': $('#id_person').val(),
+            'idtask':$('#idtask').val()
         },
-        success: function(data) {
-            $('.item' + $('#id_person').val()).remove();
-            swal("Eliminado!", "Se ha eliminado correctamente", "success");
+        success:function () {
+            alert('Se eliminaron los datos con exito');
         }
-    });
+    })
+
 });

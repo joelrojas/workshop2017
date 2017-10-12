@@ -127,9 +127,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        DB::table('users_tasks')->where('id', '=', $request->idtask)->delete();
     }
 
     public function autocompleteEmpleado(Request $request)
