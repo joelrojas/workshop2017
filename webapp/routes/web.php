@@ -22,7 +22,7 @@ Route::get('/catalog/dataTable', 'CatalogController@indexDataTable');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/kardex','KardexController@index');
-Route::get('/order','OrderController@index');
+Route::get('/order','KardexController@indexOrders');
 
 
 //ReservationController
@@ -45,17 +45,23 @@ Route::get('/taskAsignment', 'TaskController@index');
 Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
 Route::post('/addtask','TaskController@store');
+Route::post('/edittask','TaskController@update');
 
-
+//Proveedores
 Route::get('/supplier','SupplierController@index');
 Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
 Route::post('/addsupplier','SupplierController@store');
 Route::post('/editsupplier','SupplierController@update');
 Route::post('/deletesupplier','SupplierController@destroy');
+//Ordenes de compra
+Route::get('/order/dataTable', 'SupplierController@listOrder');
+Route::get('/createOrder','KardexController@createOrder');
+
 
 //Users
 Route::get('/users', 'UserController@index');
 Route::post('/adduser','UserController@store');
+Route::put('/edituser','UserController@update');
 
 //Auth LARAVEL
 Auth::routes();

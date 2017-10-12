@@ -32,22 +32,12 @@ $('#createUserButton').click(function () {
 
 });
 
-$('#EditSupplierButton').click(function () {
-
+$('#EditUserButton').click(function () {
     $.ajax({
-        type: 'POST',
-        url: '/editsupplier',
-        data:{
-            '_token': $('input[name=_token]').val(),
-            'id':$('#idsupplier').val(),
-            'companyName': $('#companyNameEdit').val(),
-            'contactName': $('#contactNameEdit').val(),
-            'address': $('#addressEdit').val(),
-            'productSupplied':$('#productEdit').val(),
-            'phono':$('#phoneEdit').val()
-        },
+        type: 'PUT',
+        url: '/edituser',
+        data: $('#socio').serialize(),
         success:function () {
-            alert('Se modificaron los datos con exito');
         }
     })
 

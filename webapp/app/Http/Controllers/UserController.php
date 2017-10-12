@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\People;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -86,9 +87,62 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
+        $ci      = $request->input('ci');
+        $name   = $request->input('email');
+        $lastName       = $request->input('username');
+        $birthday   = $request->input('password');
+        $phone    = $request->input('people_id');
+        $sex    =   $request->input('sex');
+        $address    =   $request->input('address');
+
+        $userType      = $request->input('userType');
+        $email   = $request->input('email');
+        $username       = $request->input('username');
+        $password   = $request->input('password');
+        $people_id    = $request->input('idpeople');
+
+
+        /*$users = Users::find($request->people_id);
+        $users->userType       = $request->userType;
+        $users->email  = $request->last_name;
+        $users->username      = $request->phone;
+        $users->password        = $request->sex;
+        $users->save();
+        return response()->json($users);*/
+
+        $updateUsers = DB::table('users')
+            ->where('people_id', $people_id)
+            ->update(['userType' => $userType,
+                'email'=> $email,
+                 'username'=>$username,
+                'password'=>$password]);
+        if($updateUsers){
+            $updatePeople = DB::table('people')
+                ->where('id', $request->id)
+                ->update([
+                    'ci' => $ci,
+                    'name'=> $name,
+                    'lastName'=>$lastName,
+                    'birthday'=>$birthday,
+                    'phone'=>$phone,
+                    'sex'=>$sex,
+                    'address'=>$address]);
+            if($updatePeople){
+                return response()->json(['x'=> 'registro editado' ]);
+            }
+            else{
+                return response()->json(['x'=> 'no se actualizo personas' ]);
+            }
+        }
+        else{
+            return response()->json(['x'=> 'no se regssitro users' ]);
+        }
+
+
+
     }
 
     /**

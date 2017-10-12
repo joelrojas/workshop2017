@@ -93,7 +93,13 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        DB::table('users_tasks')
+            ->where('id', $request->id)
+            ->update(['date' => $request->date,
+                'dateBegin'=>$request->dateBegin,
+                'dateEnd'=>$request->dateEnd,
+                'users_id'=>$request->users_id,
+                'tasks_id'=>$request->tasks_id]);
     }
 
     /**

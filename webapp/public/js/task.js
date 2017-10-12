@@ -1,58 +1,3 @@
-/**
- * Created by hp on 04/10/2017.
- */
-$(document).on('click', '.edit-modal', function() {
-    // $('#id').val($(this).data('id'));
-    // $('#email').val($(this).data('email'));
-    // $('#password').val($(this).data('password'));
-    // $('#role').val($(this).data('role'));
-    $('#id').val($(this).data('id'));
-    $('#name').val($(this).data('name'));
-    $('#last_name').val($(this).data('last_name'));
-    $('#phone').val($(this).data('phone'));
-    $('#sex').val($(this).data('sex'));
-    $('#nationality').val($(this).data('nationality'));
-    $('#modal1').openModal(true);
-});
-
-$('.modal-footer').on('click', '.edit', function() {
-    $.ajax({
-        type: 'post',
-        url: '/editUser',
-        data: {
-            '_token': $('input[name=_token]').val(),
-            // 'id':           $("#id").val(),
-            // 'email':        $('#d').val(),
-            // 'password':     $("#password").val(),
-            // 'role':         $("#role").val(),
-            'id_person':    $("#id_person").val(),
-            'name':         $("#name").val(),
-            'last_name':    $("#last_name").val(),
-            'phone':        $("#phone").val(),
-            'sex':          $('#sex').val(),
-            'nationality':  $('#nationality').val()
-        },
-        success: function(data) {
-            $('.item' + data.id_person).replaceWith("" +
-                "<tr class='item" + data.id_person + "'>" +
-                "<td>" + data.id_person + "</td>" +
-                "<td>" + data.name + "</td>" +
-                "<td>" + data.last_name + "</td>" +
-                "<td>" + data.phone + "</td>" +
-                "<td>" + data.nationality + "</td>" +
-                "<td>" +
-                "<button class='waves-effect waves-light btn edit-modal' data-id_person='" + data.id_person + "' data-name='" + data.name + "' data-last_name='" + data.last_name + "' data-phone='" + data.phone +"' data-sex='"+ data.sex+"' data-nationality='"+data.nationality+"'>" +
-                "<i class='material-icons dp48'>settings</i></button> " +
-                "<button class='waves-effect waves-light btn red delete-modal' data-id='" + data.id + "' data-id_person='" + data.id_person + "' data-name='" + data.name + "'><i class='material-icons dp48'>delete</i></button></td>" +
-                "</tr>");
-
-            swal("Buen trabajo!", "Se realizo correctame los cambios.!", "success")
-        }
-    });
-});
-// add function
-
-
 $('#createTaskButton').click(function () {
     //alert($('input[name=companyName]').val());
     //alert($('input[name=phone]').val())
@@ -83,19 +28,19 @@ $('#createTaskButton').click(function () {
 
 });
 
-$('#EditSupplierButton').click(function () {
+$('#EditTaskButton').click(function () {
 
     $.ajax({
         type: 'POST',
-        url: '/editsupplier',
+        url: '/edittask',
         data:{
             '_token': $('input[name=_token]').val(),
-            'id':$('#idsupplier').val(),
-            'companyName': $('#companyNameEdit').val(),
-            'contactName': $('#contactNameEdit').val(),
-            'address': $('#addressEdit').val(),
-            'productSupplied':$('#productEdit').val(),
-            'phono':$('#phoneEdit').val()
+            'id':$('#idtask').val(),
+            'date': $('#dateEdit').val(),
+            'dateEnd': $('#dateEndEdit').val(),
+            'dateBegin': $('#dateBeginEdit').val(),
+            'users_id':$('#id-personEdit').val(),
+            'tasks_id':$('#multipleEdit').val()
         },
         success:function () {
             alert('Se modificaron los datos con exito');

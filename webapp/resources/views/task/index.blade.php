@@ -12,6 +12,8 @@
 @section('menu_task', 'open active')
 @section('title', 'Asignacion de Tareas')
 @section('title-description', 'Tabla de Tareas')
+
+{{ csrf_field() }}
 @section('content')
     <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir Tarea</button>
     <section class="section">
@@ -25,6 +27,7 @@
                             <td>Empleado</td>
                             <td>Tarea</td>
                             <td>Fecha</td>
+                            <td>Opciones</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,7 +43,6 @@
 @endsection
 @section('modal-bod')
     <form role="form">
-        {{ csrf_field() }}
             <label class="control-label" for="empleado">Buscar Empleado</label>
             <input type="text" class="form-control" name="empleado" id="empleado">
             <input type="hidden" id="id-person" name="id-person">
@@ -70,6 +72,44 @@
 @endsection
 
 
+@section('modal-head2')
+    <h4 class="modal-title">Editar Tareas</h4>
+@endsection
+
+@section('modal-bod2')
+
+    <form role="form">
+        <input type="hidden" name="idtask" id="idtask">
+        <label class="control-label" for="empleado">Buscar Empleado</label>
+        <input type="text" class="form-control" name="empleado" id="empleado">
+        <input type="hidden" id="id-personEdit" name="id-person">
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Creacion de la Tarea</label>
+            <input type="date" name="date" id="dateEdit" class="form-control datepicker1" autocomplete="off" /></div>
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Seleccione Tarea</label>
+            <select class="form-control" id="multipleEdit" name="multiple">
+                <option value="" disabled="" selected="">Tarea...</option>
+                <option value="1">Puerta</option>
+                <option value="2">Lavar</option>
+                <option value="3">Barrer</option>
+                <option value="4">Bar</option>
+            </select></div>
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
+            <input type="date" name="dateBegin" id="dateBeginEdit" class="form-control datepicker1" autocomplete="off" /></div>
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
+            <input type="date" name="dateEnd" id="dateEndEdit" class="form-control datepicker2" autocomplete="off" /></div>
+    </form>
+@endsection
+@section('modal-foot2')
+    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    <button id="EditTaskButton" type="submit" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+
+@endsection
+
+
 
 
 @section('js')
@@ -82,7 +122,7 @@
     <!--<script src="js/main.js"></script>-->
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#taskTable").DataTable({
+            var table = $('#taskTable').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ route('api.tasks.index') }}",
@@ -91,9 +131,21 @@
                     { data: 'state' },
                     { data: 'dateBegin' },
                     { data: 'dateEnd' },
+                    { defaultContent: "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalEdit'>Editar</button>" + " "+ "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalDelete'>Eliminar</button>"}
                 ]
             });
+            $('#taskTable tbody').on( 'click', 'button', function () {
+
+                var data = table.row( $(this).parents('tr') ).data();
+                $('#idtask').val(data['id']);
+                $('#dateEdit').val(data['date']);
+                $('#dateEndEdit').val(data['dateEnd']);
+                $('#dateBeginEdit').val(data['dateBegin']);
+                $('#multipleEdit').val(data['tasks_id']);
+                $('#id-personEdit').val(data['users_id']);
+            } );
         });
+
 
         $('#empleado').autocomplete({
             source: '{!! url('/buscarEmpleado') !!}',
