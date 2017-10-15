@@ -23,16 +23,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <table id="mainTable">
+                    <table id="kardexTable">
                         <thead>
                         <tr>
                             <td>Fecha</td>
                             <td>Detalle</td>
                             <td>Valor unitario</td>
-                            <td>Cantidad</td>
-                            <td>Valores</td>
-                            <td>Cantidad</td>
-                            <td>Valores</td>
                             <td>Cantidad</td>
                             <td>Valores</td>
                         </tr>
@@ -51,7 +47,23 @@
     <script src="js/vendor.js"></script>
     <script src="js/app-template.js"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/supplier.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#kardexTable").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ route('api.kardex.index') }}",
+                "columns":
+                    [
+
+                        { data: 'dateorder' },
+                        { data: 'name' },
+                        { data: 'total' },
+                        { data: 'quantityOrder' },
+                        { data: 'total' }
+                    ]
+            });
+        });
+    </script>
 @endsection
 

@@ -32,6 +32,7 @@ class APIController extends Controller
 
         return datatables($query)->toJson();
     }
+
     public function getTasks()
     {
         $query = DB::table('users_tasks')
@@ -52,6 +53,30 @@ class APIController extends Controller
             ->select('people.*', 'users.*','people.id as idpeople')
             ->get();
         return datatables($query)->toJson();
+    }
+
+    public function getOrders()
+    {
+        $query = DB::table('details_orders')
+            ->join('orders','orders.id','=','details_orders.orders_id')
+            ->join('products','products.id','=','details_orders.products_id')
+            ->join('suppliers','suppliers.id','=','orders.suppliers_id')
+            ->select('orders.*','products.*','suppliers.*')
+            ->get();
+        return datatables($query)->make(true);
+    }
+
+    public function getKardex()
+    {
+        $query = DB::table('details_orders')
+            ->join('orders','orders.id','=','details_orders.orders_id')
+            ->join('products','products.id','=','details_orders.products_id')
+            ->join('suppliers','suppliers.id','=','orders.suppliers_id')
+            //->join('sells','sells.id','=','details.sells_id')
+            //->join('products','products.id','=','details.products_id')
+            ->select('orders.*','products.*','suppliers.*')
+            ->get();
+        return datatables($query)->make(true);
     }
 
 }

@@ -40,27 +40,27 @@
         <div class="form-group has-success">
             <label class="control-label" for="inputSuccess1">Nombre compañia</label>
             <input type="text" class="form-control underlined" name="companyName">
-            <span class="has-success"></span>
+
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Producto</label>
             <input type="text" class="form-control underlined" name="product">
-            <span class="fa fa-check form-control-feedback"></span>
+
         </div>
         <div class="form-group has-error">
             <label class="control-label" for="inputError1">Nombre contacto</label>
             <input type="text" class="form-control underlined" name="contactName">
-            <span class="has-error">Error message.</span>
+
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Direccion</label>
             <input type="text" class="form-control underlined" name="address">
-            <span class="fa fa-check form-control-feedback"></span>
+
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Telefono</label>
             <input type="text" class="form-control underlined" name="phone">
-            <span class="fa fa-check form-control-feedback"></span>
+
         </div>
 
     </form>
@@ -86,27 +86,27 @@
         <div class="form-group has-success">
             <label class="control-label" for="inputSuccess1">Nombre compañia</label>
             <input type="text" class="form-control underlined" name="companyName" id="companyNameEdit">
-            <span class="has-success"></span>
+
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Producto</label>
             <input type="text" class="form-control underlined" name="product" id="productEdit">
-            <span class="fa fa-check form-control-feedback"></span>
+
         </div>
         <div class="form-group has-error">
             <label class="control-label" for="inputError1">Nombre contacto</label>
             <input type="text" class="form-control underlined" name="contactName" id="contactNameEdit">
-            <span class="has-error">Error message.</span>
+
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Direccion</label>
             <input type="text" class="form-control underlined" name="address" id="addressEdit">
-            <span class="fa fa-check form-control-feedback"></span>
+
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Telefono</label>
             <input type="text" class="form-control underlined" name="phone" id="phoneEdit">
-            <span class="fa fa-check form-control-feedback"></span>
+
         </div>
 
     </form>
@@ -138,6 +138,9 @@
     <script src="js/vendor.js"></script>
     <script src="js/app-template.js"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+
     <script src="js/main.js"></script>
     <script src="js/supplier.js"></script>
 @endsection

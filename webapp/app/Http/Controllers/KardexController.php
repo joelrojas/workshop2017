@@ -29,7 +29,30 @@ use DB;
             return response()->json($products);
         }
 
-        public function createOrder(Request $request){
+        public function createOrder(Request $request)
+        {
+
+                $product_id=DB::table('products')->insertGetId([
+                   'name'          =>$request->productName,
+                   'price'         =>$request->productPrice,
+                   'quantity'      =>$request->orderQuantity,
+                   'productType'   =>$request->productType
+                ]);
+
+                $order_id=DB::table('orders')->insertGetId([
+                   'total'         =>$request->orderPrice,
+                   'quantityOrder' =>$request->orderQuantity,
+                   'suppliers_id'  =>$request->supplier_id,
+                   'dateorder'     =>date("Y-m-d H:i:s")
+                ]);
+
+                DB::table('details_orders')->insert([
+                   'subtotal'      =>$request->orderPrice,
+                   'quantity'      =>$request->orderQuantity,
+                   'orders_id'     =>$order_id,
+                   'products_id'   =>$product_id,
+                   'date'          =>date("Y-m-d H:i:s")
+                ]);
 
         }
         /**
