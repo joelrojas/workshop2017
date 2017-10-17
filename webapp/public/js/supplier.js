@@ -49,6 +49,22 @@ $(document).ready(function() {
 $('#createSupplierButton').click(function () {
     //alert($('input[name=companyName]').val());
     //alert($('input[name=phone]').val())
+    if($('#companyName').val().length)
+    {
+        $.toaster({ priority : 'danger', title : 'Incompleto', message : 'Debe colocar el nombre del proveedor'});
+    }else if($('#contactName').val().length){
+        $.toaster({ priority : 'danger', title : 'Incompleto', message : 'Debe colocar el nombre del contacto'});
+    }else if($('#address').val().length){
+        $.toaster({ priority : 'danger', title : 'Incompleto', message : 'Debe colocar una direccion'});
+    }else if($('#product').val().length){
+        $.toaster({ priority : 'danger', title : 'Incompleto', message : 'Debe colocar al menos un producto'});
+    }else if($('#phone').val().length )
+    {
+        $.toaster({ priority : 'danger', title : 'Incompleto', message : 'Debe colocar el telefono del proveedor'});
+    }
+
+
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

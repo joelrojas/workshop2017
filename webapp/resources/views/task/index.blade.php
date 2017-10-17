@@ -18,6 +18,15 @@
     <section class="section">
         <div class="row">
             <div class="col-md-12">
+                <!--
+                <div class="input-daterange input-group" id="datepicker">
+                    <input type="text" class="input-sm form-control" name="startDate" value="{{ Carbon\Carbon::now()->format('m/d/Y') }}" />
+                    <span class="input-group-addon">to</span>
+                    <input type="text" class="input-sm form-control" name="endDate" value="{{ Carbon\Carbon::now()->format('m/d/Y') }}"/>
+                </div>
+
+                <button type="button" id="dateSearch" class="btn btn-sm btn-primary">Search</button>
+                -->
                 <div class="card">
                     <table id="taskTable">
                         <thead>
@@ -38,6 +47,19 @@
             </div>
         </div>
     </section>
+    <form method="get" action="/download-pdf">
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
+            <input type="date" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
+            <input type="date" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
+        <button type="submit" class="btn btn-primary">Crear Pdf</button>
+    </form>
+
+    <!--
+    <a href="{{url('/download-pdf')}}">PDF</a>
+    -->
 @endsection
 @section('modal-head')
     <h4 class="modal-title">Añadir Tarea</h4>
@@ -150,6 +172,12 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ route('api.tasks.index') }}",
+                /*
+                    data: function(d) {
+                        d.startDate = $('input[name=startDate]').val();
+                        d.endDate = $('input[name=endDate]').val();
+                    },
+                */
                 "columns": [
                     { data: 'idtask' },
                     { data: 'task' },
@@ -160,6 +188,16 @@
                     { defaultContent: "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalEdit'>Editar</button>" + " "+ "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalDelete'>Eliminar</button>"}
                 ]
             });
+            /*
+            $('.input-daterange').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $('#dateSearch').on('click', function() {
+                table.draw();
+            });
+            */
             $('#taskTable tbody').on( 'click', 'button', function () {
 
                 var data = table.row( $(this).parents('tr') ).data();

@@ -4,71 +4,143 @@
 @section('title-description', 'Inventario relacionado a los proveedores')
 {{ csrf_field() }}
 @section('content')
-    <div class="row">
-        <div class="col-xl-12">
-            <div class="card card-default">
-                <div class="card-header">
-                    <div class="header-block">
-                        <p class="title">Comprar producto</p>
-                    </div>
-                </div>
-                <div class="card-block">
+<section class="section">
+<div class="row">
+  <div class="col-xl-12">
+    <div class="card sameheight-item" style="height: 350px;">
+        <div class="card-block">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-target="#home" data-toggle="tab" aria-controls="home" role="tab" aria-expanded="true">Home</a>
+                </li>
+                <li class="nav-item" >
+                    <a href="#productsmenu" class="nav-link" data-target="#productsmenu" aria-controls="productsmenu" data-toggle="tab" role="tab" aria-expanded="false">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link" data-target="#messages" aria-controls="messages" data-toggle="tab" role="tab" aria-expanded="false">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link" data-target="#settings" aria-controls="settings" data-toggle="tab" role="tab" aria-expanded="false">Settings</a>
+                </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content tabs-bordered">
+                <div class="tab-pane fade in active show" id="home" aria-expanded="true">
+                    <h4>Home Tab</h4>
                     {{ csrf_field() }}
                     <form role="form">
                         <div class="row">
-                        <div class="col-xl-6">
-                        <div class="form-group">
+                          <div class="col-xl-6">
+
+                            <div class="form-group">
+                                <div class="col-xl-3">
                             <label class="control-label" for="inputSuccess1">Proveedor</label>
-                            @foreach($suppliers as $supplier)
+                                </div>
+                                <div class="col-xl-9">
                                 <select class="form-control form-control-sm" id="supplier">
+                                @foreach($suppliers as $supplier)
+
                                     <option value="{{$supplier->id}}">{{ $supplier->companyName }}</option>
 
-                            @endforeach
-                                 </select>
+                                @endforeach
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-xl-6">
+                        <div class="form-group has-success">
+
+                            <label for="inputEmail3" >Producto</label>
+
+
+                            <input type="text" class="form-control" id="orderProduct" name="orderProduct" placeholder="Cantidad">
 
                         </div>
+                          </div>
                         </div>
 
+                        <div class="row">
+                          <div class="col-xl-6">
+                        <div class="form-group has-error">
+                            <label for="inputEmail3" >Precio</label>
+
+                            <input type="text" class="form-control" id="orderPrice" name="orderPrice" placeholder="Precio">
+                        </div>
+                          </div>
+                           <div class="col-xl-6">
+                        <div class="form-group has-success">
+                        <label for="inputEmail3">Cantidad</label>
+
+                        <input type="text" class="form-control" id="orderQuantity" name="orderQuantity" placeholder="Cantidad">
+                        </div>
+                           </div>
+                        <br>
+
+                            <a href="#productsmenu" class="nav-link" data-target="#productsmenu" aria-controls="productsmenu" data-toggle="tab" role="tab" aria-expanded="false">Profile</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="productsmenu" aria-expanded="false">
+                    <form role="form">
+                        <div class="row">
                             <div class="col-xl-6">
-
+                                <input type="hidden" name="country" id="idsupplier">
                                 <div class="form-group has-success">
-
-                                    <label for="inputEmail3" >Producto</label>
-
-
-                                    <input type="text" class="form-control" id="orderProduct" name="orderProduct" placeholder="Cantidad">
+                                    <label class="control-label" for="inputSuccess1">Producto</label>
+                                    <input type="text" class="form-control underlined" name="productName" id="productName">
 
                                 </div>
                             </div>
+                            <div class="col-xl-6">
+                                <div class="form-group has-success  has-feedback">
+                                    <label class="control-label" for="inputSuccess2">Precio de venta</label>
+                                    <input type="text" class="form-control underlined" name="productPrice" id="productPrice">
 
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                        <div class="col-xl-6 col-md-6">
-                            <div class="form-group has-error">
-                                <label for="inputEmail3" >Precio</label>
+                            <div class="col-xl-6">
+                                <div class="form-group has-success">
+                                    <label class="control-label" for="inputSuccess2">Cantidad</label>
+                                    <input type="text" class="form-control underlined" name="productQuantity" id="productQuantity">
 
-                                <input type="text" class="form-control" id="orderPrice" name="orderPrice" placeholder="Precio">
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="form-group has-success  has-feedback">
+                                    <label class="control-label" for="inputSuccess2">Tipo de producto</label>
+                                    <input type="text" class="form-control underlined" name="productType" id="productType">
 
+                                </div>
+                            </div>
                         </div>
-                        </div>
-                        <div class="col-xl-6 col-md-6">
-                            <div class="form-group has-success  has-feedback">
-                                <label for="inputEmail3">Cantidad</label>
-
-                                <input type="text" class="form-control" id="orderQuantity" name="orderQuantity" placeholder="Cantidad">
-
-                        </div>
-                        </div>
-                        </div>
-                        <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir producto</button>
+                        <a href="#home" class="nav-link" data-target="#home" data-toggle="tab" aria-controls="home" role="tab" aria-expanded="false">Home</a>
+                    </form>
                 </div>
-
-                <div class="box-footer">
+                <div class="tab-pane fade" id="messages" aria-expanded="false">
+                    <h4>Messages Tab</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                        deserunt mollit anim id est laborum.</p>
                 </div>
-                <div class="card-footer"></div>
+                <div class="tab-pane fade" id="settings" aria-expanded="false">
+                    <h4>Settings Tab</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                        deserunt mollit anim id est laborum.</p>
+                </div>
             </div>
         </div>
+        <!-- /.card-block -->
     </div>
+
+  </div>
+</div>
+</section>
+
+
     <section class="section">
         <div class="row">
             <div class="col-md-12">
@@ -162,6 +234,19 @@
          ]
             });
         });
+/*
+    $('#productsmenuactivate').click(function () {
+
+        var h = document.getElementById("home");
+        h.setAttribute("class","nav-link");
+        h.setAttribute("aria-expanded","false");
+        var d = document.getElementById("productsmenu");
+        d.setAttribute("class", "nav-link active");
+        d.setAttribute("aria-expanded","true");
+        //d.setAttribute("href","products");
+    })
+*/
     </script>
+
 @endsection
 

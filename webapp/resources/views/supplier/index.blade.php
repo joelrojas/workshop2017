@@ -5,7 +5,63 @@
 {{ csrf_field() }}
 
 @section('content')
-    <button id="supplierModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir proveedor</button>
+    <div class="col-xl-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <div class="header-block">
+                    <p class="title"> Primary card </p>
+                </div>
+            </div>
+            <div class="card-block">
+
+                <form role="form">
+                    <div class="row">
+                        <div class="col-xl-6">
+                    <input type="hidden" name="country" id="idsupplier">
+                    <div class="form-group has-success">
+                        <label class="control-label" for="inputSuccess1">Nombre compañia</label>
+                        <input type="text" class="form-control underlined" name="companyName" id="companyNameEdit">
+
+                    </div>
+                        </div>
+                        <div class="col-xl-6">
+                    <div class="form-group has-success  has-feedback">
+                        <label class="control-label" for="inputSuccess2">Producto</label>
+                        <input type="text" class="form-control underlined" name="product" id="productEdit">
+
+                    </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4">
+                    <div class="form-group has-error">
+                        <label class="control-label" for="inputError1">Nombre contacto</label>
+                        <input type="text" class="form-control underlined" name="contactName" id="contactNameEdit">
+
+                    </div>
+                        </div>
+                        <div class="col-xl-4">
+                    <div class="form-group has-success  has-feedback">
+                        <label class="control-label" for="inputSuccess2">Direccion</label>
+                        <input type="text" class="form-control underlined" name="address" id="addressEdit">
+
+                    </div>
+                        </div>
+                        <div class="col-xl-4">
+                    <div class="form-group has-success  has-feedback">
+                        <label class="control-label" for="inputSuccess2">Telefono</label>
+                        <input type="text" class="form-control underlined" name="phone" id="phoneEdit">
+
+                    </div>
+                        </div>
+                    </div>
+                    <button id="createSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
     <section class="section">
         <div class="row">
             <div class="col-md-12">
@@ -143,5 +199,8 @@
 
     <script src="js/main.js"></script>
     <script src="js/supplier.js"></script>
+    <script type="text/javascript">
+
+    </script>
 @endsection
 
