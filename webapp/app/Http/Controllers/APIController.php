@@ -63,7 +63,7 @@ class APIController extends Controller
             ->join('suppliers','suppliers.id','=','orders.suppliers_id')
             ->select('orders.*','products.*','suppliers.*')
             ->get();
-        return datatables($query)->make(true);
+        return datatables($query)->toJson();
     }
 
     public function getKardex()
