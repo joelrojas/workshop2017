@@ -39,6 +39,16 @@ $('#EditTaskButton').click(function () {
     })
 });
 
+$('#PdfButton').click(function () {
+    $.ajax({
+        type: 'GET',
+        url: '/download-pdf',
+        data: $('#fechas').serialize(),
+        success:function () {
+        }
+    })
+});
+
 
 
 $('#SupplierModalDelete').click(function () {

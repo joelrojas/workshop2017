@@ -69,3 +69,5 @@ Route::put('/edituser','UserController@update');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//pdf
+Route::get('/download-pdf','TaskController@downloadPDF');

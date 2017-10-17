@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Users_task;
+use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class TaskController extends Controller
 {
@@ -20,12 +24,22 @@ class TaskController extends Controller
     }
     public function indexDataTable()
     {
+        $arrStart = explode("/", Input::get('startDate'));
+        $arrEnd = explode("/", Input::get('endDate'));
+        $startDate = Carbon::create($arrStart[2], $arrStart[0], $arrStart[1], 0, 0, 0);
+        $endDate = Carbon::create($arrEnd[2], $arrEnd[0], $arrEnd[1], 23, 59, 59);
 
         //$catalogList = Catalog::all()->forPage(1,3);
         $tasksList = Task::table('users_tasks')
             ->join('tasks','users_tasks.tasks_id','=','tasks.id')
             ->join('users','users.id','=','users_tasks.users_id')
             ->join('people','users.people_id','=','people.id')
+            ->whereBetween('users_tasks.dateBegin',[$startDate,$endDate])
+            ->addColumn( 'action', function ( $orders )
+            {
+                return '<a href="/taskAsignment/' . $orders->id . '" class="btn btn-xs btn-primary"><i class="fa fa-truck"></i></a>';
+            }
+            )
             ->orderBy('tasks.id','asc')->take(3)->offset(3);
 
         return response()->json($tasksList);
@@ -150,10 +164,23 @@ class TaskController extends Controller
         }
         return response()->json($result);
     }
-    /**
-     * Buscar y autocompletar el nombre del empleado
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //Funcion para descargar el archivo PDF
+    public function downloadPDF(){
+        $input = Input::only('startDate','endDate');
+        $startDate    = $input['startDate'];
+        $endDate      = $input['endDate'];
+        $datetime1 = new DateTime($startDate);
+        $datetime2 = new DateTime($endDate);
+        $user = DB::table('users_tasks')
+            ->join('users', 'users.id', '=', 'users_tasks.users_id')
+            ->join('tasks', 'users_tasks.tasks_id', '=', 'tasks.id')
+            ->join('people', 'users.people_id', '=', 'people.id')
+            ->whereBetween('users_tasks.dateBegin',[$datetime1,$datetime2])
+            ->select('users.*', 'users_tasks.*', 'tasks.*', 'people.*','users_tasks.id as idtask')
+            ->get();
+
+        $pdf = PDF::loadView('PDF.report', compact('user'));
+        return $pdf->download('invoice.pdf');
+
+    }
 }
