@@ -127,7 +127,7 @@
             </ul>
         </div>
     </li>
-    
+
     <li>
         <a data-toggle="collapse" href="#pagesExamples">
             <i class="ti-gift"></i>
