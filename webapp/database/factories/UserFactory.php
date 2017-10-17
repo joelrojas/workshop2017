@@ -42,7 +42,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 $factory->define(App\Customer::class, function (Faker $faker) {
 
     return [
-        'clientType'    =>  $faker->randomElement('nuevo', 'habitual'),
+        'clientType'    =>  $faker->randomElement(['nuevo', 'habitual']),
         'points'   =>  $faker->numberBetween(1,100),
         'people_id' => \App\People::all()->unique()->random()->id,
     ];

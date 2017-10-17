@@ -94,6 +94,13 @@
                             <div class="card-block">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
+                                        <label for="" class="form-control-label">Fecha de reserva</label>
+                                        <input type="text" id="checkDate" name="checkDate" class="form-control datepicker2" placeholder="ingrese la fecha de la reserva" autocomplete="off" />
+                                        <!-- <input type="hidden" value="" id="id-table" name="id-table"> -->
+                                        <!-- <input type="hidden" value="" id="quantityChairs-table" name="quantityChairs-table"> -->
+                                        <input type="hidden" value="" id="dateReservation-table" name="dateReservation-table">
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="" class="form-control-label">Tipo de mesa</label>
                                         <select class="form-control" name="id-table" id="id-table">
                                             <option selected disabled>Seleccione un tipo de mesa</option>
@@ -101,13 +108,6 @@
                                                 <option value="{{ $table->id }}">{{ $table->typeTable }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="" class="form-control-label">Fecha de reserva</label>
-                                        <input type="text" id="checkDate" name="checkDate" class="form-control datepicker2" placeholder="ingrese la fecha de la reserva" autocomplete="off" />
-                                        <!-- <input type="hidden" value="" id="id-table" name="id-table"> -->
-                                        <!-- <input type="hidden" value="" id="quantityChairs-table" name="quantityChairs-table"> -->
-                                        <input type="hidden" value="" id="dateReservation-table" name="dateReservation-table">
                                     </div>
                                     <input type="hidden" value="" id="id_customer" name="id_customer">
                                     <input type="hidden" value="" id="helper" name="helper">

@@ -9,23 +9,23 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
-					<div class="card-block">
-						<div class="card-title-block">
-							<h3 class="title"> <b>Listado de catalogos</b> </h3>
+					<div class="card-header">
+						<h3 class="title"> <b>Listado de catalogos</b> </h3>
+						<div class="card-content">
+							<div class="row">
+								<table id="mainTable" class="table table-sm ">
+									<thead class="thead-inverse">
+									<tr>
+										<th>Acciones</th>
+										<th>Código</th>
+										<th>Descripción</th>
+									</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
-						<section class="example">
-							<table id="mainTable" class="table table-sm ">
-								<thead class="thead-inverse">
-								<tr>
-									<th>Acciones</th>
-									<th>Código</th>
-									<th>Descripción</th>
-								</tr>
-								</thead>
-								<tbody>
-								</tbody>
-							</table>
-						</section>
 					</div>
 			</div>
 		</div>
