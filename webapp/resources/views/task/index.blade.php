@@ -47,8 +47,19 @@
             </div>
         </div>
     </section>
-    <a href="{{url('/download-pdf')}}">PDF</a>
+    <form method="get" action="/download-pdf">
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
+            <input type="date" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
+        <div class="form-group">
+            <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
+            <input type="date" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
+        <button type="submit" class="btn btn-primary">Crear Pdf</button>
+    </form>
 
+    <!--
+    <a href="{{url('/download-pdf')}}">PDF</a>
+    -->
 @endsection
 @section('modal-head')
     <h4 class="modal-title">Añadir Tarea</h4>

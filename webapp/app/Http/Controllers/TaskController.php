@@ -6,6 +6,7 @@ use App\Task;
 use App\Users_task;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -165,7 +166,18 @@ class TaskController extends Controller
     }
     //Funcion para descargar el archivo PDF
     public function downloadPDF(){
-        $user = Users_task::all();
+        $input = Input::only('startDate','endDate');
+        $startDate    = $input['startDate'];
+        $endDate      = $input['endDate'];
+        $datetime1 = new DateTime($startDate);
+        $datetime2 = new DateTime($endDate);
+        $user = DB::table('users_tasks')
+            ->join('users', 'users.id', '=', 'users_tasks.users_id')
+            ->join('tasks', 'users_tasks.tasks_id', '=', 'tasks.id')
+            ->join('people', 'users.people_id', '=', 'people.id')
+            ->whereBetween('users_tasks.dateBegin',[$datetime1,$datetime2])
+            ->select('users.*', 'users_tasks.*', 'tasks.*', 'people.*','users_tasks.id as idtask')
+            ->get();
 
         $pdf = PDF::loadView('PDF.report', compact('user'));
         return $pdf->download('invoice.pdf');
