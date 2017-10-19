@@ -4,7 +4,7 @@
 @section('title-description', 'Tabla de Usuarios')
 {{ csrf_field() }}
 @section('content')
-    <button id="orderModalButton" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#orderModal" >Añadir Tarea</button>
+
     <section class="section">
         <div class="row">
             <div class="col-md-12">
@@ -31,123 +31,217 @@
     </section>
 @endsection
 
-@section('modal-head')
-    <h4 class="modal-title">Añadir Usuario</h4>
-@endsection
-@section('modal-bod')
-    <form role="form">
 
-        <div class="form-group">
-            <label class="control-label" for="ci">Carnet de Identidad</label>
-            <input type="text" class="form-control" name="ci" ></div>
-        <div class="form-group">
-            <label class="control-label" for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="name" ></div>
-        <div class="form-group">
-            <label class="control-label" for="apellido">Apellido</label>
-            <input type="text" class="form-control" name="lastName" ></div>
-        <div class="form-group">
-            <label class="control-label" for="nacimiento">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" name="birthday" ></div>
-        <div class="form-group">
-            <label class="control-label" for="telefono">Telefono/Celular</label>
-            <input type="text" class="form-control" name="phone" ></div>
-        <div class="form-group">
-            <label class="control-label" for="sexo">Sexo</label>
-            <select class="form-control"  name="sex">
-                <option value="" disabled="" selected="">Sexo...</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-            </select></div>
-        <div class="form-group">
-            <label class="control-label" for="direccion">Direccion</label>
-            <input type="text" class="form-control" name="address"></div>
-        <div class="form-group">
-            <label class="control-label" for="email">Correo Electronico</label>
-            <input type="text" class="form-control" name="email" ></div>
-        <div class="form-group">
-            <label class="control-label" for="username">Usuario</label>
-            <input type="text" class="form-control" name="username" ></div>
-        <div class="form-group">
-            <label class="control-label" for="password">Contraseña</label>
-            <input type="text" class="form-control" name="password"></div>
-        <div class="form-group">
-            <label class="control-label" for="formGroupExampleInput">Seleccione Tipo de Usuario</label>
-            <select class="form-control" name="userType">
-                <option value="" disabled="" selected="">Tipo de Usuario...</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Recepcionista">Recepcionista</option>
-            </select></div>
-    </form>
-@endsection
-@section('modal-foot')
-    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-    <button id="createUserButton" type="submit" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-@endsection
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Editar Usuario</h4>
+            </div>
 
 
-@section('modal-head2')
-    <h4 class="modal-title">Editar Usuario</h4>
-@endsection
+            <div class="modal-body">
+                <form role="form" id="socio">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="idpeople" id="idpeople">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <h4 class="card-title">
+                                    Datos Personales
+                                </h4>
+                                <label class="control-label">
+                                    Carnet de Identidad <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="ci"
+                                       id="ciEdit"
+                                       type="text"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">
+                                </label>
 
-@section('modal-bod2')
+                            </div>
+                            <div class="col-md-5">
+                                <h4 class="card-title">
+                                    Usuario
+                                </h4>
+                                <label class="control-label">
+                                    Nombre de Usuario
+                                </label>
+                                <input class="form-control"
+                                       name="username"
+                                       id="usernameEdit"
+                                       type="text"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
 
-    <form role="form" id="socio">
-        {{ csrf_field() }}
-        <input type="hidden" name="idpeople" id="idpeople">
-        <div class="form-group">
-            <label class="control-label" for="ci">Carnet de Identidad</label>
-            <input type="text" class="form-control" name="ci" id="ciEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="nombre">Nombre</label>
-            <input type="text" class="form-control" name="name" id="nameEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="apellido">Apellido</label>
-            <input type="text" class="form-control" name="lastName" id="lastNameEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="nacimiento">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" name="birthday" id="birthdayEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="telefono">Telefono/Celular</label>
-            <input type="text" class="form-control" name="phone" id="phoneEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="sexo">Sexo</label>
-            <select class="form-control" name="sex" id="sexEdit">
-                <option value="" disabled="" selected="">Sexo...</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Masculino">Masculino</option>
-            </select></div>
-        <div class="form-group">
-            <label class="control-label" for="direccion">Direccion</label>
-            <input type="text" class="form-control" name="address" id="addressEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="email">Correo Electronico</label>
-            <input type="text" class="form-control" name="email" id="emailEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="username">Usuario</label>
-            <input type="text" class="form-control" name="username" id="usernameEdit"></div>
-        <div class="form-group">
-            <!--<label class="control-label" for="password">Contraseña</label>-->
-            <input type="hidden" class="form-control" name="password" id="passwordEdit"></div>
-        <div class="form-group">
-            <label class="control-label" for="formGroupExampleInput">Seleccione Tipo de Usuario</label>
-            <select class="form-control" name="userType" id="userTypeEdit" >
-                <option value="" disabled="" selected="">Tipo de Usuario...</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Recepcionista">Recepcionista</option>
-            </select></div>
-    </form>
-@endsection
-@section('modal-foot2')
-    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-    <button id="EditUserButton" type="submit" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Nombre(s) <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="name"
+                                       id="nameEdit"
+                                       type="text"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">
+                                </label>
 
-@endsection
+                            </div>
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Correo Electronico
+                                </label>
+                                <input class="form-control"
+                                       name="email"
+                                       id="emailEdit"
+                                       type="text"
+                                       required="true"
+                                       email="true"
+                                       autocomplete="off"
+                                />
+                            </div>
 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Apellido(s) <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="lastName"
+                                       id="lastNameEdit"
+                                       type="text"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">
+                                </label>
+
+                            </div>
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Contraseña <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="password"
+                                       id="passwordEdit"
+                                       type="password"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Birthday <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="birthday"
+                                       id="birthdayEdit"
+                                       type="date"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
+                            <div class="col-md-1">
+                                <label class="control-label">
+                                </label>
+
+                            </div>
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Tipo de Usuario
+                                </label>
+                                <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="userType" id="userTypeEdit" data-size="7">
+                                    <option value="" disabled="" selected="">Tipo de Usuario...</option>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="recepcionista">Recepcionista</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Telefono/Celular <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="phone"
+                                       id="phoneEdit"
+                                       type="text"
+                                       required="true"
+                                       autocomplete="off"
+                                />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Sexo <star>*</star>
+                                </label>
+                                <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="sex" id="sexEdit" data-size="7">
+                                    <option value="" disabled="" selected="">Sexo...</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="femenino">Femenino</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label class="control-label">
+                                    Direccion <star>*</star>
+                                </label>
+                                <input class="form-control"
+                                       name="address"
+                                       id="addressEdit"
+                                       type="text"
+                                       autocomplete="off"
+                                />
+                            </div>
+                        </div>
+
+
+                        <div class="category"><star>*</star> Campos Requeridos</div>
+                    </div>
+
+                </form>
+            </div>
+
+
+
+            <div class="modal-footer">
+                <button id="EditUserButton" type="submit" class="btn btn-info btn-fill pull-right">Register</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 @section('js')
     <script src=" {{ asset('js/vendor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="js/user.js"></script>
@@ -165,8 +259,9 @@
                     { data: 'email' },
                     { data: 'username' },
                     { data: 'userType' },
-                    { defaultContent: "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalEdit'>Editar</button>" + " "+ "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalDelete'>Eliminar</button>"},
-                ]
+                    { defaultContent: "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#myModal'>Editar</button>" + " "+ "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalDelete'>Eliminar</button>"}
+                ],
+
             });
 
             $('#userTable tbody').on( 'click', 'button', function () {
@@ -185,9 +280,8 @@
                 $('#usernameEdit').val(data['username']);
                 $('#passwordEdit').val(data['password']);
             } );
-
-
         });
+
 
     </script>
 @endsection

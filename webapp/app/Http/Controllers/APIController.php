@@ -37,22 +37,6 @@ class APIController extends Controller
 
     public function getTasks()
     {
-/*
-        $arrStart = explode("/", Input::get('startDate'));
-        $arrEnd = explode("/", Input::get('endDate'));
-        $startDate = Carbon::create($arrStart[2], $arrStart[0], $arrStart[1], 0, 0, 0);
-        $endDate = Carbon::create($arrEnd[2], $arrEnd[0], $arrEnd[1], 23, 59, 59);
-        $query = DB::table('users_tasks')
-            ->join('users', 'users.id', '=', 'users_tasks.users_id')
-            ->join('tasks', 'users_tasks.tasks_id', '=', 'tasks.id')
-            ->join('people', 'users.people_id', '=', 'people.id')
-            ->select('users.*', 'users_tasks.*', 'tasks.*', 'people.*','users_tasks.id as idtask')
-            ->whereBetween('users_tasks.dateBegin',[$startDate,$endDate])
-            ->get();
-
-        return datatables($query)->toJson();
-*/
-
         $query = DB::table('users_tasks')
             ->join('users', 'users.id', '=', 'users_tasks.users_id')
             ->join('tasks', 'users_tasks.tasks_id', '=', 'tasks.id')
@@ -61,14 +45,12 @@ class APIController extends Controller
             ->get();
 
         return datatables($query)->toJson();
-
-
     }
 
     public function getUsers()
     {
-        $query = DB::table('people')
-            ->join('users', 'people.id', '=', 'users.people_id')
+        $query = DB::table('users')
+            ->join('people', 'people.id', '=', 'users.people_id')
             ->select('people.*', 'users.*','people.id as idpeople')
             ->get();
         return datatables($query)->toJson();
