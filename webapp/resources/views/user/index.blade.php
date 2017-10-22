@@ -6,10 +6,10 @@
 @section('content')
 
     <section class="section">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <table id="userTable">
+        <div class="card">
+            <div class="card-content">
+                <div class="fresh-datatables">
+                    <table id="userTable" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <td>CI</td>

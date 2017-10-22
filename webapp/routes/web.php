@@ -67,6 +67,10 @@ Route::get('/userCreate', 'UserController@create');
 Route::post('/adduser','UserController@store');
 Route::put('/edituser','UserController@update');
 
+//Reportes
+Route::get('/taskReport', 'ReportController@task');
+
+
 //Auth LARAVEL
 Auth::routes();
 

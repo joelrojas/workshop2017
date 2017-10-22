@@ -1,8 +1,5 @@
 @extends('layouts.app')
 @section('css')
-    <link
-            rel="stylesheet"
-            href="http://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
     <style>
         .ui-autocomplete {
@@ -41,7 +38,7 @@
                                    required="true"
                                    autocomplete="off"
                             />
-                            <input type="hidden" id="id-person" name="id-person">
+                            <input type="hidden" name="id-person" id="id-person">
                         </div>
                     </div>
                     <div class="row">
@@ -114,7 +111,6 @@
 @endsection
 @section('js')
     <script src=" {{ asset('js/vendor.js') }}"></script>
-    <script src=" {{ asset('js/app-template.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
@@ -122,15 +118,12 @@
     <!--<script src="js/main.js"></script>-->
     <script type="text/javascript">
 
-    $('#empleado').autocomplete({
-    source: '{!! url('/buscarEmpleado') !!}',
-    minlength:1,
-        messages: {
-            noResults: '',
-            select: function (event, ui) {
+        $('#empleado').autocomplete({
+            source: '{!! url('/buscarEmpleado') !!}',
+            minlength:1,
+            select:function (event, ui) {
                 $('#id-person').val(ui.item.id);
             }
-        }
-    });
+        });
     </script>
 @endsection
