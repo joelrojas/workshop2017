@@ -16,7 +16,7 @@ class AddPeopleIdToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             //
             $table->integer('people_id')->unsigned();
-            $table->foreign('people_id')->references('id')->on('people');
+            $table->foreign('people_id')->references('id')->on('people')->onDelete('cascade');
         });
     }
 
