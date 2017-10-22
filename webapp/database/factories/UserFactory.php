@@ -48,13 +48,13 @@ $factory->define(App\Customer::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Catalog::class, function (Faker $faker) {
+/*$factory->define(App\Catalog::class, function (Faker $faker) {
 
     return [
         'name'          =>  $faker->unique()->name,
         'description'   =>  $faker->paragraph(1),
     ];
-});
+});*/
 
 /*$factory->define(App\Table::class, function (Faker $faker) {
 

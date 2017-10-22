@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
         factory(App\User::class, $quantityUsers)->create();
         $quantityCustomer = 80;
         factory(App\Customer::class, $quantityCustomer)->create();
-        $quantityCatalogs = 1000;
-        factory(App\Catalog::class, $quantityCatalogs)->create();
+        //$quantityCatalogs = 1000;
+        //factory(App\Catalog::class, $quantityCatalogs)->create();
 
         //$this->call(CatalogSeeder::class);
     }
