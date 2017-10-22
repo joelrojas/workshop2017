@@ -20,13 +20,15 @@
                     </div>
                 @endif
                  <b>Bienvenido al Club Gitanas</b>
-
+                
             </div>
         </div>
     </div>
 @endsection
 
 @section('js')
-    <script src="js/vendor.js"></script>
-    <script src="js/app-template.js"></script>
+    <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
 @endsection
