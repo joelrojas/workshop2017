@@ -24,9 +24,6 @@ Route::get('/home', 'HomeController@index');
 Route::get('/kardex','KardexController@index');
 Route::get('/order','KardexController@indexOrders');
 
-//CatalogController
-Route::resource('catalog', 'CatalogController');
-
 
 //ReservationController
 Route::get('/reservation', 'ReservationController@index');
@@ -35,7 +32,6 @@ Route::post('/reservation/store', 'ReservationController@store');
 Route::get('/reservation/{idReservation}', 'ReservationController@show');
 Route::put('/reservationEdit', 'ReservationController@update');
 Route::get('/getReservation', 'ReservationController@getReservation');
-Route::post('/search/reservation/available', 'ReservationController@searchCatalogTables')->name('search.tables.available');
 //CustomerController
 Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
 Route::get('/search/customer/name', 'CustomerController@autocompleteCustomerByName')->name('search.customer.name');
