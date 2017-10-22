@@ -93,7 +93,7 @@
 				'position' : 'fixed',
 				'top'      : '10px',
 				'right'    : '10px',
-				'width'    : '500px',
+				'width'    : '600px',
 				'zIndex'   : 50000
 			}
 		},
@@ -113,7 +113,7 @@
 			{
 				'title'     : 'Notice',
 				'priority'  : 'success',
-				'delimiter' : ':'
+				'delimiter' : ''
 			},
 
 			'css'      : {},
