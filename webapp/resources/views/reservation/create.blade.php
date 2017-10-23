@@ -224,7 +224,6 @@
     <script src="{{ asset('assets/js/jquery.datatables.js') }}"></script>
     <!-- Paper Dashboard PRO Core javascript and methods for Demo purpose -->
     <script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
-    <script src="{{ asset('assets/js/demo.js') }}"></script>
     <!--  Forms Validations Plugin -->
     <script src="{{ asset('assets/js/validator.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.toaster.js') }}" type="text/javascript"></script>
