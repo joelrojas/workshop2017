@@ -79,6 +79,7 @@
 		</div>
 	</div>
 @endsection
+
 @section('js')
 	<script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
@@ -88,8 +89,9 @@
 	<script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
 	<script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
 	<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+	<script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 	<script src="{{ asset('assets/js/validator.min.js') }}"></script>
+
 	<script type="text/javascript">
 		var save_method;
 		var table = $('#catalog-table').DataTable({

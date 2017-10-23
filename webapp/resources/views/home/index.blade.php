@@ -20,7 +20,7 @@
                     </div>
                 @endif
                  <b>Bienvenido al Club Gitanas</b>
-                
+
             </div>
         </div>
     </div>

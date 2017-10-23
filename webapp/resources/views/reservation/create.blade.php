@@ -28,7 +28,7 @@
                             <div class="col-md-12">
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Carnet de identidad</label>
-                                    <input type="text" class="form-control" id="ci" name="ci" placeholder="buscar el carnet de identidad" data-minlength="6"  required>
+                                    <input type="text" class="form-control" id="ci" name="ci" placeholder="buscar el carnet de identidad"  required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group col-md-6">
