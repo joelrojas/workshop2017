@@ -22,7 +22,7 @@ Route::get('/catalog/dataTable', 'CatalogController@indexDataTable');
 Route::get('/home', 'HomeController@index');
 
 Route::get('/kardex','KardexController@index');
-Route::get('/order','KardexController@indexOrders');
+Route::get('/order','KardexController@getOrders');
 
 
 //ReservationController

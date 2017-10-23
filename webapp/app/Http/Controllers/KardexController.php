@@ -29,17 +29,32 @@ use DB;
             return response()->json($products);
         }
 
+        public function getOrders()
+        {
+            $suppliers=DB::table('suppliers')->get();
+            $query = DB::table('details_orders')
+                ->join('orders','orders.id','=','details_orders.orders_id')
+                ->join('products','products.id','=','details_orders.products_id')
+                ->join('suppliers','suppliers.id','=','orders.suppliers_id')
+                ->select('orders.*','products.*','suppliers.*')
+                ->get();
+            return view('order.index',['orders'=>$query,'suppliers'=>$suppliers]);
+        }
+
         public function createOrder(Request $request)
         {
+            $product=$request->productName;
 
                 $product_id=DB::table('products')->insertGetId([
-                   'name'          =>$request->productName,
+                   'name'          => "caquita",
                    'price'         =>$request->productPrice,
                    'quantity'      =>$request->orderQuantity,
                    'productType'   =>$request->productType
                 ]);
 
-                $order_id=DB::table('orders')->insertGetId([
+
+
+               $order_id=DB::table('orders')->insertGetId([
                    'total'         =>$request->orderPrice,
                    'quantityOrder' =>$request->orderQuantity,
                    'suppliers_id'  =>$request->supplier_id,
@@ -51,7 +66,8 @@ use DB;
                    'quantity'      =>$request->orderQuantity,
                    'orders_id'     =>$order_id,
                    'products_id'   =>$product_id,
-                   'date'          =>date("Y-m-d H:i:s")
+                   'date'          =>date("Y-m-d H:i:s"),
+                   'quantityReceived' => $request->quantityReceived
                 ]);
 
         }
