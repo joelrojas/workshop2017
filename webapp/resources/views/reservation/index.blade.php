@@ -39,93 +39,98 @@
 
 @section('content')
     <div class="row">
-
         <div class="col-md-12">
-            <a href="{{ url('/reservation/create') }}" class="btn btn-primary">Registrar reserva</a>
             <div class="card">
-                <div class="card-block">
-                    <div class="card-title-block">
-                        <h3 class="title"> <b>Listado de Reservas</b> </h3>
-                    </div>
-                        <table id="mainTable" class="table table-sm ">
+                <div class="card-header">
+                    <h3 class="title"> <b>Listado de Reservas</b>
+                        <a href="{{ url('/reservation/create') }}" class="btn btn-primary btn-fill pull-right">Registrar reserva</a>
+                    </h3>
+                    <div class="card-content table-responsive">
+                        <table id="mainTable" class="table table-striped">
                             <thead class="thead-inverse">
                             <tr>
-                                <th>Codigo Reserva</th>
-                                <th>Nombre Completo</th>
-                                <th>Fecha Reserva</th>
-                                <th>Mesa</th>
-                                <th>Opciones</th>
+                                <th><b>Codigo</b></th>
+                                <th><b>Apellido</b></th>
+                                <th><b>Nombre</b></th>
+                                <th><b>Telefono</b></th>
+                                <th><b>Tipo de cliente</b></th>
+                                <th><b>Estado Reserva</b></th>
+                                <th><b>Fecha Reserva</b></th>
+                                <th><b>Opciones</b></th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Bootstrap modal -->
-    <div class="modal fade" id="modal_form" role="dialog">
+    <!-- <div class="modal fade" id="modal_form" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-                    <h3 class="modal-title">Información de la reserva</h3>
-                </div>
-                <div class="modal-body form">
-                    <form action="#" id="form" class="form-horizontal">
-                        <h5 class="modal-title"><b>Detalle de la Reserva</b></h5>
-                        <hr>
-                        <div class="form-row">
-                            <input type="hidden" value="" name="idpeople" id="idpeople"/>
-                            <div class="form-group col-md-6">
-                                <label for="" class="control-label">Codigo de la reserva</label>
-                                <input type="text" class="form-control" id="idReservation" name="idReservation" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Fecha de la reserva</label>
-                                <input type="text" class="form-control" id="created_at" name="created_at" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="" class="control-label">Tipo de cliente</label>
-                                <input type="text" class="form-control" id="clientType" name="clientType" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Tipo de mesa</label>
-                                <input type="text" class="form-control" id="typeTable" name="typeTable" disabled>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <input type="hidden" value="" name="idpeople" id="idpeople"/>
-                            <input type="hidden" value="" name="idReservation" id="idReservation"/>
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Apellido completo </label>
-                                <input type="text" class="form-control" id="lastName" name="lastName" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label" >Nombre completo</label>
-                                <input type="text" class="form-control" id="name" name="name" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Carnet de identidad</label>
-                                <input type="text" class="form-control" id="ci" name="ci" disabled>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="" class="control-label">Telefono</label>
-                                <input type="text" class="form-control" id="phone" name="phone" disabled>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnSave" onclick="save()" class="btn btn-danger">Cancelar reserva</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title">Información de la reserva</h3>
     </div>
+    <div class="modal-body form">
+        <form action="#" id="form" class="form-horizontal">
+            <h5 class="modal-title"><b>Detalle de la Reserva</b></h5>
+            <hr>
+            <div class="form-row">
+                <input type="hidden" value="" name="idpeople" id="idpeople"/>
+                <div class="form-group col-md-6">
+                    <label for="" class="control-label">Codigo de la reserva</label>
+                    <input type="text" class="form-control" id="idReservation" name="idReservation" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Fecha de la reserva</label>
+                    <input type="text" class="form-control" id="created_at" name="created_at" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="" class="control-label">Tipo de cliente</label>
+                    <input type="text" class="form-control" id="clientType" name="clientType" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Tipo de mesa</label>
+                    <input type="text" class="form-control" id="typeTable" name="typeTable" disabled>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <input type="hidden" value="" name="idpeople" id="idpeople"/>
+                <input type="hidden" value="" name="idReservation" id="idReservation"/>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Apellido completo </label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label" >Nombre completo</label>
+                    <input type="text" class="form-control" id="name" name="name" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Carnet de identidad</label>
+                    <input type="text" class="form-control" id="ci" name="ci" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="" class="control-label">Telefono</label>
+                    <input type="text" class="form-control" id="phone" name="phone" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnSave" onclick="save()" class="btn btn-danger">Cancelar reserva</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    -->
     <!-- /.modal -->
+
 @endsection
 
 @section('js')
@@ -143,89 +148,74 @@
 
     <script type="text/javascript">
 
-        $(document).ready(function() {
+       // $(document).ready(function() {
             var table = $('#mainTable').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": "{{ route('api.reservations.index') }}",
                 "columns": [
-                    { data: 'id'},
-                    { data: 'name'},
-                    { data: 'reservationDate' },
-                    { data: 'nameTable' },
-                    { defaultContent: "<button type=\"button\" class=\"btn btn-primary btn-detail open_modal\"> ver detalle</button> <button class=\"btn btn-danger\"> Cancelar</button>" }
+                    { data: 'id', name: 'id'},
+                    { data: 'lastName', name: 'lastName'},
+                    { data: 'name', name: 'name'},
+                    { data: 'phone', name: 'phone'},
+                    { data: 'clientType' , name: 'clientType'},
+                    { data: 'state', name: 'state'},
+                    { data: 'reservationDate', name: 'reservationDate'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
+                    //{ defaultContent: "<button type=\"button\" class=\"btn btn-primary btn-detail open_modal\"> ver detalle</button> <button class=\"btn btn-danger\"> Cancelar</button>" }
                 ]
             });
+      //  });
 
-            $('#mainTable tbody').on( 'click', 'button', function () {
-                var data = table.row( $(this).parents('tr') ).data();
-                $.ajax({
-                   type: 'GET',
-                   url: '/getReservation',
-                   data: data,
-                    success: function (data) {
-                        console.log(data);
-                        $('#idReservation').val(data['reservations_id']);
-                        $('#idpeople').val(data['id']);
-                        $('#ci').val(data['ci']);
-                        $('#name').val(data['name']);
-                        $('#lastName').val(data['lastName']);
-                        $('#reservationDate').val(data['reservationDate']);
-                        $('#phone').val(data['phone']);
-                        $('#clientType').val(data['clientType']);
-                        $('#typeTable').val(data['typeTable']);
-                        $('#created_at').val(data['created_at']);
+       function cancelReservation(id){
+           save_method = "cancel";
+           $('input[name=_method]').val('PATCH');
+           $('#modal-form form')[0].reset();
 
-                        $('#modal_form').modal('show');
-                    }
-                });
+           $.ajax({
+               url: "{{ url('reservation') }}" + '/' + id,
+               type: "GET",
+               dataType: "JSON",
+               success: function (data) {
+                   $('#modal-form').modal('show');
+                   $('.modal-title').text('Cancelar Reserva');
 
-            } );
+                   $('#id').val(data.id);
+                   $('#name').val(data.name);
+                   $('#lastName').val(data.lastName);
+                   $('#reservationDate').val(data.reservationDate);
 
-        });
+               },
+               error: function() {
+                   swal('¡Error!', '<b>No se pueden obtener los datos de este catalogo, Intente mas tarde</b>', 'error');
+               }
+           });
+       }
 
-        $(function() {
-            $('.datepicker1').datepicker( {
-                todayHighlight: true,
-                autoclose: true,
-                format: 'dd-mm-yyyy',
-                startDate: new Date(),
-            }).on('changeDate', function (selected) {
-                var date1 = $(".datepicker1").datepicker('getDate')
-                if(date1){
-                    check_availbility();
-                }
-                else{
-                    $.toaster({ priority : 'danger', title : 'Fallo', message : 'Ingrese la fecha de la reserva'});
-                }
-            });
-            function check_availbility() {
-                $.ajax({
-                    url: '{{ url('/searchTable') }}',
-                    type:'POST',
-                    data:$('#SearchTable').serialize(),
-                    success:function(result){
-                        var obj = result.x;
-                        var data = result.search;
-                        var dateReservation = result.dateReservation;
-                        if(obj==1)
-                        {
-                            $('#orderdata').html(data);
-                            $('#next').show();
-                            $.toaster({ priority : 'success', title : 'Éxito', message : 'Mesa disponible'});
+       $(function () {
+           $('#modal-form form').validator().on('submit', function (e) {
+               var url;
+               if(!e.isDefaultPrevented()){
+                   var id = $('#id').val();
+                   //if(save_method == 'add') url = "{{ url('reservation') }}";
+                   //else url = "{{ url('catalog'). '/' }}" + id;
 
-                            document.getElementById("id-table").value = data.id;
-                            document.getElementById("quantityChairs-table").value = data.quantityChair;
-                            document.getElementById("dateReservation-table").value = dateReservation;
+                   $.ajax({
+                       url: "{{ url('reservation') }}" + '/' + id + "/cancel",
+                       type: "POST",
+                       data: $('#modal-form form').serialize(),
+                       success: function(data){
+                           $('#modal-form').modal('hide');
+                           table.ajax.reload();
+                       },
+                       error : function(){
+                           alert('ERROR, al cancelar la reserva');
+                       }
+                   });
+                   return false;
+               }
+           })
+       })
 
-                        }
-                        else
-                        {
-                            $.toaster({ priority : 'danger', title : 'Fallo', message : 'Sin Mesas disponibles'});
-                        }
-                    }
-                });
-            }
-        });
     </script>
 @endsection
