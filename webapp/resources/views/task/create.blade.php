@@ -13,15 +13,14 @@
 @section('title-description', 'Tabla de Usuarios')
 {{ csrf_field() }}
 @section('content')
-
+<h1>
+    Registro de Tareas
+</h1>
     <div class="col-md-12">
         <div class="card">
             <form role="form">
                 {{ csrf_field() }}
                 <div class="card-header">
-                    <h4 class="card-title">
-                        Registro de Tareas
-                    </h4>
                 </div>
                 <div class="card-content">
 
@@ -56,11 +55,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-5 selectContainer">
                             <label class="control-label">
                                 Sexo <star>*</star>
                             </label>
-                            <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="multiple" id="multiple"  data-size="7">
+                            <select class="form-control" name="multiple" id="multiple"  required="true">
                                 <option value="" disabled="" selected="">Tarea...</option>
                                 <option value="1">Puerta</option>
                                 <option value="2">Lavar</option>
@@ -101,8 +100,8 @@
                     <div class="category"><star>*</star> Campos Requeridos</div>
                 </div>
 
-                <div class="card-footer">
-                    <button id="createTaskButton" type="submit" class="btn btn-info btn-fill pull-right">Register</button>
+                <div class="card-footer text-center">
+                    <button id="createTaskButton" type="submit" class="btn btn-info btn-fill">Register</button>
                 </div>
             </form>
         </div>

@@ -14,8 +14,9 @@
 @section('title-description', 'Tabla de Tareas')
 {{ csrf_field() }}
 @section('content')
-    <button action="{{ url('/taskCreate') }}"  type="button" class="btn btn-primary btn-lg" >Añadir Tarea</button>
+
     <section class="section">
+        <h1>Lista de Asignacion de Tareas</h1>
         <div class="card">
             <div class="card-content">
                 <div class="fresh-datatables">
@@ -23,11 +24,11 @@
                         <thead>
                         <tr>
                             <td>Codigo</td>
-                            <td>Empleado</td>
                             <td>Tarea</td>
                             <td>Empleado</td>
-                            <td>Tarea</td>
-                            <td>Fecha</td>
+                            <td>Estado</td>
+                            <td>Inicio</td>
+                            <td>Fin</td>
                             <td>Opciones</td>
                         </tr>
                         </thead>
@@ -38,19 +39,7 @@
             </div>
         </div>
     </section>
-    <form method="get" action="/download-pdf">
-        <div class="form-group">
-            <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
-            <input type="date" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
-        <div class="form-group">
-            <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
-            <input type="date" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
-        <button type="submit" class="btn btn-primary">Crear Pdf</button>
-    </form>
 
-    <!--
-    <a href="{{url('/download-pdf')}}">PDF</a>
-    -->
 @endsection
 
 <div id="myModalEdit" class="modal fade" role="dialog">
@@ -60,7 +49,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Editar Usuario</h4>
+                <h4 class="modal-title">Editar Tarea</h4>
             </div>
 
 
@@ -72,7 +61,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-8">
                                 <label class="control-label">
                                     Buscar Empleado <star>*</star>
                                 </label>
@@ -87,7 +76,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-8">
                                 <label class="control-label">
                                     Fecha de Creacion de la Tarea <star>*</star>
                                 </label>
@@ -101,11 +90,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-8 selectContainer">
                                 <label class="control-label">
                                     Tarea <star>*</star>
                                 </label>
-                                <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="multiple" id="multipleEdit"  data-size="7">
+                                <select class="form-control" name="multiple" id="multipleEdit" >
                                     <option value="" disabled="" selected="">Tarea...</option>
                                     <option value="1">Puerta</option>
                                     <option value="2">Lavar</option>
@@ -115,11 +104,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-8 selectContainer">
                                 <label class="control-label">
                                     Estado <star>*</star>
                                 </label>
-                                <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="state" id="stateEdit"  data-size="7">
+                                <select class="form-control" name="state" id="stateEdit" >
                                     <option value="" disabled="" selected="">Estado...</option>
                                     <option value="completo">Completo</option>
                                     <option value="incompleto">Incompleto</option>
@@ -127,7 +116,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-8">
                                 <label class="control-label">
                                     Fecha de Inicio <star>*</star>
                                 </label>
@@ -141,7 +130,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-8">
                                 <label class="control-label">
                                     Fecha de Salida<star>*</star>
                                 </label>
@@ -160,12 +149,9 @@
 
                 </form>
             </div>
-
-
-
             <div class="modal-footer">
-                <button id="EditTaskButton" type="submit" class="btn btn-info btn-fill pull-right" data-dismiss="modal">Register</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="EditTaskButton" type="submit" class="btn btn-info btn-fill pull-right" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
 
@@ -201,7 +187,6 @@
 
 @section('js')
     <script src=" {{ asset('js/vendor.js') }}"></script>
-    <script src=" {{ asset('js/app-template.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>

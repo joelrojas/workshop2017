@@ -4,15 +4,13 @@
 @section('title-description', 'Tabla de Usuarios')
 {{ csrf_field() }}
 @section('content')
+    <h1>
+        Registro de Usuarios
+    </h1>
     <div class="col-md-12">
         <div class="card">
             <form role="form">
                 {{ csrf_field() }}
-                <div class="card-header">
-                    <h4 class="card-title">
-                        Registro de Usuarios
-                    </h4>
-                </div>
                 <div class="card-content">
                     <div class="row">
                         <div class="col-md-5">
@@ -39,7 +37,7 @@
                                 Usuario
                             </h4>
                             <label class="control-label">
-                                Nombre de Usuario
+                                Nombre de Usuario <star>*</star>
                             </label>
                             <input class="form-control"
                                    name="username"
@@ -69,7 +67,7 @@
                         </div>
                         <div class="col-md-5">
                             <label class="control-label">
-                                Correo Electronico
+                                Correo Electronico <star>*</star>
                             </label>
                             <input class="form-control"
                                    name="email"
@@ -128,11 +126,11 @@
                             </label>
 
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-5 selectContainer">
                             <label class="control-label">
-                                Tipo de Usuario
+                                Tipo de Usuario <star>*</star>
                             </label>
-                            <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="userType" data-size="7">
+                            <select class="form-control" name="userType" required="true">
                                 <option value="" disabled="" selected="">Tipo de Usuario...</option>
                                 <option value="administrador">Administrador</option>
                                 <option value="recepcionista">Recepcionista</option>
@@ -144,22 +142,21 @@
                     <div class="row">
                         <div class="col-md-5">
                             <label class="control-label">
-                                Telefono/Celular <star>*</star>
+                                Telefono/Celular
                             </label>
                             <input class="form-control"
                                    name="phone"
                                    type="text"
-                                   required="true"
                                    autocomplete="off"
                             />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-5 selectContainer">
                             <label class="control-label">
                                 Sexo <star>*</star>
                             </label>
-                            <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="sex" data-size="7">
+                            <select class="form-control" name="sex" data-size="7">
                                 <option value="" disabled="" selected="">Sexo...</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>
@@ -169,7 +166,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <label class="control-label">
-                                Direccion <star>*</star>
+                                Direccion
                             </label>
                             <input class="form-control"
                                    name="address"
@@ -183,8 +180,8 @@
                     <div class="category"><star>*</star> Campos Requeridos</div>
                 </div>
 
-                <div class="card-footer">
-                    <button id="createUserButton" type="submit" class="btn btn-info btn-fill pull-right">Register</button>
+                <div class="card-footer text-center">
+                    <button id="createUserButton" type="submit" class="btn btn-info btn-fill">Register</button>
                 </div>
             </form>
         </div>

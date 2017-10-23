@@ -74,7 +74,7 @@
                                     Usuario
                                 </h4>
                                 <label class="control-label">
-                                    Nombre de Usuario
+                                    Nombre de Usuario <star>*</star>
                                 </label>
                                 <input class="form-control"
                                        name="username"
@@ -106,18 +106,14 @@
                             </div>
                             <div class="col-md-5">
                                 <label class="control-label">
-                                    Correo Electronico
+                                    Tipo de Usuario <star>*</star>
                                 </label>
-                                <input class="form-control"
-                                       name="email"
-                                       id="emailEdit"
-                                       type="text"
-                                       required="true"
-                                       email="true"
-                                       autocomplete="off"
-                                />
+                                <select class="form-control"  name="userType" id="userTypeEdit" >
+                                    <option value="" disabled="" selected="">Tipo de Usuario...</option>
+                                    <option value="administrador">Administrador</option>
+                                    <option value="recepcionista">Recepcionista</option>
+                                </select>
                             </div>
-
                         </div>
                         <div class="row">
                             <div class="col-md-5">
@@ -139,13 +135,14 @@
                             </div>
                             <div class="col-md-5">
                                 <label class="control-label">
-                                    Contraseña <star>*</star>
+                                    Correo Electronico <star>*</star>
                                 </label>
                                 <input class="form-control"
-                                       name="password"
-                                       id="passwordEdit"
-                                       type="password"
+                                       name="email"
+                                       id="emailEdit"
+                                       type="text"
                                        required="true"
+                                       email="true"
                                        autocomplete="off"
                                 />
                             </div>
@@ -170,28 +167,28 @@
 
                             </div>
                             <div class="col-md-5">
-                                <label class="control-label">
-                                    Tipo de Usuario
-                                </label>
-                                <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="userType" id="userTypeEdit" data-size="7">
-                                    <option value="" disabled="" selected="">Tipo de Usuario...</option>
-                                    <option value="administrador">Administrador</option>
-                                    <option value="recepcionista">Recepcionista</option>
-                                </select>
+                                <!--<label class="control-label">
+                                    Contraseña <star>*</star>
+                                </label>-->
+                                <input class="form-control"
+                                       name="password"
+                                       id="passwordEdit"
+                                       type="hidden"
+                                       required="true"
+                                       autocomplete="off"
+                                />
                             </div>
-
                         </div>
 
                         <div class="row">
                             <div class="col-md-5">
                                 <label class="control-label">
-                                    Telefono/Celular <star>*</star>
+                                    Telefono/Celular
                                 </label>
                                 <input class="form-control"
                                        name="phone"
                                        id="phoneEdit"
                                        type="text"
-                                       required="true"
                                        autocomplete="off"
                                 />
                             </div>
@@ -201,7 +198,7 @@
                                 <label class="control-label">
                                     Sexo <star>*</star>
                                 </label>
-                                <select class="selectpicker" data-style="btn btn-danger btn-block" title="Single Select" name="sex" id="sexEdit" data-size="7">
+                                <select class="form-control" name="sex" id="sexEdit">
                                     <option value="" disabled="" selected="">Sexo...</option>
                                     <option value="masculino">Masculino</option>
                                     <option value="femenino">Femenino</option>
@@ -211,7 +208,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <label class="control-label">
-                                    Direccion <star>*</star>
+                                    Direccion
                                 </label>
                                 <input class="form-control"
                                        name="address"
@@ -232,8 +229,8 @@
 
 
             <div class="modal-footer">
-                <button id="EditUserButton" type="submit" class="btn btn-info btn-fill pull-right">Register</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="EditUserButton" type="submit" class="btn btn-info btn-fill pull-right" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
 
@@ -279,6 +276,9 @@
                 $('#emailEdit').val(data['email']);
                 $('#usernameEdit').val(data['username']);
                 $('#passwordEdit').val(data['password']);
+            } );
+            $('#EditUserButton').click( function () {
+                table.ajax.reload();
             } );
         });
 
