@@ -35,16 +35,58 @@
             <p>Catalogos</p>
         </a>
     </li>
-    <li class="@yield('menu_user','')">
-        <a href="{{ url('/users') }}">
-            <i class="ti-calendar"></i>
-            <p>Usuarios</p>
+    <li>
+        <a data-toggle="collapse" href="#dashboardOverview2">
+            <i class="ti-blackboard"></i>
+            <p>Tareas
+                <b class="caret"></b>
+            </p>
         </a>
+        <div class="collapse" id="dashboardOverview2">
+            <ul class="nav">
+                <li>
+                    <a href="{{ url('/taskCreate') }}">
+                        <span class="sidebar-mini">A T</span>
+                        <span class="sidebar-normal">Asignar Tarea</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/taskAsignment') }}">
+                        <span class="sidebar-mini">L T</span>
+                        <span class="sidebar-normal">Lista de Tareas</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
-    <li class="@yield('menu_task','')">
-        <a href="{{ url('/taskAsignment') }}">
+    <li>
+        <a data-toggle="collapse" href="#dashboardOverview3">
+            <i class="ti-user"></i>
+            <p>Usuarios
+                <b class="caret"></b>
+            </p>
+        </a>
+        <div class="collapse" id="dashboardOverview3">
+            <ul class="nav">
+                <li>
+                    <a href="{{ url('/userCreate') }}">
+                        <span class="sidebar-mini">O</span>
+                        <span class="sidebar-normal">Añadir Usuario</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url('/users') }}">
+                        <span class="sidebar-mini">S</span>
+                        <span class="sidebar-normal">Lista de Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="@yield('menu_reports','')">
+        <a href="{{ url('/taskReport') }}">
             <i class="ti-calendar"></i>
-            <p> Asignacion de Tareas</p>
+            <p>Reportes</p>
         </a>
     </li>
     <li>

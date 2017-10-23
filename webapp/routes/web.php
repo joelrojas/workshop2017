@@ -46,6 +46,7 @@ Route::post('/customerHistory', 'CustomerController@customerHistory');
 //TableController
 Route::post('/searchTable', 'TableController@searchTable');
 //Tasks Asignment Controller
+Route::get('/taskCreate', 'TaskController@create');
 Route::get('/taskAsignment', 'TaskController@index');
 Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
@@ -66,8 +67,13 @@ Route::post('/createOrder','KardexController@createOrder');
 
 //Users
 Route::get('/users', 'UserController@index');
+Route::get('/userCreate', 'UserController@create');
 Route::post('/adduser','UserController@store');
 Route::put('/edituser','UserController@update');
+
+//Reportes
+Route::get('/taskReport', 'ReportController@task');
+
 
 //Auth LARAVEL
 Auth::routes();
