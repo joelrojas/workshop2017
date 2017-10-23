@@ -11,6 +11,7 @@ use App\TableReservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
+use function Sodium\compare;
 
 
 class ReservationController extends Controller
@@ -44,76 +45,89 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //  Obteniendo los datos del cliente
-        $phone      = $request->input('phone');
-        $birthday   = $request->input('birthday');
-        $name       = $request->input('first-name');
-        $lastName   = $request->input('last-name');
-        $address    = $request->input('address');
-        $ci         = $request->input('ci');
-
-        //  Obteniendo los datos de la mesa a ser reservada
-        $dayReservation     = $request->input('day-reservation');
+        if(!count($request->input('id_table'))){
+            $state  = 0;
+            return response()->json([
+                'state' => $state,
+                'errorCode' => 1,
+                'message' => 'Complete el formulario, Ingrese la mesa a reservar',
+            ]);
+        }
         $idCustomer         = $request->input('id_customer');
-        $idTable            = $request->input('id-table');
-        $reservationDate    = $request->input('checkDate');
-
-        // Helper
+        $reservationDate    = $request->input('check_date');
+         // FLAGS
         $helper = $request->input('helper');
-
-        // registrar datos del cliente => TRUE
-        // no registrar datos del cliente => FALSE
-        // ###################### TRANSACCIONES #################################
+        $state  = 1 ;
          DB::beginTransaction();
         try{
         if ($helper != 1){
             $clientType = 'nuevo';
-
-            // Guardamos los datos personales del cliente a la tabla 'PEOPLE'
             DB::table('people')->insert([
-                'ci'        => $ci,
-                'name'      => $name,
-                'lastName'  => $lastName,
-                'birthday'  => $birthday,
-                'phone'     => $phone,
-                'sex'       => '',
-                'address'   => $address
+                    'ci'        => $request->input('ci'),
+                    'name'      => $request->input('first_name'),
+                    'lastName'  => $request->input('last_name'),
+                    'birthday'  => $request->input('birthday'),
+                    'phone'     => $request->input('phone'),
+                    'sex'       => '',
+                    'address'   => $request->input('address')
                 ]);
-            //Hacemos una consulta para obtener la llave primaria de 'Customers'
             $idPeople = People::all()->last()->id;
-
-            // Guardamos al cliente como usuario nuevo y con cero puntos en la tabla 'CUSTOMERS'
             DB::table('customers')->insert([
-                'clientType'    => $clientType,
-                'points'        => '0',
-                'people_id'     => $idPeople
-            ]);
+                    'clientType'    => $clientType,
+                    'points'        => '0',
+                    'people_id'     => $idPeople
+                    ]);
             $idCustomer = Customer::all()->last()->id;
         }
-
-        // Guardamos la reservacion con las llaves foraneas de 'CUSTOMERS' , 'USERS'
         DB::table('reservations')->insert([
-           'reservationDate'    => $reservationDate,
-           'users_id'           => '1',             ///MODIFICAR
+           'reservationDate'    => $request->input('check_date'),
+           'users_id'           => $request->input('id_user'),
            'customers_id'       => $idCustomer
         ]);
-
-        // Obtenemos el id de la reserva registrada anteriormente.
         $idReservation = Reservation::all()->last()->id;
 
-        // Guardamos la mesa de la reserva.
-        DB::table('tables_reservations')->insert([
-            'tableReservationDate'  => $reservationDate,
-            'tables_id'             => $idTable,
-            'reservations_id'       => $idReservation,
-            'stateTable'            => 'No disponible'
-        ]);
-            DB::commit();
-         return redirect('/reservation/'.$idReservation);
+        $idTable = $request->input('id_table');     // Array de los id de las mesas
+        $nameTable = $request->input('name_table');  // Array de nombres de las mesas seleccionadas
+        $typeTable = $request->input('type_table'); // Array de los tipos de mesa |VIP, NORMAL|
+        $data= [];
+            for($i=0; $i<count($idTable); $i++){
+                $list = [
+                    'tableReservationDate'  => $reservationDate,
+                    'tables_id'             => $idTable[$i],
+                    'reservations_id'       => $idReservation,
+                    'stateTable'            => 'No disponible',
+                    'nameTable'             => $nameTable[$i],
+                    'typeTable'             => $typeTable[$i],
+                ];
+                array_push($data,$list);
+            }
+        DB::table('tables_reservations')->insert($data);
+        DB::commit();
 
-        }catch (Exception $e){
+        $showReservation = '/reservation/'.$idReservation;
+
+        return response()->json([
+             'state' => $state,
+             'show' => $showReservation,
+        ]);
+
+        }catch (\Exception $e){
             DB::rollback();
-            return view('reservation.index');
+            $state  = 0;
+            return response()->json([
+                'state' => $state,
+                'errorCode' => $e->getCode(),
+                //'message' => '¡No se registraron los datos!',
+                'message'  => $e->getMessage(),
+                ]);
+        }catch (\Throwable $e) {
+            DB::rollBack();
+            $state = 0;
+            return response()->json([
+                'state' => $state,
+                'errorCode' => $e->getCode(),
+                'message'=> $e->getMessage()
+                ]);
         }
     }
 
@@ -126,7 +140,6 @@ class ReservationController extends Controller
     public function show($id)
     {
         $idReservation = $id;
-
        $reservation = DB::table('reservations')
            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
@@ -134,7 +147,7 @@ class ReservationController extends Controller
            ->join('people', 'customers.people_id', '=', 'people.id')
            ->where('reservations.id', '=', $idReservation)
            ->first();
-        return view('reservation.registered', compact(['reservation']));
+        return view('reservation.registered', compact('reservation'));
     }
 
     public function getReservation(Request $request)
@@ -150,5 +163,24 @@ class ReservationController extends Controller
 
         return response()->json($reservation);
     }
+
+    // BUSCAR POR MESA
+    public function searchCatalogTables (Request $request)
+    {
+        $idTable = $request->input('typeTable');
+        $table = DB::table('tables')->where('id', '=', $idTable)->first();
+
+        $namecatalog = "CAT_".strtoupper($table->typeTable);
+        $search = DB::table('catalogs')
+            ->where('name', '=', $namecatalog)
+           // ->where('tables_reservations.tableReservationDate', '!=', $request->input('date'))
+            ->get();
+        $result = 1;
+        if(!$search){
+            $result = 0;
+        }
+        return response()->json(['x'=> $result,'search'=>$search ]);
+    }
+
 
 }

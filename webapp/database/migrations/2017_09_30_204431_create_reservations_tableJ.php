@@ -19,10 +19,10 @@ class CreateReservationsTableJ extends Migration
             $table->dateTime('reservationDate');
             $table->integer('peopleQuantity');
             $table->integer('users_id')->unsigned();
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('customers_id')->unsigned();
-            $table->foreign('customers_id')->references('id')->on('customers');
-            $table->timestamps();
+            $table->foreign('customers_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->timestamps()->default('CURRENT_TIMESTAMP');;
         });
     }
 

@@ -16,9 +16,9 @@ class CreateSuppliersProductsTableR extends Migration
         Schema::create('suppliers_products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('suppliers_id')->unsigned();
-            $table->foreign('suppliers_id')->references('id')->on('suppliers');
+            $table->foreign('suppliers_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->integer('products_id')->unsigned();
-            $table->foreign('products_id')->references('id')->on('products');
+            $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -24,6 +24,9 @@ Route::get('/home', 'HomeController@index');
 Route::get('/kardex','KardexController@index');
 Route::get('/order','KardexController@getOrders');
 
+//CatalogController
+Route::resource('catalog', 'CatalogController');
+
 
 //ReservationController
 Route::get('/reservation', 'ReservationController@index');
@@ -32,6 +35,7 @@ Route::post('/reservation/store', 'ReservationController@store');
 Route::get('/reservation/{idReservation}', 'ReservationController@show');
 Route::put('/reservationEdit', 'ReservationController@update');
 Route::get('/getReservation', 'ReservationController@getReservation');
+Route::post('/search/reservation/available', 'ReservationController@searchCatalogTables')->name('search.tables.available');
 //CustomerController
 Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
 Route::get('/search/customer/name', 'CustomerController@autocompleteCustomerByName')->name('search.customer.name');
@@ -42,6 +46,7 @@ Route::post('/customerHistory', 'CustomerController@customerHistory');
 //TableController
 Route::post('/searchTable', 'TableController@searchTable');
 //Tasks Asignment Controller
+Route::get('/taskCreate', 'TaskController@create');
 Route::get('/taskAsignment', 'TaskController@index');
 Route::get('/buscarEmpleado', 'TaskController@autocompleteEmpleado');
 Route::get('/taskAsignment/dataTable', 'TaskController@indexDataTable');
@@ -62,8 +67,13 @@ Route::post('/createOrder','KardexController@createOrder');
 
 //Users
 Route::get('/users', 'UserController@index');
+Route::get('/userCreate', 'UserController@create');
 Route::post('/adduser','UserController@store');
 Route::put('/edituser','UserController@update');
+
+//Reportes
+Route::get('/taskReport', 'ReportController@task');
+
 
 //Auth LARAVEL
 Auth::routes();

@@ -129,13 +129,17 @@
 @endsection
 
 @section('js')
-    <script src="js/vendor.js"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- Sweet Alert 2 plugin -->
+    <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <!--<script src="js/main.js"></script>-->
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('assets/js/validator.min.js') }}"></script>
+
 
     <script type="text/javascript">
 

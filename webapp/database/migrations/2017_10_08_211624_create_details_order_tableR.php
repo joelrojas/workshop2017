@@ -18,9 +18,9 @@ class CreateDetailsOrderTableR extends Migration
             $table->decimal('subtotal',10,2);
             $table->integer('quantity');
             $table->integer('products_id')->unsigned();
-            $table->foreign('products_id')->references('id')->on('products');
+            $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('orders_id')->unsigned();
-            $table->foreign('orders_id')->references('id')->on('orders');
+            $table->foreign('orders_id')->references('id')->on('orders')->onDelete('cascade');
             $table->date('date');
             $table->timestamps();
         });
