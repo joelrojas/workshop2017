@@ -109,6 +109,8 @@
 
 @endsection
 @section('js')
+
+
     <script src=" {{ asset('js/vendor.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
