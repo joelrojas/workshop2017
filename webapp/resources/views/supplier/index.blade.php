@@ -5,6 +5,77 @@
 {{ csrf_field() }}
 
 @section('content')
+
+
+    <div class="card">
+        <form id="registerFormValidation" action="#" method="" novalidate="novalidate">
+            <input type="hidden" name="country" id="idsupplier">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Register Form
+                </h4>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputEmail3" >Nombre de compañia</label>
+                            <input type="text" class="form-control" id="companyName" name="orderProduct" placeholder="Cantidad">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputEmail3" >Producto</label>
+                            <input type="text" class="form-control" id="product" name="orderProduct" placeholder="Cantidad">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputEmail3" >Nombre de contacto</label>
+                            <input type="text" class="form-control" id="contactName" name="orderPrice" placeholder="Precio">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputEmail3">Direccion</label>
+
+                            <input type="text" class="form-control" id="address" name="orderQuantity" placeholder="Cantidad">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group has-success  has-feedback">
+                            <label for="inputEmail3" >Telefono</label>
+                            <input type="text" class="form-control underlined" name="productPrice" id="phone">
+
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <button id="createSupplierButton" type="submit" class="btn btn-info btn-fill pull-right">Registrar</button>
+
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
     <div class="col-xl-12">
         <div class="card card-primary">
             <div class="card-header">
@@ -17,7 +88,7 @@
                 <form role="form">
                     <div class="row">
                         <div class="col-xl-6">
-                    <input type="hidden" name="country" id="idsupplier">
+
                     <div class="form-group has-success">
                         <label class="control-label" for="inputSuccess1">Nombre compañia</label>
                         <input type="text" class="form-control underlined" name="companyName" id="companyNameEdit">
