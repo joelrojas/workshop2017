@@ -6,32 +6,40 @@ use App\Catalog;
 use App\Reservation;
 use App\Users_task;
 use App\users_tasks;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Yajra\DataTables\DataTables;
 
 class APIController extends Controller
 {
     public function getCatalogs()
     {
-        $query = Catalog::select('id', 'name', 'description');
-        return datatables($query)->make(true);
+        //$query = Catalog::select('id', 'name', 'description');
+        //return datatables($query)->make(true);
+        $catalog = Catalog::select('id', 'name', 'description');
+        return DataTables::of($catalog)
+            ->addColumn('action', function($catalog) {
+                return  '<div class="table-icons">'.
+                        //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
+                        '<a onclick="editCatalog('. $catalog->id .')" class="btn btn-primary btn-group-xs btn-fill "><i class="ti ti-marker"></i> Editar</a>'.
+                        '<a onclick="deleteCatalog('. $catalog->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Eliminar</a>'.
+                        '</div>';
+            })->make(true);
+
     }
 
     public function getReservations()
     {
-
-
         $query = DB::table('reservations')
             ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
             ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
             ->join('customers', 'reservations.customers_id', '=', 'customers.id')
             ->join('users', 'reservations.users_id', '=', 'users.id')
             ->join('people', 'customers.people_id', '=', 'people.id')
-            ->select('reservations.*', 'tables_reservations.tableReservationDate', 'tables.typeTable', 'people.name')
+            ->select('reservations.*', 'tables_reservations.*', 'tables.*', 'people.*')
             ->get();
-
         return datatables($query)->toJson();
     }
 

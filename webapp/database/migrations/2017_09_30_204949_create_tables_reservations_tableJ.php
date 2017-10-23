@@ -17,9 +17,9 @@ class CreateTablesReservationsTableJ extends Migration
             $table->increments('id');
             $table->date('tableReservationDate');
             $table->integer('tables_id')->unsigned();
-            $table->foreign('tables_id')->references('id')->on('tables');
+            $table->foreign('tables_id')->references('id')->on('tables')->onDelete('cascade');
             $table->integer('reservations_id')->unsigned();
-            $table->foreign('reservations_id')->references('id')->on('reservations');
+            $table->foreign('reservations_id')->references('id')->on('reservations')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class CreateCustomerHistoryTableJ extends Migration
             $table->date('dateHistory');
             $table->string('observation', 150);
             $table->integer('customers_id')->unsigned();
-            $table->foreign('customers_id')->references('id')->on('customers');
+            $table->foreign('customers_id')->references('id')->on('customers')->onDelete('cascade');;
             $table->timestamps();
         });
     }

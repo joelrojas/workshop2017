@@ -20,9 +20,9 @@ class CreateUsersTasksTableR extends Migration
             $table->date('dateEnd');
             $table->date('dateBegin');
             $table->integer('users_id')->unsigned();
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('tasks_id')->unsigned();
-            $table->foreign('tasks_id')->references('id')->on('tasks');
+            $table->foreign('tasks_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->timestamps();
         });
     }

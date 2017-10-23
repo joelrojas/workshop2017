@@ -12,10 +12,10 @@ class TableController extends Controller
 
         // Obtenemos la cantidad de personas
 
-        $quantityChairs = $request->quantityPeople;
+        $quantityChairs = $request->input('quantityPeople');
 
         // Obtenemos y Modificamos la fecha de la reserva de d-m-Y --> Y-m-d
-        $reservationDate = date("Y-m-d",strtotime($request->checkDate));
+        $reservationDate = date("Y-m-d",strtotime($request->input('checkDate')));
 
         //Haciendo la consulta para ver si tenemos la mesa para esa cantidad de personas.
 
