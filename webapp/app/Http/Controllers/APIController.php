@@ -33,14 +33,14 @@ class APIController extends Controller
     public function getReservations()
     {
         $query = DB::table('reservations')
-            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
-            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
-            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
-            ->join('users', 'reservations.users_id', '=', 'users.id')
-            ->join('people', 'customers.people_id', '=', 'people.id')
-            ->select('reservations.*', 'tables_reservations.*', 'tables.*', 'people.*')
+            ->leftjoin('customers', 'reservations.customers_id', '=', 'customers.id')
+            ->leftjoin('people', 'customers.people_id', '=', 'people.id')
+            ->leftjoin('tables_reservations', 'tables_reservations.reservations_id', '=', 'reservations.id')
+            ->select('reservations.id', 'reservations.*', 'people.lastName','people.name', 'tables_reservations.nameTable')
+            ->orderBy('reservations.id')
+            ->groupBy('reservations.id', 'people.id', 'tables_reservations.id', 'customers.id')
             ->get();
-        return datatables($query)->toJson();
+        return DataTables::of($query)->make(true);
     }
 
     public function getTasks()

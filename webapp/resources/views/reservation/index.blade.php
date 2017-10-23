@@ -53,7 +53,7 @@
                                 <th>Codigo Reserva</th>
                                 <th>Nombre Completo</th>
                                 <th>Fecha Reserva</th>
-                                <th>Mesa Asignada</th>
+                                <th>Mesa</th>
                                 <th>Opciones</th>
                             </tr>
                             </thead>
@@ -152,8 +152,7 @@
                     { data: 'id'},
                     { data: 'name'},
                     { data: 'reservationDate' },
-                    { data: 'typeTable' },
-
+                    { data: 'nameTable' },
                     { defaultContent: "<button type=\"button\" class=\"btn btn-primary btn-detail open_modal\"> ver detalle</button> <button class=\"btn btn-danger\"> Cancelar</button>" }
                 ]
             });
