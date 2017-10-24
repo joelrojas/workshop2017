@@ -6,6 +6,7 @@ use App\People;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -37,6 +38,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'ci'       => 'required',
+            'name'     => 'required',
+            'lastName' => 'required',
+            'birthday' => 'required',
+            'sex'      => 'required',
+            'userType' => 'required',
+            'email'    => 'required',
+            'password' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/userCreate')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $people=new People;
         $people->ci           =   $request->ci;
         $people->name         =   $request->name;
@@ -94,6 +112,8 @@ class UserController extends Controller
         $username       = $request->input('username');
         $password   = $request->input('password');
         $people_id    = $request->input('idpeople');
+
+
 
         $users = DB::table('users')
         ->where('people_id', $people_id)
