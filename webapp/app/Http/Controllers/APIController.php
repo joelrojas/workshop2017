@@ -32,15 +32,37 @@ class APIController extends Controller
 
     public function getReservations()
     {
-        $query = DB::table('reservations')
-            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
-            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
+        $reservations = DB::table('reservations')
             ->join('customers', 'reservations.customers_id', '=', 'customers.id')
-            ->join('users', 'reservations.users_id', '=', 'users.id')
             ->join('people', 'customers.people_id', '=', 'people.id')
-            ->select('reservations.*', 'tables_reservations.*', 'tables.*', 'people.*')
+            ->select(
+                'reservations.id',
+                'reservations.reservationDate',
+                'reservations.state_reservation',
+                'people.name',
+                'people.lastName',
+                'people.phone',
+                'customers.id as id_customer',
+                'customers.clientType')
+            ->orderBy('reservations.reservationDate')
+            //->groupBy('people.id', 'reservations.id', 'customers.id')
             ->get();
-        return datatables($query)->toJson();
+
+        return DataTables::of($reservations)
+            ->addColumn('state', function ($reservations){
+                if($reservations->state_reservation == 'en espera') return '<span class="label label-info"> EN ESPERA</span>';
+                elseif ($reservations->state_reservation == 'cancelado') return '<span class="label label-danger"> CANCELADO</span>';
+                elseif ($reservations->state_reservation == 'completado') return '<span class="label label-success"> COMPLETADO</span>';
+                else return '<span class="label label-primary"> EN CURSO</span>';
+            })
+            ->addColumn('action', function ($reservations) {
+                return '<div class="table-icons">'.
+                    '<a href="reservation/'. $reservations->id .'" class="btn btn-primary btn-group-xs btn-fill "><i class="ti ti-eye"></i> Ver Reserva</a>'.
+                    '<a onclick="cancelReservation('. $reservations->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Cancelar Reserva</a>'.
+                    '</div>';
+            })
+            ->rawColumns(['state', 'action'])
+            ->make(true);
     }
 
     public function getTasks()
