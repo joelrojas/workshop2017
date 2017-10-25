@@ -22,7 +22,7 @@ class CreateReservationsTableJ extends Migration
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('customers_id')->unsigned();
             $table->foreign('customers_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->timestamps()->default('CURRENT_TIMESTAMP');;
+            $table->timestamps();
         });
     }
 
