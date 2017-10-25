@@ -60,9 +60,8 @@
                                        name="ci"
                                        id="ciEdit"
                                        type="text"
-                                       required="true"
                                        autocomplete="off"
-                                />
+                                       required>
                             </div>
                             <div class="col-md-1">
                                 <label class="control-label">
@@ -80,9 +79,8 @@
                                        name="username"
                                        id="usernameEdit"
                                        type="text"
-                                       required="true"
                                        autocomplete="off"
-                                />
+                                       required>
                             </div>
 
                         </div>
@@ -95,9 +93,8 @@
                                        name="name"
                                        id="nameEdit"
                                        type="text"
-                                       required="true"
                                        autocomplete="off"
-                                />
+                                       required>
                             </div>
                             <div class="col-md-1">
                                 <label class="control-label">
@@ -108,7 +105,7 @@
                                 <label class="control-label">
                                     Tipo de Usuario <star>*</star>
                                 </label>
-                                <select class="form-control"  name="userType" id="userTypeEdit" >
+                                <select class="form-control"  name="userType" id="userTypeEdit">
                                     <option value="" disabled="" selected="">Tipo de Usuario...</option>
                                     <option value="administrador">Administrador</option>
                                     <option value="recepcionista">Recepcionista</option>
@@ -124,9 +121,8 @@
                                        name="lastName"
                                        id="lastNameEdit"
                                        type="text"
-                                       required="true"
                                        autocomplete="off"
-                                />
+                                       required>
                             </div>
                             <div class="col-md-1">
                                 <label class="control-label">
@@ -141,10 +137,9 @@
                                        name="email"
                                        id="emailEdit"
                                        type="text"
-                                       required="true"
                                        email="true"
                                        autocomplete="off"
-                                />
+                                       required>
                             </div>
 
                         </div>
@@ -157,7 +152,7 @@
                                        name="birthday"
                                        id="birthdayEdit"
                                        type="date"
-                                       required="true"
+                                       required
                                        autocomplete="off"
                                 />
                             </div>
@@ -174,7 +169,7 @@
                                        name="password"
                                        id="passwordEdit"
                                        type="hidden"
-                                       required="true"
+                                       required
                                        autocomplete="off"
                                 />
                             </div>
@@ -229,7 +224,7 @@
 
 
             <div class="modal-footer">
-                <button id="EditUserButton" type="submit" class="btn btn-info btn-fill pull-right" data-dismiss="modal">Guardar</button>
+                <button id="EditUserButton" type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -248,7 +243,61 @@
     <script src="js/user.js"></script>
     <!--<script src="js/main.js"></script>-->
     <script type="text/javascript">
+
         $(document).ready(function() {
+
+            $("#myModal form").validate({
+                rules: {
+                    // simple rule, converted to {required:true}
+                    name: {
+                        required: true
+                    },
+                    ci: {
+                        required: true,
+                        minlength: 5
+                    },
+                    username: {
+                        required: true
+                    },
+                    lastName: {
+                        required: true
+                    },
+                    email: {
+                        required: true
+                    },
+                    birthday: {
+                        required: true
+                    }
+                    // compound rule
+                },
+                messages: {
+                    name: {
+                        required: "Ingrese su nombre"
+                    },
+                    ci: {
+                        required: "Ingrese su Carnet de identidad",
+                        minlength: "Minimo 5 caracteres"
+                    },
+                    username: {
+                        required: "Ingrese nombre de usuario"
+                    },
+                    lastName: {
+                        required: "Ingrese su apellido"
+                    },
+                    email: {
+                        required: "Ingrese correo electronico"
+                    },
+                    birthday: {
+                        required: "Ingrese fecha de nacimiento"
+                    }
+                },
+                submitHandler: function(form) {
+                    alert(' asd00');
+                    form.submit();
+                    $('#myModal').modal('hide');
+                }
+            });
+
             var table = $('#userTable').DataTable({
                 "processing": true,
                 "serverSide": true,
@@ -284,7 +333,9 @@
             $('#EditUserButton').click( function () {
                 table.ajax.reload();
             } );
+
         });
+
 
 
     </script>

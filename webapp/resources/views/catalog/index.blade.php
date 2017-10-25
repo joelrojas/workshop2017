@@ -57,14 +57,14 @@
 						<div class="form-group">
 							<label for="name" class="col-md-3 control-label" description>Nombre</label>
 							<div class="col-md-6">
-								<input type="text" id="name" name="name" class="form-control" required>
+								<input type="text" id="name" name="name" class="form-control" required autocomplete="off" >
 								<span class="help-block with-errors"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="description" class="col-md-3 control-label">Descripción</label>
 							<div class="col-md-6">
-								<input type="text" id="description" name="description" class="form-control" required>
+								<input type="text" id="description" name="description" class="form-control" required autocomplete="off" >
 								<span class="help-block with-errors"></span>
 							</div>
 						</div>
@@ -90,7 +90,7 @@
 	<script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
 	<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	<script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
-	<script src="{{ asset('assets/js/validator.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
 	<script type="text/javascript">
 		var save_method;
@@ -176,7 +176,50 @@
 		}
 
 		$(function () {
-		    $('#modal-form form').validator().on('submit', function (e) {
+            $('#modal-form form').validate({
+                rules:{
+                    name: {
+                        required:true,
+                        minlength: 2
+					},
+                    description: {
+                        required:true,
+                        minlength: 5
+                    }
+                },
+                messages:{
+                    name: {
+                        required: 'Campo nombre Requerido.',
+                        minlength: 'El nombre debe ser mas de 2 letras'
+					},
+                    description: {
+                        required: 'Campo descripcion Requerido.',
+                        minlength: 'La descipción debe ser mas de 5 letras'
+					}
+                },
+                submitHandler: function() {
+                    var url;
+					var id = $('#id').val();
+					if(save_method == 'add') url = "{{ url('catalog') }}";
+					else url = "{{ url('catalog'). '/' }}" + id;
+					console.log(save_method);
+					$.ajax({
+						url: url,
+						type: "POST",
+						data: $('#modal-form form').serialize(),
+						success: function(data){
+							$('#modal-form').modal('hide');
+							table.ajax.reload();
+						},
+						error : function(){
+							alert('ERROR, al registrar');
+						}
+					});
+					return false;
+
+                }
+			});
+		    /*$('#modal-form form').validator().on('submit', function (e) {
 		        var url;
 				if(!e.isDefaultPrevented()){
 				    var id = $('#id').val();
@@ -197,7 +240,7 @@
 					});
 					return false;
 				}
-            })
+            })*/
         })
 
     </script>
