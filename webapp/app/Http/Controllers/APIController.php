@@ -75,6 +75,17 @@ class APIController extends Controller
         return datatables($query)->toJson();
     }
 
+    public function getSells()
+    {
+        $query = DB::table('details_sells')
+            ->join('orders','orders.id','=','details_orders.orders_id')
+            ->join('products','products.id','=','details_orders.products_id')
+            ->join('suppliers','suppliers.id','=','orders.suppliers_id')
+            ->select('orders.*','products.*','suppliers.*')
+            ->get();
+        return datatables($query)->toJson();
+    }
+
     public function getKardex()
     {
         $query = DB::table('details_orders')

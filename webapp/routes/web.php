@@ -81,3 +81,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 //pdf
 Route::get('/download-pdf','TaskController@downloadPDF');
+//Ventas
+Route::get('/sell','KardexController@indexSells');

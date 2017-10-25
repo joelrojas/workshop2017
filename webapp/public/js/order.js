@@ -42,18 +42,24 @@ $('#createOrderButton').click(function () {
        $.toaster({ priority : 'danger', title : 'Error', message : 'Existe algun campo erroneo'});
 
     }else{
-
+        if($('#orderQuantity').val()<=$('#quantityReceived').val())
+        {
+            var state="rcbd";
+        }else{
+            var state="rchzd";
+        }
         $.ajax({
             type:'post',
             url:'/createOrder',
             data:{
                 '_token': $('input[name=_token]').val(),
-                'productName': $('#productName').val(),
+                'productName': $('#orderProduct').val(),
                 'orderQuantity': $('#orderQuantity').val(),
                 'orderPrice': $('#orderPrice').val(),
-                'productPrice': $('#productPrice').val(),
                 'productType':$('#productType').val(),
-                'supplier_id':$('#supplier').val()
+                'quantityReceived':$('#quantityReceived').val(),
+                'supplier_id':$('#supplier').val(),
+                'state':state
             },
             success:function () {
                 $.toaster({ priority : 'success', title : 'Orden creada', message : 'Se creo la orden correctamente'});
