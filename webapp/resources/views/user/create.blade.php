@@ -4,6 +4,16 @@
 @section('title-description', 'Tabla de Usuarios')
 {{ csrf_field() }}
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <h1>
         Registro de Usuarios
     </h1>
@@ -87,8 +97,6 @@
                             <input class="form-control"
                                    name="lastName"
                                    type="text"
-                                   required="true"
-                                   autocomplete="off"
                             />
                         </div>
                         <div class="col-md-1">
