@@ -150,6 +150,20 @@ class ReservationController extends Controller
         return view('reservation.registered', compact('reservation'));
     }
 
+    public function edit($id)
+    {
+        $idReservation = $id;
+        $reservation = DB::table('reservations')
+            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
+            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
+            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
+            ->join('people', 'customers.people_id', '=', 'people.id')
+            ->where('reservations.id', '=', $idReservation)
+            ->first();
+        return response()->json($reservation);
+    }
+
+
     public function getReservation(Request $request)
     {
         $idReservation = $request->input('id');
@@ -162,6 +176,35 @@ class ReservationController extends Controller
             ->first();
 
         return response()->json($reservation);
+    }
+
+    public function update(Request $request, $id)
+    {
+        ######################  QUERY BUILDER ###############
+        /* $catalog = DB::table('catalogs')
+            ->where('id', $id)
+            ->update([
+                'name' => $request['name'],
+                'description' => $request['description']
+            ]);*/
+        $reservation = Reservation::find($id);
+        $reservation->state_reservation = $request['state_reservation'];
+        $reservation->save();
+
+        if($request['state_reservation'] == 'cancelado'){
+            $catalog = DB::table('customer_history')
+                ->insert([
+                    'dateHistory' => date('Y-m-d'),
+                    'observation' => $request['description'],
+                    'customers_id' => $request['customers_id']
+                ]);
+        }
+        $showReservation = '/reservation';
+
+        return response()->json([
+            'reservation' => $reservation,
+            'show' => $showReservation,
+        ]);
     }
 
     // BUSCAR POR MESA
