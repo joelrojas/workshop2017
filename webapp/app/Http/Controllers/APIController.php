@@ -23,7 +23,7 @@ class APIController extends Controller
             ->addColumn('action', function($catalog) {
                 return  '<div class="table-icons">'.
                         //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
-                        '<a onclick="editCatalog('. $catalog->id .')" class="btn btn-primary btn-group-xs btn-fill "><i class="ti ti-marker"></i> Editar</a>'.
+                        '<a onclick="editCatalog('. $catalog->id .')" class="btn btn-default btn-group-xs btn-fill "><i class="ti ti-marker"></i> Editar</a>'.
                         '<a onclick="deleteCatalog('. $catalog->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Eliminar</a>'.
                         '</div>';
             })->make(true);
@@ -50,15 +50,15 @@ class APIController extends Controller
 
         return DataTables::of($reservations)
             ->addColumn('state', function ($reservations){
-                if($reservations->state_reservation == 'en espera') return '<span class="label label-info"> EN ESPERA</span>';
+                if($reservations->state_reservation == 'en espera') return '<span class="label label-warning"> EN ESPERA</span>';
                 elseif ($reservations->state_reservation == 'cancelado') return '<span class="label label-danger"> CANCELADO</span>';
                 elseif ($reservations->state_reservation == 'completado') return '<span class="label label-success"> COMPLETADO</span>';
-                else return '<span class="label label-primary"> EN CURSO</span>';
+                else return '<span class="label label-info"> EN CURSO</span>';
             })
             ->addColumn('action', function ($reservations) {
                 return '<div class="table-icons">'.
-                    '<a href="reservation/'. $reservations->id .'" class="btn btn-primary btn-group-xs btn-fill "><i class="ti ti-eye"></i> Ver Reserva</a>'.
-                    '<a onclick="cancelReservation('. $reservations->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Cancelar Reserva</a>'.
+                    '<a href="reservation/'. $reservations->id .'" class="btn btn-default btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver Reserva</a>' .
+                    //' <a onclick="cancelReservation('. $reservations->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Cancelar Reserva</a>'.
                     '</div>';
             })
             ->rawColumns(['state', 'action'])
