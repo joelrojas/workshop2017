@@ -13,7 +13,7 @@
 				<div class="card">
 					<div class="card-header">
 						<h3 class="title"> <b>Listado de catalogos</b>
-							<a onclick="addCatalog()" class="btn btn-primary btn-fill pull-right style="margin-top: -8px">Agregar Catalogo</a>
+							<a onclick="addCatalog()" class="btn btn-default btn-fill pull-right style="margin-top: -8px">Agregar Catalogo</a>
 						</h3>
 						<div class="card-content">
 							<div class="row">
