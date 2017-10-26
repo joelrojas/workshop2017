@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use App\Supplier;
 
 class APIController extends Controller
 {
@@ -119,6 +120,20 @@ class APIController extends Controller
             ->select('orders.*','products.*','suppliers.*')
             ->get();
         return datatables($query)->make(true);
+    }
+
+    public function getSuppliers()
+    {
+        $supplier = Supplier::select('id', 'companyName', 'productSupplied','contactName');
+        return DataTables::of($supplier)
+            ->addColumn('action', function($supplier) {
+                return  '<div class="table-icons">'.
+                    //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
+                    '<a onclick="editSupplier('. $supplier->id .')" class="btn btn-primary btn-group-xs btn-fill "><i class="ti ti-marker"></i> Editar</a>'.
+                    '<a onclick="deleteSupplier('. $supplier->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Eliminar</a>'.
+                    '</div>';
+            })->make(true);
+
     }
 
 }

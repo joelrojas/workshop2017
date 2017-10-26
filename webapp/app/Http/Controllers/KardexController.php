@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Supplier;
 use Illuminate\Http\Request;
 use DB;
     class KardexController extends Controller
@@ -86,6 +87,8 @@ use DB;
                 ]);
 
         }
+
+
         /**
          * Show the form for creating a new resource.
          *
@@ -127,6 +130,8 @@ use DB;
         public function edit($id)
         {
             //
+            $supplier = Supplier::find($id);
+            return $supplier;
         }
 
         /**

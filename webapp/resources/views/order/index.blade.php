@@ -4,7 +4,7 @@
 @section('title-description', 'Inventario relacionado a los proveedores')
 {{ csrf_field() }}
 @section('content')
-
+<div class="main-pannel" >
 <div class="row">
     <div class="col-sm-12">
     <div class="card">
@@ -83,11 +83,9 @@
                 </div>
             <div class="card-footer">
                <div class="row">
-                   <div class="col-sm-9">
-                       <button class="btn btn-primary btn-fill btn-wd" >Primary</button>
-                   </div>
 
-                <div class="col-sm-3">
+
+                <div class="col-sm-12">
                 <button id="createOrderButton" type="button" class="btn btn-info btn-fill pull-right">Registrar</button>
                 </div>
 
@@ -99,11 +97,12 @@
     </div>
     </div>
 </div>
-
+<div class="row">
+    <div class="col-sm-12">
             <div class="card">
                 <div class="card-content">
 
-                    <table id="orderTable" class="table">
+                    <table id="orderTable" class="table table-striped">
                         <thead>
 
 
@@ -122,18 +121,26 @@
 
                 </div>
             </div>
+    </div>
+</div>
 
-
-
+</div>
 
 @endsection
 
 
 @section('js')
-    <script src="js/vendor.js"></script>
+
+    <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- Sweet Alert 2 plugin -->
+    <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
     <script src="js/order.js"></script>
     <script type="text/javascript">
 
@@ -192,7 +199,7 @@
         }
 
 
-            if($('#orderPrice').val()==="" || $('#orderPrice').val()==0 || $('#orderPrice').val()<0)
+            if(isNaN($('#orderPrice').val())==true || $('#orderPrice').val()==="" || $('#orderPrice').val()==0 || $('#orderPrice').val()<0)
             {
                 document.getElementById("price-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -212,7 +219,7 @@
         }else{
             document.getElementById('createOrderButton').disabled = false;
         }
-            if($('#orderQuantity').val()==="" || $('#orderQuantity').val()==0 || $('#orderQuantity').val()<0)
+            if(isNaN($('#orderQuantity').val())==true || $('#orderQuantity').val()==="" || $('#orderQuantity').val()==0 || $('#orderQuantity').val()<0)
             {
                 document.getElementById("quantity-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -238,7 +245,7 @@
         }else{
             document.getElementById('createOrderButton').disabled = false;
         }
-            if($('#quantityReceived').val()==="" || $('#quantityReceived').val()<0)
+            if(isNaN($('#quantityReceived').val())==true || $('#quantityReceived').val()==="" || $('#quantityReceived').val()<0)
             {
                 document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -253,8 +260,8 @@
         //{
         //    $('#supplier'.setAttribute('class','form-control form-control-sm'))
         //}
-    $(document).ready(function() {
-    $("#orderTable").DataTable({
+
+    var table = $("#orderTable").DataTable({
          "processing": true,
          "serverSide": true,
          "ajax": "{{ route('api.orders.index') }}",
@@ -267,7 +274,7 @@
             { data: 'companyName' }
          ]
             });
-        });
+
 
     $(function () {
         $('#supplier').on('change',onSelectSupplier);
@@ -297,6 +304,52 @@
     })
 */
 
+    $('#createOrderButton').click(function () {
+
+        var product = document.getElementById("orderProduct").getAttribute("class");
+        var type = document.getElementById("productType").getAttribute("class");
+        var quantity = document.getElementById("orderQuantity").getAttribute("class");
+        var price = document.getElementById("orderPrice").getAttribute("class");
+
+        var received = document.getElementById("quantityReceived").getAttribute("class");
+        //alert(quantity);
+        if(product==="form-control error" ||type==="form-control error" || quantity==="form-control error" || price==="form-control error" || received==="form-control error")
+        {
+            //  alert("No funciona asi bro disculpa");
+            // $.toaster({ priority : 'danger', title : 'Error', message : 'Existe algun campo erroneo'});
+            swal('Campo(s) erroneos');
+        }else{
+            if($('#orderQuantity').val()<=$('#quantityReceived').val())
+            {
+                var state="rcbd";
+            }else{
+                var state="rchzd";
+            }
+            $.ajax({
+                type:'post',
+                url:'/createOrder',
+                data:{
+                    '_token': $('input[name=_token]').val(),
+                    'productName': $('#orderProduct').val(),
+                    'orderQuantity': $('#orderQuantity').val(),
+                    'orderPrice': $('#orderPrice').val(),
+                    'productType':$('#productType').val(),
+                    'quantityReceived':$('#quantityReceived').val(),
+                    'supplier_id':$('#supplier').val(),
+                    'state':state
+                },
+                success:function () {
+
+                    swal('Se creo la orden correctamente');
+                    table.ajax.reload();
+                }
+            })
+        }
+
+
+
+
+    });
 
     </script>
 

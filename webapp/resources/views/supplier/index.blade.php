@@ -8,11 +8,13 @@
 
 
     <div class="card">
+
         <form id="registerFormValidation" action="#" method="" novalidate="novalidate">
+            {{ csrf_field() }} {{ method_field('POST') }}
             <input type="hidden" name="country" id="idsupplier">
             <div class="card-header">
                 <h4 class="card-title">
-                    Register Form
+                    Proveedores
                 </h4>
             </div>
             <div class="card-content">
@@ -20,13 +22,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3" >Nombre de compañia</label>
-                            <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Cantidad">
+                            <input type="text" class="form-control" id="companyName" name="companyName" >
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3" >Producto</label>
-                            <input type="text" class="form-control" id="product" name="product" placeholder="Cantidad">
+                            <input type="text" class="form-control" id="product" name="product" >
 
                         </div>
                     </div>
@@ -35,14 +37,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3" >Nombre de contacto</label>
-                            <input type="text" class="form-control" id="contactName" name="contactName" placeholder="Precio">
+                            <input type="text" class="form-control" id="contactName" name="contactName" >
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3">Direccion</label>
 
-                            <input type="text" class="form-control" id="address" name="address" placeholder="Cantidad">
+                            <input type="text" class="form-control" id="address" name="address" >
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
 
             </div>
             <div class="card-footer">
-                <button id="createSupplierButton" type="submit" class="btn btn-info btn-fill pull-right">Registrar</button>
+                <button id="createSupplierButton" type="button" class="btn btn-info btn-fill pull-right">Registrar</button>
 
                 <div class="clearfix"></div>
             </div>
@@ -70,7 +72,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <table id="supplierTable">
+                    <table id="supplierTable" class="table table-striped" >
                         <thead>
                         <tr>
                             <td>Nro. Proveedor</td>
@@ -87,6 +89,70 @@
             </div>
         </div>
     </section>
+
+
+
+    <div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" class="form-horizontal" data-toggle="validator">
+                    {{ csrf_field() }} {{ method_field('POST') }}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span arria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title"></h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="row">
+                                <div class="col-sm-6">
+                            <input type="hidden" name="country" id="idsupplier">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess1">Nombre compañia</label>
+                                <input type="text" class="form-control" name="companyName" id="companyNameEdit">
+                                </div>
+                            </div>
+                                <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess2">Producto</label>
+                                <input type="text" class="form-control" name="product" id="productEdit">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess2">Nombre contacto</label>
+                                <input type="text" class="form-control" name="contactName" id="contactNameEdit">
+
+                            </div>
+                                </div>
+                                <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess2">Direccion</label>
+                                <input type="text" class="form-control" name="address" id="addressEdit">
+
+                            </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess2">Telefono</label>
+                                <input type="text" class="form-control" name="phone" id="phoneEdit">
+
+                            </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                        <button id="EditSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+                    </div>
 @endsection
 
 @section('modal-head')
@@ -99,28 +165,28 @@
 
         <div class="form-group has-success">
             <label class="control-label" for="inputSuccess1">Nombre compañia</label>
-            <input type="text" class="form-control underlined" name="companyName">
-
+            <input type="text" class="form-control" name="companyName">
+            <label id="received-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Producto</label>
-            <input type="text" class="form-control underlined" name="product">
-
+            <input type="text" class="form-control" name="product">
+            <label id="product-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
         </div>
-        <div class="form-group has-error">
-            <label class="control-label" for="inputError1">Nombre contacto</label>
-            <input type="text" class="form-control underlined" name="contactName">
-
+        <div class="form-group has-success">
+            <label class="control-label" for="inputSuccess2">Nombre contacto</label>
+            <input type="text" class="form-control" name="contactName">
+            <label id="contact-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Direccion</label>
-            <input type="text" class="form-control underlined" name="address">
-
+            <input type="text" class="form-control" name="address">
+            <label id="address-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
         </div>
         <div class="form-group has-success  has-feedback">
             <label class="control-label" for="inputSuccess2">Telefono</label>
-            <input type="text" class="form-control underlined" name="phone">
-
+            <input type="text" class="form-control" name="phone">
+            <label id="phone-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
         </div>
 
     </form>
@@ -135,47 +201,7 @@
 
 
 
-@section('modal-head2')
-    <h4 class="modal-title">Editar proveedor</h4>
-@endsection
 
-@section('modal-bod2')
-
-    <form role="form">
-        <input type="hidden" name="country" id="idsupplier">
-        <div class="form-group has-success">
-            <label class="control-label" for="inputSuccess1">Nombre compañia</label>
-            <input type="text" class="form-control underlined" name="companyName" id="companyNameEdit">
-
-        </div>
-        <div class="form-group has-success  has-feedback">
-            <label class="control-label" for="inputSuccess2">Producto</label>
-            <input type="text" class="form-control underlined" name="product" id="productEdit">
-
-        </div>
-        <div class="form-group has-error">
-            <label class="control-label" for="inputError1">Nombre contacto</label>
-            <input type="text" class="form-control underlined" name="contactName" id="contactNameEdit">
-
-        </div>
-        <div class="form-group has-success  has-feedback">
-            <label class="control-label" for="inputSuccess2">Direccion</label>
-            <input type="text" class="form-control underlined" name="address" id="addressEdit">
-
-        </div>
-        <div class="form-group has-success  has-feedback">
-            <label class="control-label" for="inputSuccess2">Telefono</label>
-            <input type="text" class="form-control underlined" name="phone" id="phoneEdit">
-
-        </div>
-
-    </form>
-@endsection
-@section('modal-foot2')
-    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-    <button id="EditSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
-
-@endsection
 
 
 
@@ -195,14 +221,358 @@
 @endsection
 
 @section('js')
-    <script src="js/vendor.js"></script>
-    <script src="js/app-template.js"></script>
+    <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <!-- Sweet Alert 2 plugin -->
+    <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
+    <script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
-    <script src="js/supplier.js"></script>
     <script type="text/javascript">
+        document.getElementById('createSupplierButton').disabled = true;
+        $('#companyName').keyup(function () {
+            if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
+            {
+                document.getElementById('createSupplierButton').disabled = true;
+            }else{
+                document.getElementById('createSupplierButton').disabled = false;
+            }
+            if($('#companyName').val()==="")
+            {
+               // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#product').keyup(function () {
+            if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
+            {
+                document.getElementById('createSupplierButton').disabled = true;
+            }else{
+                document.getElementById('createSupplierButton').disabled = false;
+            }
+            if($('#product').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#contactName').keyup(function () {
+            if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
+            {
+                document.getElementById('createSupplierButton').disabled = true;
+            }else{
+                document.getElementById('createSupplierButton').disabled = false;
+            }
+            if($('#contactName').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#address').keyup(function () {
+            if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
+            {
+                document.getElementById('createSupplierButton').disabled = true;
+            }else{
+                document.getElementById('createSupplierButton').disabled = false;
+            }
+            if($('#address').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#phone').keyup(function () {
+            if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
+            {
+                document.getElementById('createSupplierButton').disabled = true;
+            }else{
+                document.getElementById('createSupplierButton').disabled = false;
+            }
+            if($('#phone').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        // EDITS
+        $('#companyNameEdit').keyup(function () {
+            if($('#companyNameEdit').val()==="" || $('#productEdit').val()==="" || $('#contactNameEdit').val()==="" || $('#addressEdit').val()==="" || $('#phoneEdit').val()==="")
+            {
+                document.getElementById('EditSupplierButton').disabled = true;
+            }else{
+                document.getElementById('EditSupplierButton').disabled = false;
+            }
+            if($('#companyNameEdit').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#productEdit').keyup(function () {
+            if($('#companyName').val()==="" || $('#productEdit').val()==="" || $('#contactNameEdit').val()==="" || $('#addressEdit').val()==="" || $('#phoneEdit').val()==="")
+            {
+                document.getElementById('EditSupplierButton').disabled = true;
+            }else{
+                document.getElementById('EditSupplierButton').disabled = false;
+            }
+            if($('#productEdit').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#contactNameEdit').keyup(function () {
+            if($('#companyNameEdit').val()==="" || $('#productEdit').val()==="" || $('#contactNameEdit').val()==="" || $('#addressEdit').val()==="" || $('#phoneEdit').val()==="")
+            {
+                document.getElementById('EditSupplierButton').disabled = true;
+            }else{
+                document.getElementById('EditSupplierButton').disabled = false;
+            }
+            if($('#contactNameEdit').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#addressEdit').keyup(function () {
+            if($('#companyNameEdit').val()==="" || $('#productEdit').val()==="" || $('#contactNameEdit').val()==="" || $('#addressEdit').val()==="" || $('#phoneEdit').val()==="")
+            {
+                document.getElementById('EditSupplierButton').disabled = true;
+            }else{
+                document.getElementById('EditSupplierButton').disabled = false;
+            }
+            if($('#addressEdit').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+        $('#phoneEdit').keyup(function () {
+            if($('#companyNameEdit').val()==="" || $('#productEdit').val()==="" || $('#contactNameEdit').val()==="" || $('#addressEdit').val()==="" || $('#phoneEdit').val()==="")
+            {
+                document.getElementById('EditSupplierButton').disabled = true;
+            }else{
+                document.getElementById('EditSupplierButton').disabled = false;
+            }
+            if($('#phoneEdit').val()==="")
+            {
+                // document.getElementById("received-error").setAttribute("style","");
+                this.setAttribute('class','form-control error');
+            }else
+            {
+                //document.getElementById("received-error").setAttribute("style","display:none");
+                this.setAttribute('class','form-control valid');
+            }
+        });
+
+
+
+
+
+
+
+        //FIN EDITS
+        var table = $('#supplierTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "{{ route('api.suppliers') }}",
+            "columns": [
+                { data: 'id', name: 'id' },
+                { data: 'companyName', name: 'companyName' },
+                { data: 'productSupplied', name: 'productSupplied' },
+                { data: 'contactName', name: 'contactName' },
+                { data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
+
+        function addSupplier(){
+            save_method = "add";
+            $('input[name=_method]').val('POST');
+            $('#modal-form').modal('show');
+            $('#modal-form form')[0].reset();
+            $('.modal-title').text('Agregando Proveedor');
+        }
+
+
+        $('#createSupplierButton').click(function () {
+            //alert($('input[name=companyName]').val());
+            //alert($('input[name=phone]').val())
+            var product = document.getElementById("companyName").getAttribute("class");
+            var type = document.getElementById("contactName").getAttribute("class");
+            var quantity = document.getElementById("product").getAttribute("class");
+            var price = document.getElementById("phone").getAttribute("class");
+
+            var received = document.getElementById("address").getAttribute("class");
+            //alert(quantity);
+            if(product==="form-control error" ||type==="form-control error" || quantity==="form-control error" || price==="form-control error" || received==="form-control error")
+            {
+                //  alert("No funciona asi bro disculpa");
+                // $.toaster({ priority : 'danger', title : 'Error', message : 'Existe algun campo erroneo'});
+                swal('Campo(s) erroneos');
+            }else{
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: "/addsupplier",
+                data:{
+                    '_token':$('input[name=_token]').val(),
+                    'companyName':$('input[name=companyName]').val(),
+                    'contactName':$('input[name=contactName]').val(),
+                    'address':$('input[name=address]').val(),
+                    'productSupplied':$('input[name=product]').val(),
+                    'phono':$('input[name=phone]').val()
+                },
+                success:function () {
+                    swal('Proveedor creado');
+                    table.ajax.reload();
+                }
+            })
+            }
+        });
+        function editSupplier(id){
+            save_method = "edit";
+            $('input[name=_method]').val('PATCH');
+            $('#modal-form form')[0].reset();
+            //$('#modal-form').modal('show');
+            $.ajax({
+                url: "{{ url('api/supplier') }}" + '/' + id + "/edit",
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    $('#modal-form').modal('show');
+                    $('.modal-title').text('Editar Catalogo');
+                    $('#idsupplier').val(data.id);
+                    $('#companyNameEdit').val(data.companyName);
+                    $('#productEdit').val(data.productSupplied);
+                    $('#contactNameEdit').val(data.contactName);
+                    $('#addressEdit').val(data.address);
+                    $('#phoneEdit').val(data.phono);
+
+                },
+                error: function() {
+                    swal('¡Error!', '<b>No se pueden obtener los datos de este catalogo, Intente mas tarde</b>', 'error');
+                }
+            });
+        }
+        $('#EditSupplierButton').click(function () {
+            //$('#modal-form').modal('show');
+
+            $.ajax({
+                type: 'POST',
+                url: '/editsupplier',
+                data:{
+                    '_token': $('input[name=_token]').val(),
+                    'id':$('#idsupplier').val(),
+                    'companyName': $('#companyNameEdit').val(),
+                    'contactName': $('#contactNameEdit').val(),
+                    'address': $('#addressEdit').val(),
+                    'productSupplied':$('#productEdit').val(),
+                    'phono':$('#phoneEdit').val()
+                },
+                success:function () {
+                    swal('Modificado con Exito');
+                    table.ajax.reload();
+                  //  $.toaster({ priority : 'success', title : 'Modificado', message : 'Se modificaron los datos correctamente'});
+                }
+            })
+
+        });
+
+
+        function deleteSupplier(id){
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            swal({
+                title: '¿Está seguro de eliminar a este proveedor?',
+                text: "'¡No podrás revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3189d6',
+                cancelButtonColor: '#EA4101',
+                confirmButtonText: 'Si, bórralo!',
+                cancelButtonText: 'No, cancelar!',
+            }).then(function () {
+
+                $.ajax({
+                    url: "{{ url('api/supplier') }}" + '/' + id +'/' +'delete',
+                    type: "POST",
+                    data: {'_token': csrf_token},
+                    success: function(data){
+                        table.ajax.reload();
+                        swal({
+                            title: 'Borrado!',
+                            text: 'El dato fue eliminado.',
+                            type: 'success',
+                            timer: '1500'
+                        })
+                    },
+                    error: function() {
+                        swal({
+                            title: '¡Error!',
+                            text: '<b>No se pueden eliminar este catalogo, Intente mas tarde</b>',
+                            type: 'error',
+                            timer: '1500'
+                        });
+                    }
+                });
+            });
+        }
+
+
 
     </script>
 @endsection
