@@ -10,6 +10,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -63,6 +64,20 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'date'       => 'required',
+            'dateEnd' => 'required',
+            'dateBegin' => 'required',
+            'users_id'      => 'required',
+            'tasks_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/taskCreate')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $role = "incompleto";
         $task=new Users_task;
         $task->date = $request->date;
@@ -114,7 +129,7 @@ class TaskController extends Controller
         $dateEnd       = $request->input('dateEnd');
         $dateBegin   = $request->input('dateBegin');
         $tasks_id = $request->input('multiple');
-        $users_id = $request->input('empleado');
+        $users_id = $request->input('id-person');
 
         $tasks = DB::table('users_tasks')
             ->where('id', $idtask)

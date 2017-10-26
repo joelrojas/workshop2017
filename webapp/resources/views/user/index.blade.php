@@ -292,9 +292,10 @@
                     }
                 },
                 submitHandler: function(form) {
-                    alert(' asd00');
-                    form.submit();
+
                     $('#myModal').modal('hide');
+                    form.submit();
+                    return false;
                 }
             });
 
@@ -332,6 +333,7 @@
             } );
             $('#EditUserButton').click( function () {
                 table.ajax.reload();
+                $('#myModal').modal('hide');
             } );
 
         });
