@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\CustomerHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -11,8 +12,9 @@ class CustomerController extends Controller
     public function customerHistory(Request $request)
     {
         $idCustomer = $request->input('id_customer');
-
         $search = Customer::find($idCustomer);
+
+        $customer_history = DB::table('customer_history')->where('customers_id',$idCustomer)->latest()->first();
 
         if(!empty($search)) {
             $result = 1;
@@ -21,29 +23,7 @@ class CustomerController extends Controller
             $result = 0;
             $search = '';
         }
-        return response()->json(['x'=> $result,'search'=>$search ]);
-    }
-
-    /*
-     * Autocomplete de clientes por celular
-     */
-    public function autocompleteCustomerByPhone(Request $request)
-    {
-        $term   = $request->term;
-        $column = 'phone';
-        $result = $this->searchCustomer($column, $term);
-        return response()->json($result);
-    }
-
-    /*
-    * Autocomplete de clientes por nombre
-    */
-    public function autocompleteCustomerByName(Request $request)
-    {
-        $term   = $request->term;
-        $column = 'name';
-        $result = $this->searchCustomer($column,$term);
-        return response()->json($result);
+        return response()->json(['x'=> $result,'search'=>$search, 'history'=>$customer_history ]);
     }
 
     /*

@@ -150,6 +150,20 @@ class ReservationController extends Controller
         return view('reservation.registered', compact('reservation'));
     }
 
+    public function edit($id)
+    {
+        $idReservation = $id;
+        $reservation = DB::table('reservations')
+            ->join('tables_reservations', 'reservations.id', '=', 'tables_reservations.reservations_id')
+            ->join('tables', 'tables_reservations.tables_id', '=', 'tables.id')
+            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
+            ->join('people', 'customers.people_id', '=', 'people.id')
+            ->where('reservations.id', '=', $idReservation)
+            ->first();
+        return response()->json($reservation);
+    }
+
+
     public function getReservation(Request $request)
     {
         $idReservation = $request->input('id');
@@ -164,22 +178,82 @@ class ReservationController extends Controller
         return response()->json($reservation);
     }
 
+    public function update(Request $request, $id)
+    {
+        ######################  QUERY BUILDER ###############
+        /* $catalog = DB::table('catalogs')
+            ->where('id', $id)
+            ->update([
+                'name' => $request['name'],
+                'description' => $request['description']
+            ]);*/
+        $reservation = Reservation::find($id);
+        $reservation->state_reservation = $request['state_reservation'];
+        $reservation->save();
+
+        if($request['state_reservation'] == 'cancelado'){
+            $catalog = DB::table('customer_history')
+                ->insert([
+                    'dateHistory' => date('Y-m-d'),
+                    'observation' => $request['description'],
+                    'customers_id' => $request['customers_id']
+                ]);
+        }
+        $showReservation = '/reservation';
+
+        return response()->json([
+            'reservation' => $reservation,
+            'show' => $showReservation,
+        ]);
+    }
+
     // BUSCAR POR MESA
     public function searchCatalogTables (Request $request)
     {
+        $date = $request->input('date');
         $idTable = $request->input('typeTable');
-        $table = DB::table('tables')->where('id', '=', $idTable)->first();
+                                //DB::table('tables_reservations')->where('tables_id', '=', $idTable)->get();
+                                // ultimo parametro first() = 1, get() != 1, (default = 0)
+        $existId = $this->query_where('tables_reservations', 'tables_id', '=', $idTable);
 
-        $namecatalog = "CAT_".strtoupper($table->typeTable);
-        $search = DB::table('catalogs')
-            ->where('name', '=', $namecatalog)
-           // ->where('tables_reservations.tableReservationDate', '!=', $request->input('date'))
-            ->get();
-        $result = 1;
-        if(!$search){
-            $result = 0;
+        if (!($existId->isEmpty())) {
+            $existDate = $this->query_where('tables_reservations', 'tableReservationDate', '=', $date);
+           // $existDate = DB::table('tables_reservations')->where('tableReservationDate', '=', $date)->get();
+            if($existDate){
+                $tablesOccupied = [];
+                foreach ($existDate as $nameTables ) {
+                    array_push($tablesOccupied,$nameTables->nameTable);
+                }
+                    // DB::table('tables')->where('id', '=', $idTable)->first();
+                    // ultimo parametro first() = 1, get() != 1
+                $table = $this->query_where('tables', 'id', '=', $idTable, 1);
+
+                $nameCatalog = "CAT_".strtoupper($table->typeTable);
+                $search = DB::table('catalogs')
+                    ->where('name', '=', $nameCatalog)
+                    ->whereNotIn('description',$tablesOccupied)
+                    ->get();
+            }
+            else{
+                $table = $table = $this->query_where('tables', 'id', '=', $idTable, 1);
+
+                $nameCatalog = "CAT_".strtoupper($table->typeTable);
+                $search = $this->query_where('catalogs', 'name', '=', $nameCatalog);
+            }
         }
-        return response()->json(['x'=> $result,'search'=>$search ]);
+        else{
+            $table = $this->query_where('tables', 'id', '=', $idTable, 1);
+            $nameCatalog = "CAT_".strtoupper($table->typeTable);
+            $search = $this->query_where('catalogs', 'name', '=', $nameCatalog);
+        }
+
+        return response()->json(['search'=>$search ]);
+    }
+
+    public function query_where($table, $column, $operation ='=',$value, $end = '0')
+    {
+        if($end == 1) return DB::table($table)->where($column, $operation, $value)->first();
+        else return DB::table($table)->where($column, $operation, $value)->get();
     }
 
 

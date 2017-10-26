@@ -19,7 +19,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"><b>INFORMACIÓN DEL CLIENTE</b></h4>
+                    <h4 class="card-title"><b>DATOS DEL CLIENTE</b></h4>
                 </div>
                 <div class="card-content">
                     <form id="data_reservation_form" method="POST"  data-toggle="validator">
@@ -32,32 +32,32 @@
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label class="control-label">Apellido completo </label>
-                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="ingrese el apellido completo" required>
+                                    <label for="" class="control-label">Fecha de nacimiento</label>
+                                    <input type="text" class="form-control datepicker1" id="birthday" name="birthday" placeholder="ingrese la fecha de nacimiento" required/>
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
                             <div class="col-md-12">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Apellido completo </label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="ingrese el apellido completo" required>
+                                    <div class="help-block with-errors"></div>
+                                </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Nombre completo</label>
                                     <input type="text" class="form-control" id="first_name" name="first_name" placeholder="ingrese el nombre completo" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label for="" class="control-label">Telefono</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="ingrese el numero de celular" required>
-                                    <div class="help-block with-errors"></div>
-                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group col-md-6">
-                                    <label for="" class="control-label">Fecha de nacimiento</label>
-                                    <input type="text" class="form-control datepicker1" id="birthday" name="birthday" placeholder="ingrese la fecha de nacimiento" required/>
+                                    <label for="" class="control-label">Dirección</label>
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="ingrese la dirección" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="" class="control-label">Dirección</label>
-                                    <input type="text" class="form-control" id="address" name="address" placeholder="ingrese la dirección" required>
+                                    <label for="" class="control-label">Telefono</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="ingrese el numero de celular" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@
                                <div class="form-group col-md-3">
                                    <label for="" class="form-control-label">Fecha de reserva</label>
                                    <input type="text" id="check_date" name="check_date" class="form-control datepicker2"
-                                          placeholder="ingrese la fecha de la reserva" autocomplete="off" >
+                                          placeholder="ingrese la fecha de la reserva" autocomplete="off">
                                    <input type="hidden" value="" id="date_reservation_table" name="date_reservation_table">
                                </div>
                                <div class="form-group col-md-3">
@@ -123,78 +123,33 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Historial del cliente</h4>
-                    <p class="category">registro historico</p>
+                    <h4 class="card-title"><b>HISTORIAL DEL CLIENTE</b></h4>
+                    <p><b>Registro historico</b></p>
                 </div>
                 <div class="card-content">
-                    <div class="row">
-                        <div class="left-vertical-tabs">
-                            <ul class="nav nav-stacked" role="tablist">
-                                <li class="active">
-                                    <a href="#info" role="tab" data-toggle="tab" aria-expanded="true">
-                                        Info
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="#description" role="tab" data-toggle="tab" aria-expanded="false">
-                                        Description
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="#concept" role="tab" data-toggle="tab" aria-expanded="false">
-                                        Concept
-                                    </a>
-                                </li>
-                                <li class="">
-                                    <a href="#support" role="tab" data-toggle="tab" aria-expanded="false">
-                                        Support
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#extra" role="tab" data-toggle="tab">
-                                        Extra
-                                    </a>
-                                </li>
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                                <li class="active"><a href="#home" data-toggle="tab">Tipo de Cliente</a></li>
+                                <!-- <li><a href="#profile" data-toggle="tab">Productos Preferidos</a></li> -->
+                                <li><a href="#messages" data-toggle="tab">Observaciones</a></li>
                             </ul>
                         </div>
-                        <div class="right-text-tabs">
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="info">
-                                    <p>Larger, yet dramatically thinner. More powerful, but remarkably power efficient.
-                                        With a smooth metal surface that seamlessly meets the new Retina HD display.</p>
-                                    <p>It’s one continuous form where hardware and software function in perfect unison,
-                                        creating a new generation of phone that’s better by any measure.</p>
-                                </div>
-                                <div class="tab-pane" id="description">
-                                    <p>The first thing you notice when you hold the phone is how great it feels in your
-                                        hand. The cover glass curves down around the sides to meet the anodized aluminum
-                                        enclosure in a remarkable, simplified design. </p>
-                                    <p>There are no distinct edges. No gaps. Just a smooth, seamless bond of metal and
-                                        glass that feels like one continuous surface.</p>
-                                </div>
-                                <div class="tab-pane" id="concept">
-                                    <p>It’s one continuous form where hardware and software function in perfect unison,
-                                        creating a new generation of phone that’s better by any measure.</p>
-                                    <p>Larger, yet dramatically thinner. More powerful, but remarkably power efficient.
-                                        With a smooth metal surface that seamlessly meets the new Retina HD
-                                        display. </p>
-                                </div>
-                                <div class="tab-pane" id="support">
-                                    <p>From the seamless transition of glass and metal to the streamlined profile, every
-                                        detail was carefully considered to enhance your experience. So while its display
-                                        is larger, the phone feels just right.</p>
-                                    <p>It’s one continuous form where hardware and software function in perfect unison,
-                                        creating a new generation of phone that’s better by any measure.</p>
-                                </div>
-                                <div class="tab-pane" id="extra">
-                                    <p>Larger, yet dramatically thinner. More powerful, but remarkably power efficient.
-                                        With a smooth metal surface that seamlessly meets the new Retina HD
-                                        display. </p>
-                                    <p>It’s one continuous form where hardware and software function in perfect unison,
-                                        creating a new generation of phone that’s better by any measure.</p>
-                                </div>
-                            </div>
+                    </div>
+                    <div id="my-tab-content" class="tab-content text-center">
+                        <div class="tab-pane active" id="home">
+                            <h5 align="left"><b>Tipo de cliente:</b>  <span for="typeclient" id="typeclient"></span></h5>
+
+                            <h5 align="left"><b>Puntos:</b>  <span for="points" id="points"></span></h5>
+                            <h5 align="left"><b>Primera visita:</b>  <span for="created_at" id="created_at"></span></h5>
+                        </div>
+                        <!-- <div class="tab-pane" id="profile">
+                            <p>Here is your profile.</p>
+                        </div> -->
+                        <div class="tab-pane" id="messages">
+                            <h5 align="left"><b>Fecha de la reserva:</b>  <span for="date_reservation" id="date_reservation"></span></h5>
+                            <h5 align="left"><b>Observación:</b>  <span for="observation" id="observation"></span></h5>
+                            <!-- <h5 align="left"><b>Primera visita:</b>  <span for="created_at" id="created_at"></span></h5> -->
                         </div>
                     </div>
                 </div>
@@ -245,7 +200,7 @@
                 }
             });
             $('.datepicker2').datetimepicker({
-                format: 'DD/MM/YYYY',
+                format: "DD/MM/YYYY",
                 icons: {
                     time: "fa fa-clock-o",
                     date: "fa fa-calendar",
@@ -259,6 +214,7 @@
                 }
             }).on('dp.change', function (e) {
                 $("#check_date").attr("readonly", false);
+                $('.table_select').val('');
             });
 
             $('.table_select').on('change', function (selected) {
@@ -271,7 +227,6 @@
                         'error'
                     );
                     $('.table_select').val('');
-                    //$('.datepicker2').focus();
                 } else {
                     checkTables(date, typeTable);
                 }
@@ -316,16 +271,19 @@
                     'typeTable': typeTable
                 },
                 success: function (result) {
-                    var obj = result.x;
                     var search = result.search;
-                    if (obj == 1) {
+                    if (search) {
                         $('#name_table').html('');
                         $.each(search, function (index, item) {
                             $('#name_table').append('<option value="' + item.description + '">' + item.description + '</option>')
                         });
                     }
                     else {
-                        alert('haz bien las cosas csm');
+                        swal(
+                            '¡Error!',
+                            'No se encuentran estas mesas',
+                            'error'
+                        )
                     }
                 }
             });
@@ -410,14 +368,24 @@
                 success: function (result) {
                     var obj = result.x;
                     var data = result.search;
+                    var history = result.history;
                     if (obj == 1) {
                         $.toaster({priority: 'success', title: '¡Éxito!', message: 'Usuario encontrado'});
-                        //document.getElementById("client-type").innerHTML = "<b>Tipo de cliente :</b>  " + data.clientType;
-                        //document.getElementById("points").innerHTML = "<b>Puntos :</b> " + data.points;
-                        //document.getElementById('customer-history').innerHTML= data.clientType;
+                        console.log(result);
+                        document.getElementById('typeclient').innerHTML = data.clientType;
+                        document.getElementById('points').innerHTML = data.points;
+                        document.getElementById('created_at').innerHTML = data.created_at;
+
+                        document.getElementById('date_reservation').innerHTML = history.created_at;
+                        document.getElementById('observation').innerHTML = history.observation;
                     }
                     else {
                         $.toaster({priority: 'danger', title: '¡Atención!', message: 'Usuario Nuevo'});
+                        document.getElementById('typeclient').innerHTML = 'sin registro';
+                        document.getElementById('points').innerHTML = 'sin registro';
+                        document.getElementById('created_at').innerHTML = 'sin registro';
+                        document.getElementById('date_reservation').innerHTML = 'CLIENTE NUEVO';
+                        document.getElementById('observation').innerHTML = 'CLIENTE NUEVO';
                     }
                 }
             });
