@@ -5,9 +5,15 @@
             <p>Inicio</p>
         </a>
     </li>
+    <li class="@yield('menu_catalog','')">
+        <a href="{{ url('/catalog') }}">
+            <i class="ti-hummer"></i>
+            <p>Catalogos</p>
+        </a>
+    </li>
     <li>
         <a data-toggle="collapse" href="#dashboardOverview">
-            <i class="ti-panel"></i>
+            <i class="ti-folder"></i>
             <p>Reservas
                 <b class="caret"></b>
             </p>
@@ -28,12 +34,6 @@
                 </li>
             </ul>
         </div>
-    </li>
-    <li class="@yield('menu_catalog','')">
-        <a href="{{ url('/catalog') }}">
-            <i class="ti-calendar"></i>
-            <p>Catalogos</p>
-        </a>
     </li>
     <li>
         <a data-toggle="collapse" href="#dashboardOverview2">
