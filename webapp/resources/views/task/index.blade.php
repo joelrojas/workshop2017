@@ -41,7 +41,7 @@
     </section>
 
 @endsection
-
+@section('modal')
 <div id="myModalEdit" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -69,7 +69,7 @@
                                        name="empleado"
                                        id="empleadoEdit"
                                        type="text"
-                                       required="true"
+                                       required
                                        autocomplete="off"
                                 />
                                 <input type="hidden" name="id-person" id="id-personEdit">
@@ -157,7 +157,7 @@
 
     </div>
 </div>
-
+@endsection
 
 <div id="myModalDelete" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -197,6 +197,26 @@
     <!--<script src="js/main.js"></script>-->
     <script type="text/javascript">
         $(document).ready(function() {
+
+            $("#myModalEdit form").validate({
+                rules: {
+                    // simple rule, converted to {required:true}
+                    empleado: {
+                        required: true
+                    }
+                    // compound rule
+                },
+                messages: {
+                    empleado: {
+                        required: "Busque a un empleado"
+                    }
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                    $('#myModalEdit').modal('hide');
+                }
+            });
+
             var table = $('#taskTable').DataTable({
                 "processing": true,
                 "serverSide": true,

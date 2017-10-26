@@ -6931,23 +6931,23 @@ star {
 }
 
 .alert-info {
-  background-color: #7CE4FE;
-  color: #429cb6;
+  background-color: #44a3bb;
+  color: #feffd2;
 }
 
 .alert-success {
-  background-color: #8EF3C5;
-  color: #54b07d;
+  background-color: #64D85C;
+  color: #25583d;
 }
 
 .alert-warning {
-  background-color: #FFE28C;
-  color: #f0a810;
+  background-color: #ffd24d;
+  color: #736b5b;
 }
 
 .alert-danger {
-  background-color: #FF8F5E;
-  color: #c84513;
+  background-color: #a94442;
+  color: #E6E6E7;
 }
 
 .table {
