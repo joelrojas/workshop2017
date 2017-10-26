@@ -13,6 +13,15 @@
 @section('title-description', 'Tabla de Usuarios')
 {{ csrf_field() }}
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 <h1>
     Registro de Tareas
 </h1>
@@ -91,7 +100,6 @@
                                    type="date"
                                    name="dateEnd"
                                    id="dateEnd"
-                                   required="true"
                                    autocomplete="off"
                             />
                         </div>

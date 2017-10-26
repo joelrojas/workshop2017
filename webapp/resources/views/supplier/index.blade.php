@@ -20,13 +20,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3" >Nombre de compañia</label>
-                            <input type="text" class="form-control" id="companyName" name="orderProduct" placeholder="Cantidad">
+                            <input type="text" class="form-control" id="companyName" name="companyName" placeholder="Cantidad">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3" >Producto</label>
-                            <input type="text" class="form-control" id="product" name="orderProduct" placeholder="Cantidad">
+                            <input type="text" class="form-control" id="product" name="product" placeholder="Cantidad">
 
                         </div>
                     </div>
@@ -35,14 +35,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3" >Nombre de contacto</label>
-                            <input type="text" class="form-control" id="contactName" name="orderPrice" placeholder="Precio">
+                            <input type="text" class="form-control" id="contactName" name="contactName" placeholder="Precio">
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="inputEmail3">Direccion</label>
 
-                            <input type="text" class="form-control" id="address" name="orderQuantity" placeholder="Cantidad">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Cantidad">
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="col-sm-6">
                         <div class="form-group has-success  has-feedback">
                             <label for="inputEmail3" >Telefono</label>
-                            <input type="text" class="form-control underlined" name="productPrice" id="phone">
+                            <input type="text" class="form-control underlined" name="phone" id="phone">
 
                         </div>
                     </div>
@@ -64,73 +64,6 @@
                 <div class="clearfix"></div>
             </div>
         </form>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-    <div class="col-xl-12">
-        <div class="card card-primary">
-            <div class="card-header">
-                <div class="header-block">
-                    <p class="title"> Primary card </p>
-                </div>
-            </div>
-            <div class="card-block">
-
-                <form role="form">
-                    <div class="row">
-                        <div class="col-xl-6">
-
-                    <div class="form-group has-success">
-                        <label class="control-label" for="inputSuccess1">Nombre compañia</label>
-                        <input type="text" class="form-control underlined" name="companyName" id="companyNameEdit">
-
-                    </div>
-                        </div>
-                        <div class="col-xl-6">
-                    <div class="form-group has-success  has-feedback">
-                        <label class="control-label" for="inputSuccess2">Producto</label>
-                        <input type="text" class="form-control underlined" name="product" id="productEdit">
-
-                    </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-4">
-                    <div class="form-group has-error">
-                        <label class="control-label" for="inputError1">Nombre contacto</label>
-                        <input type="text" class="form-control underlined" name="contactName" id="contactNameEdit">
-
-                    </div>
-                        </div>
-                        <div class="col-xl-4">
-                    <div class="form-group has-success  has-feedback">
-                        <label class="control-label" for="inputSuccess2">Direccion</label>
-                        <input type="text" class="form-control underlined" name="address" id="addressEdit">
-
-                    </div>
-                        </div>
-                        <div class="col-xl-4">
-                    <div class="form-group has-success  has-feedback">
-                        <label class="control-label" for="inputSuccess2">Telefono</label>
-                        <input type="text" class="form-control underlined" name="phone" id="phoneEdit">
-
-                    </div>
-                        </div>
-                    </div>
-                    <button id="createSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
-                </form>
-            </div>
-
-        </div>
     </div>
 
     <section class="section">
@@ -268,7 +201,6 @@
     <script type="text/javascript" src="{{ asset('assets/js/jquery.toaster.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
 
-    <script src="js/main.js"></script>
     <script src="js/supplier.js"></script>
     <script type="text/javascript">
 
