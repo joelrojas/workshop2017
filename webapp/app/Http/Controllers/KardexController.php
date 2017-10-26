@@ -23,6 +23,16 @@ use DB;
             return view('order.index',['suppliers'=>$suppliers]);
         }
 
+        public function indexSells()
+        {
+            return view('sell.index');
+        }
+
+        public function bySupplier($id)
+        {
+            $products=DB::table('suppliers')->where('id',$id)->get();
+            return response()->json($products);
+        }
         public function listOrders()
         {
             $products=DB::table('products')->get();
@@ -41,13 +51,17 @@ use DB;
             return view('order.index',['orders'=>$query,'suppliers'=>$suppliers]);
         }
 
+
+
         public function createOrder(Request $request)
         {
             $product=$request->productName;
-
+            //if()
+            //$state=$request->state;
+            //$state_cat=DB::table('catalogs')->where('name',$state)->value('description');
                 $product_id=DB::table('products')->insertGetId([
-                   'name'          => "caquita",
-                   'price'         =>$request->productPrice,
+                   'name'          =>$request->productName,
+                   'price'         =>$request->orderPrice,
                    'quantity'      =>$request->orderQuantity,
                    'productType'   =>$request->productType
                 ]);
@@ -67,7 +81,8 @@ use DB;
                    'orders_id'     =>$order_id,
                    'products_id'   =>$product_id,
                    'date'          =>date("Y-m-d H:i:s"),
-                   'quantityReceived' => $request->quantityReceived
+                   'quantityReceived' => $request->quantityReceived,
+                   'CAT_ORDERSTATUS'=>$request->state
                 ]);
 
         }

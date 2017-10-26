@@ -31,9 +31,10 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="inputEmail3" >Producto</label>
-                        <input type="text" class="form-control " id="orderProduct" name="orderProduct" placeholder="Cantidad">
-                        <label id="product-error" class="error" for="email" style="display:none">el campo esta vacio o tiene un error</label>
+                        <label class="control-label">Producto<star>*</star></label>
+                        <select class="form-control form-control-sm" id="orderProduct">
+
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -81,8 +82,16 @@
 
                 </div>
             <div class="card-footer">
-                <button id="createOrderButton" type="button" class="btn btn-info btn-fill pull-right">Registrar</button>
+               <div class="row">
+                   <div class="col-sm-9">
+                       <button class="btn btn-primary btn-fill btn-wd" >Primary</button>
+                   </div>
 
+                <div class="col-sm-3">
+                <button id="createOrderButton" type="button" class="btn btn-info btn-fill pull-right">Registrar</button>
+                </div>
+
+                </div>
                 <div class="clearfix"></div>
             </div>
             </div>
@@ -90,10 +99,6 @@
     </div>
     </div>
 </div>
-
-
-
-
 
             <div class="card">
                 <div class="card-content">
@@ -203,7 +208,6 @@
     $('#orderQuantity').keyup(function () {
         if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
-
             document.getElementById('createOrderButton').disabled = true;
         }else{
             document.getElementById('createOrderButton').disabled = false;
@@ -218,13 +222,18 @@
                 this.setAttribute('class','form-control valid');
 
             }
+        if($('#orderQuantity').val()>=$('#quantityReceived').val())
+        {
 
+        }else{
+
+        }
 
     });
+
     $('#quantityReceived').keyup(function () {
         if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
-
             document.getElementById('createOrderButton').disabled = true;
         }else{
             document.getElementById('createOrderButton').disabled = false;
@@ -259,7 +268,23 @@
          ]
             });
         });
-/*
+
+    $(function () {
+        $('#supplier').on('change',onSelectSupplier);
+    });
+
+    function onSelectSupplier(){
+        var project_id = $(this).val();
+        //alert(project_id);
+
+        $.get('api/order/'+project_id+'/levels',function (data) {
+           for(var i=0;i<data.length;++i)
+            //   console.log(data[i]);
+            var html_select = '<option value="'+data[i].productSupplied+'">'+data[i].productSupplied+'</option>';
+            $('#orderProduct').html(html_select);
+        });
+    }
+    /*
     $('#productsmenuactivate').click(function () {
 
         var h = document.getElementById("home");
@@ -271,6 +296,8 @@
         //d.setAttribute("href","products");
     })
 */
+
+
     </script>
 
 

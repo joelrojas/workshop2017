@@ -28,3 +28,6 @@ Route::get('/api/v1/users', 'APIController@getUsers')->name('api.users.index');
 Route::get('/api/v1/orders', 'APIController@getOrders')->name('api.orders.index');
 
 Route::get('/api/v1/kardex', 'APIController@getKardex')->name('api.kardex.index');
+
+Route::get('/order/{id}/levels','KardexController@bySupplier');
+Route::get('/api/v1/sells', 'APIController@getSells')->name('api.sells.index');
