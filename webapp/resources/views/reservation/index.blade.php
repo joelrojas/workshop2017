@@ -43,7 +43,7 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="title"> <b>Listado de Reservas</b>
-                        <a href="{{ url('/reservation/create') }}" class="btn btn-primary btn-fill pull-right">Registrar reserva</a>
+                        <a href="{{ url('/reservation/create') }}" class="btn btn-default btn-fill pull-right">Registrar reserva</a>
                     </h3>
                     <div class="card-content table-responsive">
                         <table id="mainTable" class="table table-striped">
