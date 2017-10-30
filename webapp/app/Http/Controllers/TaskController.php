@@ -194,7 +194,7 @@ class TaskController extends Controller
             ->select('users.*', 'users_tasks.*', 'tasks.*', 'people.*','users_tasks.id as idtask')
             ->get();
 
-        $pdf = PDF::loadView('PDF.report', compact('user'));
+        $pdf = PDF::loadView('PDF.report', compact('datetime1','datetime2','user'));
         return $pdf->download('invoice.pdf');
 
     }
