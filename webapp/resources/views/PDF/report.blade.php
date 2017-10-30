@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Declaracion soporte</title>
+    <title>Asignacion Tareas</title>
     <style>
         body {
             font-family: "Tahoma", "Geneva", sans-serif;
@@ -31,7 +31,7 @@
 
 <h3 align="center">BAR GITANAS<br/><br />LISTA DE ASIGNACION DE TAREAS</h3>
 
-<p><b>Lista de tareas<br>de:&nbsp;</b><u></u><br><b>hasta:&nbsp;&nbsp;</b><u></u><br></p>
+<p><b>Lista de tareas<br>de:{{ date('d-m-Y',strtotime($startDate)) }}&nbsp;</b><u></u><br><b>hasta:{{ date('d-m-Y', strtotime($endDate)) }}&nbsp;&nbsp;</b><u></u><br></p>
 
 
 
@@ -53,11 +53,13 @@
                             <td>{{ $key->name }}</td>
                             <td>{{ $key->state }}</td>
                             <td>{{ $key->task }}</td>
-                            <td>{{ $key->dateBegin }}</td>
-                            <td>{{ $key->dateEnd }}</td>
+                            <td>{{ date('d-m-Y',strtotime($key->dateBegin)) }}</td>
+                            <td>{{ date('d-m-Y',strtotime($key->dateEnd)) }}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+
+<h5 style="text-align: right">Fecha del informe: <?php echo date('d-m-Y');?></h5>
 </body>
 </html>
