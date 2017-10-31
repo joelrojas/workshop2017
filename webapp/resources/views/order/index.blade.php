@@ -321,9 +321,9 @@
         }else{
             if($('#orderQuantity').val()<=$('#quantityReceived').val())
             {
-                var state="rcbd";
+                var state="Aceptado";
             }else{
-                var state="rchzd";
+                var state="Rechazado";
             }
             $.ajax({
                 type:'post',
@@ -340,7 +340,7 @@
                 },
                 success:function () {
 
-                    swal('Se creo la orden correctamente');
+                    swal('Se creo la orden correctamente' +'<br>'+ 'Estado de compra: '+state);
                     table.ajax.reload();
                 }
             })

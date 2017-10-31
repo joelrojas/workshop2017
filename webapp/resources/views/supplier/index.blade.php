@@ -5,8 +5,10 @@
 {{ csrf_field() }}
 
 @section('content')
-
-
+    <!--
+<div class="row">
+    <div class="col-sm-7">
+-->
     <div class="card">
 
         <form id="registerFormValidation" action="#" method="" novalidate="novalidate">
@@ -27,9 +29,9 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="inputEmail3" >Producto</label>
-                            <input type="text" class="form-control" id="product" name="product" >
+                            <label for="inputEmail3">Direccion</label>
 
+                            <input type="text" class="form-control" id="address" name="address" >
                         </div>
                     </div>
                 </div>
@@ -41,12 +43,27 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="inputEmail3">Direccion</label>
 
-                            <input type="text" class="form-control" id="address" name="address" >
+
+                        <div class="form-group">
+                            <label for="inputEmail3" >Producto</label>
+                            <div class="row">
+                            <div class="col-sm-8">
+
+                            <input type="text" class="form-control" id="product" name="product" >
+
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <button id="productadd" type="button" class="btn btn-info btn-fill pull-right">Añadir Producto</button>
+                                </div>
+                            </div>
+                            </div>
                         </div>
+
+
                     </div>
+
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -56,7 +73,16 @@
 
                         </div>
                     </div>
-                    
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label">Productos añadidos<star>*</star></label>
+                            <select class="form-control form-control-sm" id="productaddlist">
+                                <option></option>
+                            </select>
+
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -66,7 +92,38 @@
                 <div class="clearfix"></div>
             </div>
         </form>
+        <!--
+         </div>
+
+           </div>
+
+               <div class="col-sm-5">
+                   <div class="card">
+
+                       <div class="card-content">
+                           <div class="row">
+                               <div class="col-sm-6">
+                                   <div class="form-group has-success  has-feedback">
+                                       <label for="inputEmail3" >Producto</label>
+                                       <br>
+                                       <label for="inputEmail3" id="productlabel"></label>
+                                   </div>
+                               </div>
+                               <div class="col-sm-6">
+                                   <div class="form-group has-success  has-feedback">
+                                       <label for="inputEmail3" >Tipo de producto</label>
+                                       <input type="text" class="form-control underlined" name="phone" id="phone">
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                   </div>
+               </div>
+       -->
     </div>
+
+
 
     <section class="section">
         <div class="row">
@@ -89,6 +146,7 @@
             </div>
         </div>
     </section>
+
 
 
 
@@ -233,6 +291,21 @@
     <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
     <script type="text/javascript">
+        $("#productaddlist").change(function(){
+            alert($('#productaddlist').val());
+            var productlabel = document.getElementById("productlabel");
+            productlabel.innerText=$('#productaddlist').val();
+            // $('input[name=valor1]').val($(this).val());
+        });
+
+        $('#productadd').click(function(){
+            var html_select = '<option value="'+$('#product').val()+'">'+$('#product').val()+'</option>';
+            //$('#productaddlist').html(html_select);
+            $('#productaddlist').append(html_select);
+        });
+
+
+
         document.getElementById('createSupplierButton').disabled = true;
         $('#companyName').keyup(function () {
             if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
@@ -263,12 +336,19 @@
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
+                //var productlabel = document.getElementById("productlabel");
+                //productlabel.innerText=$('#product').val();
             }else
             {
+                var productlabel = document.getElementById("productlabel");
+                productlabel.innerText=$('#product').val();
+                //$('#productlabel').val($('#product').val());
                 //document.getElementById("received-error").setAttribute("style","display:none");
                 this.setAttribute('class','form-control valid');
             }
         });
+
+
 
         $('#contactName').keyup(function () {
             if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
@@ -277,7 +357,7 @@
             }else{
                 document.getElementById('createSupplierButton').disabled = false;
             }
-            if($('#contactName').val()==="")
+            if(isNaN($('#contactName').val())==false || $('#contactName').val()==="")
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -313,7 +393,7 @@
             }else{
                 document.getElementById('createSupplierButton').disabled = false;
             }
-            if($('#phone').val()==="")
+            if(isNaN($('#phone').val())==true || $('#phone').val()==="")
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -404,7 +484,7 @@
             }else{
                 document.getElementById('EditSupplierButton').disabled = false;
             }
-            if($('#phoneEdit').val()==="")
+            if(isNaN($('#phoneEdit').val())==true || $('#phoneEdit').val()==="" || $('#phoneEdit').val()<0)
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
