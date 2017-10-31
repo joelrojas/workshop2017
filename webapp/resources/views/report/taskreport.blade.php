@@ -27,10 +27,10 @@
 
                         <div class="form-group">
                             <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
-                            <input type="date" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
+                            <input type="text" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
                         <div class="form-group">
                             <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
-                            <input type="date" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
+                            <input type="text" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
 
 
                 </div>
@@ -43,16 +43,46 @@
 
 @endsection
 @section('js')
-    <script src=" {{ asset('js/vendor.js') }}"></script>
-    <script src=" {{ asset('js/app-template.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/moment.min.js') }}"></script> m
+    <script src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap-selectpicker.js') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="js/task.js"></script>
     <!--<script src="js/main.js"></script>-->
     <script type="text/javascript">
         $(document).ready(function() {
+            $('.datepicker1').datetimepicker({
+                format: 'DD/MM/YYYY',
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-chevron-up",
+                    down: "fa fa-chevron-down",
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-screenshot',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-remove'
+                }
+            });
+            $('.datepicker2').datetimepicker({
+                format: 'DD/MM/YYYY',
+                icons: {
+                    time: "fa fa-clock-o",
+                    date: "fa fa-calendar",
+                    up: "fa fa-chevron-up",
+                    down: "fa fa-chevron-down",
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-screenshot',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-remove'
+                }
+            });
             var table = $('#taskTable').DataTable({
                 "processing": true,
                 "serverSide": true,
