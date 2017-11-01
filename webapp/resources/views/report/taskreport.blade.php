@@ -25,14 +25,30 @@
                 </div>
                 <div class="card-content">
 
-                        <div class="form-group">
-                            <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
-                            <input type="text" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
-                        <div class="form-group">
-                            <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
-                            <input type="text" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
 
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="control-label">
+                            </label>
 
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="formGroupExampleInput">Fecha de Inicio</label>
+                                <input type="text" name="startDate" id="startDate" class="form-control datepicker1" autocomplete="off" /></div>
+                        </div>
+                        <div class="col-md-1">
+                            <label class="control-label">
+                            </label>
+
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="formGroupExampleInput">Fecha de Salida</label>
+                                <input type="text" name="endDate" id="endDate" class="form-control datepicker2" autocomplete="off" /></div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="card-footer text-center">
                     <button type="submit" class="btn btn-primary">Descargar</button>
@@ -47,7 +63,7 @@
     <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('assets/js/moment.min.js') }}"></script> m
+    <script src="{{ asset('assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-datetimepicker.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap-selectpicker.js') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
