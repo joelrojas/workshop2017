@@ -43,13 +43,14 @@ use DB;
         public function getOrders()
         {
             $suppliers=DB::table('suppliers')->get();
+            $details_orders=DB::table('details_orders')->get();
             $query = DB::table('details_orders')
                 ->join('orders','orders.id','=','details_orders.orders_id')
                 ->join('products','products.id','=','details_orders.products_id')
                 ->join('suppliers','suppliers.id','=','orders.suppliers_id')
-                ->select('orders.*','products.*','suppliers.*')
+                ->select('orders.*','products.*','suppliers.*','details_orders.*')
                 ->get();
-            return view('order.index',['orders'=>$query,'suppliers'=>$suppliers]);
+            return view('order.index',['orders'=>$query,'details_orders'=>$details_orders,'suppliers'=>$suppliers]);
         }
 
 
