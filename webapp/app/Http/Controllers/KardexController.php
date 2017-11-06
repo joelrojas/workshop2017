@@ -31,7 +31,12 @@ use DB;
 
         public function bySupplier($id)
         {
-            $products=DB::table('suppliers')->where('id',$id)->get();
+            $products=DB::table('suppliers')
+                ->join('suppliers_products','suppliers_products.suppliers_id','=','suppliers.id')
+                ->join('products','products.id','=','suppliers_products.products_id')
+                ->select('products.*','suppliers.*','suppliers_products')
+                ->where('suppliers.id',$id)
+                ->get();
             return response()->json($products);
         }
         public function listOrders()

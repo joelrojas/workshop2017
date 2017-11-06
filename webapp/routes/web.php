@@ -62,7 +62,7 @@ Route::get('/supplier/dataTable', 'SupplierController@listSupplier');
 Route::post('/addsupplier','SupplierController@store');
 Route::post('/editsupplier','SupplierController@update');
 Route::post('/deletesupplier','SupplierController@destroy');
-
+Route::get('/supplier/search/product', 'ProductController@searchProduct')->name('search.product');
 //Ordenes de compra
 Route::get('/order/dataTable', 'SupplierController@listOrder');
 Route::post('/createOrder','KardexController@createOrder');

@@ -46,6 +46,7 @@ public function listSupplier()
     public function store(Request $request)
     {
         //
+        /*
         $supplier=new Supplier;
         $supplier->companyName = $request->companyName;
         $supplier->contactName = $request->contactName;
@@ -54,8 +55,43 @@ public function listSupplier()
         $supplier->phono =$request->phono;
         $supplier->save();
         return response()->json($supplier);
+        */
+        //$dato="FUNCIONA";
+        //echo '<script type="text/javascript">alert("'.$dato.'");</script>';
+        $supplier_id=DB::table('suppliers')->insertGetId([
+            'companyName'     =>$request->companyName,
+            'contactName'     =>$request->contactName,
+            'address'         =>$request->address,
+            'phono'           =>$request->phono,
+            'productSupplied' => "hola2"
+        ]);
+        $auxi=array();
+        $auxi=json_decode($request->productSupplied);
+        $var=0;
+        /*for($i=1;$auxi.length;$i++)
+        {
+            $var=$auxi[$i];
+        }
+        */
+
+        foreach ($auxi as $valor) {
+        $product_id=DB::table('products')->insertGetId([
+                'name'       =>$valor->name,
+                'price'      =>0,
+                'quantity'   =>0,
+                'productType'=>"Alcoholica",
+            ]);
+        DB::table('suppliers_products')->insert([
+           'products_id' => $product_id,
+           'suppliers_id'=> $supplier_id
+        ]);
+        }
+
+
 
     }
+
+
 
 
     /**

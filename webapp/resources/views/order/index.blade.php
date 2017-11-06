@@ -21,6 +21,7 @@
 
                     <label class="control-label">Proveedor <star>*</star></label>
                     <select class="form-control form-control-sm" id="supplier">
+                        <option id="firstoption">Seleccione proveedor</option>
                         @foreach($suppliers as $supplier)
 
                             <option value="{{$supplier->id}}">{{ $supplier->companyName }}</option>
@@ -32,7 +33,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label">Producto<star>*</star></label>
-                        <select class="form-control form-control-sm" id="orderProduct">
+                        <select class="form-control form-control-sm" id="orderProduct" >
 
                         </select>
                     </div>
@@ -275,22 +276,31 @@
          ]
             });
 
+    $( document ).ready(function() {
+       // var combo = document.getElementById('orderProduct');
+       // combo[0].selected = true;
+            //alert("Valor de select:"+combo[i]);
 
-    $(function () {
+
         $('#supplier').on('change',onSelectSupplier);
+
+        function onSelectSupplier(){
+            $('#firstoption').remove();
+            var project_id = $(this).val();
+            //alert(project_id);
+            var html_select;
+            $.get('api/order/'+project_id+'/levels',function (data) {
+            //    alert(data.length);
+                for(var i=0;i<data.length;++i)
+                    //   console.log(data[i]);
+                    html_select += '<option value="'+data[i].name+'">'+data[i].name+'</option>';
+                $('#orderProduct').html(html_select);
+            });
+
+        }
     });
 
-    function onSelectSupplier(){
-        var project_id = $(this).val();
-        //alert(project_id);
 
-        $.get('api/order/'+project_id+'/levels',function (data) {
-           for(var i=0;i<data.length;++i)
-            //   console.log(data[i]);
-            var html_select = '<option value="'+data[i].productSupplied+'">'+data[i].productSupplied+'</option>';
-            $('#orderProduct').html(html_select);
-        });
-    }
     /*
     $('#productsmenuactivate').click(function () {
 
