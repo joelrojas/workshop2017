@@ -22,14 +22,20 @@
             <ul class="nav">
                 <li>
                     <a href="{{ url('/reservation/create') }}">
-                        <span class="sidebar-mini">O</span>
+                        <span class="sidebar-mini">AR</span>
                         <span class="sidebar-normal">Añadir reserva</span>
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('reservations.today') }}">
+                        <span class="sidebar-mini">RD</span>
+                        <span class="sidebar-normal">Reservas del día</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ url('/reservation') }}">
-                        <span class="sidebar-mini">S</span>
-                        <span class="sidebar-normal">Lista de reserva</span>
+                        <span class="sidebar-mini">HR</span>
+                        <span class="sidebar-normal">Historial de reservas</span>
                     </a>
                 </li>
             </ul>
