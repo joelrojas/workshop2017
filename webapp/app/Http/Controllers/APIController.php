@@ -31,24 +31,10 @@ class APIController extends Controller
 
     }
 
-    public function getReservations()
+    public function getReservations(Request $request)
     {
-        $reservations = DB::table('reservations')
-            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
-            ->join('people', 'customers.people_id', '=', 'people.id')
-            ->select(
-                'reservations.id',
-                'reservations.reservationDate',
-                'reservations.state_reservation',
-                'people.name',
-                'people.lastName',
-                'people.phone',
-                'customers.id as id_customer',
-                'customers.clientType')
-            ->orderBy('reservations.reservationDate')
-            //->groupBy('people.id', 'reservations.id', 'customers.id')
-            ->get();
-
+        $type_reservations = $request['request'];
+        $reservations = $this->queryReservations($type_reservations);
         return DataTables::of($reservations)
             ->addColumn('state', function ($reservations){
                 if($reservations->state_reservation == 'en espera') return '<span class="label label-warning"> EN ESPERA</span>';
@@ -58,7 +44,7 @@ class APIController extends Controller
             })
             ->addColumn('action', function ($reservations) {
                 return '<div class="table-icons">'.
-                    '<a href="reservation/'. $reservations->id .'" class="btn btn-default btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver Reserva</a>' .
+                    '<a href="/reservation/'. $reservations->id .'" class="btn btn-default btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver Reserva</a>' .
                     //' <a onclick="cancelReservation('. $reservations->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Cancelar Reserva</a>'.
                     '</div>';
             })
@@ -134,6 +120,28 @@ class APIController extends Controller
                     '</div>';
             })->make(true);
 
+    }
+
+    public function queryReservations($today=null)
+    {
+        return DB::table('reservations')
+            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
+            ->join('people', 'customers.people_id', '=', 'people.id')
+            ->when($today, function ($query) use ($today) {
+                $query->where('reservations.reservationDate', '=', date('Y-m-d'));
+            })
+            ->select(
+                'reservations.id',
+                'reservations.reservationDate',
+                'reservations.state_reservation',
+                'people.name',
+                'people.lastName',
+                'people.phone',
+                'customers.id as id_customer',
+                'customers.clientType')
+            ->orderBy('reservations.reservationDate')
+            //->groupBy('people.id', 'reservations.id', 'customers.id')
+            ->get();
     }
 
 }
