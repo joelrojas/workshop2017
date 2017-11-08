@@ -113,6 +113,7 @@
                             <td>Precio</td>
                             <td>Cantidad</td>
                             <td>Proveedor</td>
+                            <td>Estado</td>
                         </tr>
                         </thead>
                         <tbody>
@@ -127,6 +128,49 @@
 
 </div>
 
+
+<div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" class="form-horizontal" data-toggle="validator">
+                {{ csrf_field() }} {{ method_field('POST') }}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span arria-hidden="true">&times;</span>
+                    </button>
+                    <h3 class="modal-title"></h3>
+                </div>
+
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="hidden" name="country" id="idstate">
+                                <div class="form-group">
+                                    <select class="form-control form-control-sm" id="statelist" >
+                                    <option value="recibido">Recibido</option>
+                                    <option value="devuelto">Devuelto</option>
+                                    <option value="cancelado">Cancelado</option>
+                                    <option value="rechazado">Rechazado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                <label for="comment">Comentario:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button id="EditStateButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
+                </div>
 @endsection
 
 
@@ -146,6 +190,30 @@
     <script type="text/javascript">
 
     document.getElementById('createOrderButton').disabled = true;
+
+    //var e = document.getElementById("ddlViewBy");
+    //var strUser = e.option[e.selectedIndex].value;
+    //alert(strUser);
+    $('#EditStateButton').on('click',function(){
+        //alert($('#idstate').val());
+        $.ajax({
+            type: 'POST',
+            url: '/EditStateOrder',
+            data:{
+                '_token': $('input[name=_token]').val(),
+                'id':$('#idstate').val(),
+                'state':$('#statelist').val()
+            },
+            success:function (dato) {
+                swal('Modificado con Exito');
+
+                table.ajax.reload();
+                //  $.toaster({ priority : 'success', title : 'Modificado', message : 'Se modificaron los datos correctamente'});
+            }
+
+        })
+    });
+
     $('#orderProduct').keyup(function () {
         if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
@@ -272,10 +340,29 @@
             { data: 'name' },
             { data: 'total' },
             { data: 'quantityOrder' },
-            { data: 'companyName' }
+            { data: 'companyName' },
+            { data: 'action', name: 'action', orderable: false, searchable: false}
          ]
             });
-
+    function editSupplier(id){
+        save_method = "edit";
+        $('input[name=_method]').val('PATCH');
+        $('#modal-form form')[0].reset();
+        //$('#modal-form').modal('show');
+        $.ajax({
+            url: "{{ url('api/order') }}" + '/' + id + "/edit",
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                $('#modal-form').modal('show');
+                $('.modal-title').text('Editar Catalogo');
+                $('#idstate').val(data.id);
+            },
+            error: function() {
+                swal('¡Error!', '<b>No se pueden obtener los datos de este catalogo, Intente mas tarde</b>', 'error');
+            }
+        });
+    }
     $( document ).ready(function() {
        // var combo = document.getElementById('orderProduct');
        // combo[0].selected = true;

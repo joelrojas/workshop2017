@@ -66,7 +66,7 @@ Route::get('/supplier/search/product', 'ProductController@searchProduct')->name(
 //Ordenes de compra
 Route::get('/order/dataTable', 'SupplierController@listOrder');
 Route::post('/createOrder','KardexController@createOrder');
-
+Route::post('/EditStateOrder','KardexController@StateUpdate');
 
 //Users
 Route::get('/users', 'UserController@index');

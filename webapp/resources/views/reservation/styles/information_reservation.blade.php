@@ -1,6 +1,6 @@
 @if($reservation->state_reservation == 'cancelado')
     <div class="row" align="center">
-        <div class="col-lg-7 col-sm-6 col-lg-offset-3">
+        <div class="col-lg-12 col-sm-6 ">
             <div class="card" align="center">
                 <div class="card-content">
                     <div class="alert alert-danger">
@@ -15,7 +15,7 @@
 @elseif($reservation->state_reservation == 'en espera')
         <div class="row" align="center">
 
-            <div class="col-lg-7 col-sm-6 col-lg-offset-3">
+            <div class="col-lg-12 col-sm-6 col-lg">
                 <div class="card" align="center">
                     <div class="card-content">
                         <div class="alert alert-warning">
@@ -72,12 +72,19 @@
                 </div>
                 @else
     <div class="row">
+
         <div class="card-header">
-            <h3 class="card-title" ><b>DATOS DE LA FACTURA</b>
+            <div class="row">
+                <div class="col-lg-6">
+            <h3 class="card-title" ><b>DATOS DE LA FACTURA</b></h3>
+                </div>
+                <div class="col-lg-6">
                 <a onclick="addCatalog()" class="btn btn-group btn-default btn-wd btn-fill pull-right" style="margin-top: -8px"><i class="ti-settings"></i> AÑADIR PRODUCTO A LA FACTURA</a>
-            </h3>
+                </div>
             <hr>
         </div>
+        </div>
+
         <div class="col-md-12">
             <div align="center">
                 <table id="catalog-table" class="table table-striped">

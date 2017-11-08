@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterSellsTable extends Migration
+class AddNitToTableDetailsOrdersR extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AlterSellsTable extends Migration
      */
     public function up()
     {
-        Schema::table('sells', function (Blueprint $table) {
+        Schema::table('details_orders', function (Blueprint $table) {
             //
-            $table->integer('quantitySell');
+            $table->string('nit')->nullable();
         });
     }
 
@@ -26,9 +26,9 @@ class AlterSellsTable extends Migration
      */
     public function down()
     {
-        Schema::table('sells', function (Blueprint $table) {
+        Schema::table('details_orders', function (Blueprint $table) {
             //
-
+            $table->string('nit')->nullable();
         });
     }
 }
