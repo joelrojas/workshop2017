@@ -79,9 +79,43 @@ class APIController extends Controller
             ->join('orders','orders.id','=','details_orders.orders_id')
             ->join('products','products.id','=','details_orders.products_id')
             ->join('suppliers','suppliers.id','=','orders.suppliers_id')
-            ->select('orders.*','products.*','suppliers.*')
+            ->select('orders.*','products.*','suppliers.*','details_orders.*','details_orders.id')
+
+        //$supplier = Supplier::select('id', 'companyName', 'productSupplied','contactName');
+
+       // $data= DB::table('details_orders')
             ->get();
-        return datatables($query)->toJson();
+        $data=DB::table('details_orders')->get();
+        return DataTables::of($query)
+            ->addColumn('action', function($query) {
+
+                    //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
+                    if($query->CAT_ORDERSTATUS == "recibido")
+                    {
+                        return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-success btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                        '</div>';
+                    }else{
+                    if($query->CAT_ORDERSTATUS == "rechazado")
+                    {
+                        return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-danger btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                        '</div>';
+                    }else{
+                        if($query->CAT_ORDERSTATUS == "cancelado")
+                        {
+                            return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-danger btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                '</div>';
+                        }else{
+                            if($query->CAT_ORDERSTATUS == "devuelto")
+                            {
+                                return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-warning btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                    '</div>';
+                            }
+                        }
+                    }
+                    }
+
+            })
+            ->toJson();
     }
 
     public function getSells()
@@ -92,7 +126,8 @@ class APIController extends Controller
             ->join('suppliers','suppliers.id','=','orders.suppliers_id')
             ->select('orders.*','products.*','suppliers.*')
             ->get();
-        return datatables($query)->toJson();
+        return datatables($query)
+            ->toJson();
     }
 
     public function getKardex()

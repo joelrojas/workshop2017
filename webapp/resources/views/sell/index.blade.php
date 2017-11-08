@@ -4,31 +4,122 @@
 @section('title-description', 'Inventario relacionado a los proveedores')
 {{ csrf_field() }}
 @section('content')
-
-    <div class="card">
-        <div class="card-content">
-
-            <table id="orderTable" class="table">
-                <thead>
-
-
-                <tr>
-                    <td>Nro</td>
-                    <td>Producto</td>
-                    <td>Precio</td>
-                    <td>Cantidad</td>
-                    <td>Proveedor</td>
-                </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <form method="#" action="#">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            Datos factura
+                        </h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Nro. Factura:</label>
+                                    <label>666</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>NIT:</label>
+                                    <label>777</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Nro Autorizacion:</label>
+                                    <label>888</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Fecha:</label>
+                                    <label>14/10/17</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Cliente:</label>
+                                    <input id="clientid" type="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Empleado:</label>
+                                    <input id="clientid" type="email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-fill btn-info">Submit</button>
+                    </div>
+                </form>
+            </div> <!-- end card -->
         </div>
     </div>
+    <div class="card">
+        <form method="#" action="#">
+            <div class="card-header">
+                <h4 class="card-title">
+                    Venta
+                </h4>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Producto</label>
+                            <input id="clientid" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Cantidad:</label>
+                            <input id="clientid" type="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Presione para agregar un producto</label>
+                        <button type="submit" class="btn btn-fill btn-info">Agregar</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="orderTable" class="table table-striped">
+                            <thead>
 
 
+                            <tr>
+                                <td>Nro</td>
+                                <td>Producto</td>
+                                <td>Precio</td>
+                                <td>Cantidad</td>
+                                <td>Proveedor</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label>Total</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input id="clientid" type="email" class="form-control">
+                    </div>
+
+                </div>
+                <button type="submit" class="btn btn-fill btn-info">Imprimir factura</button>
+            </div>
+        </form>
+    </div> <!-- end card -->
+    </div>
 
 
 @endsection

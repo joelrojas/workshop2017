@@ -31,7 +31,12 @@ use DB;
 
         public function bySupplier($id)
         {
-            $products=DB::table('suppliers')->where('id',$id)->get();
+            $products=DB::table('suppliers')
+                ->join('suppliers_products','suppliers_products.suppliers_id','=','suppliers.id')
+                ->join('products','products.id','=','suppliers_products.products_id')
+                ->select('products.*','suppliers.*','suppliers_products')
+                ->where('suppliers.id',$id)
+                ->get();
             return response()->json($products);
         }
         public function listOrders()
@@ -43,13 +48,14 @@ use DB;
         public function getOrders()
         {
             $suppliers=DB::table('suppliers')->get();
+            $details_orders=DB::table('details_orders')->get();
             $query = DB::table('details_orders')
                 ->join('orders','orders.id','=','details_orders.orders_id')
                 ->join('products','products.id','=','details_orders.products_id')
                 ->join('suppliers','suppliers.id','=','orders.suppliers_id')
-                ->select('orders.*','products.*','suppliers.*')
+                ->select('orders.*','products.*','suppliers.*','CAT_ORDERSTATUS')
                 ->get();
-            return view('order.index',['orders'=>$query,'suppliers'=>$suppliers]);
+            return view('order.index',['orders'=>$query,'details_orders'=>$details_orders,'suppliers'=>$suppliers]);
         }
 
 
@@ -134,6 +140,20 @@ use DB;
             return $supplier;
         }
 
+        public function OrderState($id)
+        {
+            $user = DB::table('details_orders')->where('id', $id)->first();
+            return response()->json($user);
+        }
+        public function StateUpdate(Request $request)
+        {
+            $state=DB::table('details_orders')
+                     ->where('id', $request->id)
+                     ->update(['CAT_ORDERSTATUS' => $request->state,]);
+            $statedata=DB::table('details_orders')
+                     ->where('id',$request->id)->get();
+            return response()->json($statedata);
+        }
         /**
          * Update the specified resource in storage.
          *

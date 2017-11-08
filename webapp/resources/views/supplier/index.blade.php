@@ -1,12 +1,30 @@
 @extends('layouts.app')
+
+@section('css')
+    {{-- Importando el css necesario para esta vista--}}
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/datepicker3.css') }}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.css"/>
+
+@endsection
+
+
+
 @section('menu_kardex', 'open active')
 @section('title', 'Kardex de inventarios')
 @section('title-description', 'Inventario relacionado a los proveedores')
 {{ csrf_field() }}
 
+
+
+
 @section('content')
-
-
+    <!--
+<div class="row">
+    <div class="col-sm-7">
+-->
+<div class="row">
+    <div class="col-sm-8">
     <div class="card">
 
         <form id="registerFormValidation" action="#" method="" novalidate="novalidate">
@@ -27,9 +45,9 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label for="inputEmail3" >Producto</label>
-                            <input type="text" class="form-control" id="product" name="product" >
+                            <label for="inputEmail3">Direccion</label>
 
+                            <input type="text" class="form-control" id="address" name="address" >
                         </div>
                     </div>
                 </div>
@@ -41,12 +59,27 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="inputEmail3">Direccion</label>
 
-                            <input type="text" class="form-control" id="address" name="address" >
+
+                        <div class="form-group">
+                            <label for="inputEmail3" >Producto</label>
+                            <div class="row">
+                            <div class="col-sm-7">
+
+                            <input type="text" class="form-control" id="product" name="product" >
+
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <button id="productadd" type="button" class="btn btn-info btn-fill pull-right">Añadir</button>
+                                </div>
+                            </div>
+                            </div>
                         </div>
+
+
                     </div>
+
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -56,7 +89,8 @@
 
                         </div>
                     </div>
-                    
+
+
                 </div>
 
             </div>
@@ -66,7 +100,55 @@
                 <div class="clearfix"></div>
             </div>
         </form>
+      </div>
     </div>
+      <div class="col-sm-4">
+          <div class="card">
+              <div class="card-content">
+                <div class="form-group">
+                    <label class="control-label">Productos añadidos<star>*</star></label>
+                    <select class="form-control form-control-sm" id="productaddlist" size="12" multiple>
+
+                    </select>
+                </div>
+              </div>
+          </div>
+
+      </div>
+</div>
+
+        <!--
+         </div>
+
+           </div>
+
+               <div class="col-sm-5">
+                   <div class="card">
+
+                       <div class="card-content">
+                           <div class="row">
+                               <div class="col-sm-6">
+                                   <div class="form-group has-success  has-feedback">
+                                       <label for="inputEmail3" >Producto</label>
+                                       <br>
+                                       <label for="inputEmail3" id="productlabel"></label>
+                                   </div>
+                               </div>
+                               <div class="col-sm-6">
+                                   <div class="form-group has-success  has-feedback">
+                                       <label for="inputEmail3" >Tipo de producto</label>
+                                       <input type="text" class="form-control underlined" name="phone" id="phone">
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+                   </div>
+               </div>
+       -->
+    </div>
+
+
 
     <section class="section">
         <div class="row">
@@ -92,6 +174,7 @@
 
 
 
+
     <div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static" >
         <div class="modal-dialog">
             <div class="modal-content">
@@ -114,8 +197,8 @@
                                 <input type="text" class="form-control" name="companyName" id="companyNameEdit">
                                 </div>
                             </div>
-                                <div class="col-sm-6">
-                            <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                 <label class="control-label" for="inputSuccess2">Producto</label>
                                 <input type="text" class="form-control" name="product" id="productEdit">
                                 </div>
@@ -233,6 +316,66 @@
     <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
     <script type="text/javascript">
+        $('#product').autocomplete({
+            source: '{{ route('search.product') }}',
+            minlength: 1,
+            select: function (event, ui) {
+               // $('#product').val(ui.item.id);
+            }
+        });
+
+        $("#productaddlist").change(function(){
+            var productlabel = document.getElementById("productlabel");
+            //productlabel.innerText=$('#productaddlist').val();
+            // $('input[name=valor1]').val($(this).val());
+        });
+        var list=new Array();
+        function SearchInArray(array,value) {
+            var flag;
+            var count;
+            array.forEach(function(item){
+                //alert("El valor a buscar de input:"+value+"<br>"+"el valor del array:"+item);
+                if(value==item) {
+                    flag= true;
+                }
+            });
+                return flag;
+        }
+        $('#productadd').click(function(){
+
+            var testing=SearchInArray(list,$('#product').val());
+            //alert(testing);
+            if(!testing)
+            {
+                //alert(list.indexOf($('#product').val()));
+                //alert(list);
+                var html_select = '<option value="'+$('#product').val()+'">'+$('#product').val()+'</option> todito'+'<button>Quitar</button>';
+                //$('#productaddlist').html(html_select);
+
+                $('#productaddlist').append(html_select);
+                list.push($('#product').val());
+            }else{
+                swal("El producto ya se encuentra añadido");
+            }
+
+
+           /*
+           list.forEach(function(item){
+               sum+=item+",";
+           });
+           alert(sum);
+           */
+           /*
+           for(var i=0;i<list.length;i++)
+           {
+
+           }
+           */
+        });
+
+
+
+
         document.getElementById('createSupplierButton').disabled = true;
         $('#companyName').keyup(function () {
             if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
@@ -259,16 +402,24 @@
             }else{
                 document.getElementById('createSupplierButton').disabled = false;
             }
+
             if($('#product').val()==="")
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
+                //var productlabel = document.getElementById("productlabel");
+                //productlabel.innerText=$('#product').val();
             }else
             {
+                var productlabel = document.getElementById("productlabel");
+                //productlabel.innerText=$('#product').val();
+                //$('#productlabel').val($('#product').val());
                 //document.getElementById("received-error").setAttribute("style","display:none");
                 this.setAttribute('class','form-control valid');
             }
         });
+
+
 
         $('#contactName').keyup(function () {
             if($('#companyName').val()==="" || $('#product').val()==="" || $('#contactName').val()==="" || $('#address').val()==="" || $('#phone').val()==="")
@@ -277,7 +428,7 @@
             }else{
                 document.getElementById('createSupplierButton').disabled = false;
             }
-            if($('#contactName').val()==="")
+            if(isNaN($('#contactName').val())==false || $('#contactName').val()==="")
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -313,7 +464,7 @@
             }else{
                 document.getElementById('createSupplierButton').disabled = false;
             }
-            if($('#phone').val()==="")
+            if(isNaN($('#phone').val())==true || $('#phone').val()==="")
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -404,7 +555,7 @@
             }else{
                 document.getElementById('EditSupplierButton').disabled = false;
             }
-            if($('#phoneEdit').val()==="")
+            if(isNaN($('#phoneEdit').val())==true || $('#phoneEdit').val()==="" || $('#phoneEdit').val()<0)
             {
                 // document.getElementById("received-error").setAttribute("style","");
                 this.setAttribute('class','form-control error');
@@ -445,6 +596,15 @@
 
 
         $('#createSupplierButton').click(function () {
+            var combo = document.getElementById('productaddlist');
+            var cantidad = combo.length;
+            for (i = 0; i < cantidad; i++) {
+
+                    combo[i].selected = true;
+                    //alert("Valor de select:"+combo[i]);
+
+            }
+
             //alert($('input[name=companyName]').val());
             //alert($('input[name=phone]').val())
             var product = document.getElementById("companyName").getAttribute("class");
@@ -465,7 +625,17 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
+              var itemes= [];
+                var values = $('#productaddlist').val();
+                //var listvalues=new Object();
+                for(var i in values) {
+                    var listvalues=new Object();
+                    //alert(values[i]);  // (o el campo que necesites)
+                    listvalues.name=values[i];
+                    listvalues.type="traguito";
+                    itemes.push(listvalues)
+                }
+                //alert(JSON.stringify(listvalues));
             $.ajax({
                 type: 'POST',
                 url: "/addsupplier",
@@ -474,7 +644,8 @@
                     'companyName':$('input[name=companyName]').val(),
                     'contactName':$('input[name=contactName]').val(),
                     'address':$('input[name=address]').val(),
-                    'productSupplied':$('input[name=product]').val(),
+                    //'productSupplied':JSON.stringify($('#productaddlist').val()),
+                    'productSupplied':JSON.stringify(itemes),
                     'phono':$('input[name=phone]').val()
                 },
                 success:function () {

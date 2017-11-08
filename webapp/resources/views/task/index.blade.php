@@ -186,10 +186,10 @@
 </div>
 
 @section('js')
-    <script src=" {{ asset('js/vendor.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-1.10.2.js') }}" type="text/javascript"></script>
-    <script src="http://demos.creative-tim.com/paper-dashboard-pro/assets/js/bootstrap.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
