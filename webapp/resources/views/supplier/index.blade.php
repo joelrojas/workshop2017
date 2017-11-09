@@ -197,8 +197,8 @@
                                 <input type="text" class="form-control" name="companyName" id="companyNameEdit">
                                 </div>
                             </div>
-                                <div class="col-sm-6">
-                            <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="form-group">
                                 <label class="control-label" for="inputSuccess2">Producto</label>
                                 <input type="text" class="form-control" name="product" id="productEdit">
                                 </div>

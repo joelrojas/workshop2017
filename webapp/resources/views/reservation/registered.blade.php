@@ -11,6 +11,7 @@
 @section('title-description', 'Detalle de reservas')
 
 @section('content')<div class="container-fluid">
+    <div id="state_reservation_script" value="{{$reservation->state_reservation}}" type="hidden" ></div>
     <div class="card">
         <div class="card-header">
             <br>
@@ -19,27 +20,30 @@
             </h3>
             <hr>
         </div>
-
+<div class="row">
+    <div class="col-lg-3" id="maincol">
         <div class="card-content">
             <div class="row">
-                <div class="col-lg-4 col-sm-6">
+                <div class="col-lg-12 col-sm-6" id="colinfo">
                     <div class="card">
                         @include('reservation.styles.type_color_reservation')
                             <p><b>INFORMACIÓN DE LA RESERVA</b></p>
                         </div>
                         <div class="card-content">
                             <div class="row">
-                                <div class="col-xs-8">
+                                <div class="col-xs-12">
                                     <p class="leads"><b>Codigo de la reserva :</b> {{$reservation->reservations_id}}</p>
                                     <p class="leads"><b>Estado de la reserva :</b> {{$reservation->state_reservation}}</p>
                                     <p class="leads"><b>Fecha a reservar :</b> {{ date('d-m-Y', strtotime($reservation->reservationDate)) }}</p>
                                     <p class="leads"><b>Fecha que se realizo la reserva :</b> {{ $reservation->created_at }}</p>
                                 </div>
+                                <!--
                                 <div class="col-xs-3">
                                     @include('reservation.styles.icon_color_reservation')
                                         <br><i class="ti-na"></i>
                                     </div>
                                 </div>
+                                -->
                             </div>
                         </div>
                     <!-- <div class="card-footer">
@@ -50,25 +54,27 @@
                             </div> -->
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6">
+                <div class="col-lg-12 col-sm-6" id="colclient">
                     <div class="card">
                         @include('reservation.styles.type_color_reservation')
                             <p><b>INFORMACIÓN DEL CLIENTE</b></p>
                         </div>
                         <div class="card-content">
                             <div class="row">
-                                <div class="col-xs-8">
+                                <div class="col-xs-12">
                                     <p class="leads"><b>Carnet del cliente :</b> {{ $reservation->ci }}</p>
                                     <p class="leads"><b>Apellido del cliente :</b> {{$reservation->lastName}}</p>
                                     <p class="leads"><b>Nombre del cliente :</b> {{$reservation->name}}</p>
                                     <p class="leads"><b>Telefono del cliente :</b> {{ $reservation->phone }}</p>
 
                                 </div>
+                                <!--
                                 <div class="col-xs-3">
                                     @include('reservation.styles.icon_color_reservation')
                                         <br><i class="ti-user"></i>
                                     </div>
                                 </div>
+                                -->
                             </div>
                         </div>
                 <!--   <div class="card-footer">
@@ -79,26 +85,28 @@
                                 </div> -->
                     </div>
                 </div>
-                <div class="col-lg-4 col-sm-6">
+                <div class="col-lg-12 col-sm-6" id="colstate">
                     <div class="card">
                         @include('reservation.styles.type_color_reservation')
                             <p><b>ESTADO DE CLIENTE</b></p>
                         </div>
                         <div class="card-content">
                             <div class="row">
-                                <div class="col-xs-8">
+                                <div class="col-xs-12">
                                     <p class="leads"><b>Tipo de cliente :</b> {{$reservation->clientType}}</p>
                                     <p class="leads"><b>Puntos del cliente :</b> {{$reservation->points}}</p>
                                     <p class="leads"><b>Ultima visita :</b> {{ $reservation->updated_at}}</p>
                                     <p class="leads"><b>Producto preferido:</b> Baradero </p>
                                 </div>
-                                <div class="col-xs-3">
+                                <!-- <div class="col-xs-3">
                                     @include('reservation.styles.icon_color_reservation')
                                     <br><i class="ti-zoom-in"></i>
                                     </div>
-                                </div>
+                                </div>  -->
+
                             </div>
                         </div>
+      </div>
                         <!-- <div class="card-footer">
                             <hr>
                             <div class="stats">
@@ -108,10 +116,11 @@
                     </div>
                 </div>
             </div>
-            @include('reservation.styles.information_reservation')
-            <a href="/reservation" class="btn btn-block btn-fill btn-primary">ir a lista de reservas</a>
-        </div>
     </div>
+<div class="col-lg-9 offset-1">
+    @include('reservation.styles.information_reservation')
+    <a href="/reservation" class="btn btn-block btn-fill btn-primary">ir a lista de reservas</a>
+</div>
 </div>
     <section class="jumbotron">
     </section>
@@ -172,6 +181,28 @@
     <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
     <script type="text/javascript">
+
+        $( document ).ready(function() {
+            var state_element=document.querySelector('#state_reservation_script');
+            var state=state_element.getAttribute('value');
+            //alert(state) ;
+            if(state==='cancelado' || state==='en espera')
+            {
+                var maincol=document.querySelector('#maincol');
+                var colinfo=document.querySelector('#colinfo');
+                var colstate=document.querySelector('#colstate');
+                var colclient=document.querySelector('#colclient');
+               // alert(colinfo.getAttribute('class'));
+             maincol.setAttribute('class','col-lg-12');
+             colinfo.setAttribute('class','col-sm-4');
+             colstate.setAttribute('class','col-sm-4');
+             colclient.setAttribute('class','col-sm-4');
+             //$('#colclient').setAttribute('class',' ');
+             //$('#colstate').setAttribute('class',' ');
+            }
+        });
+
+
         function changeStateReservation(id){
             save_method = "edit";
             $('input[name=_method]').val('PATCH');

@@ -31,24 +31,10 @@ class APIController extends Controller
 
     }
 
-    public function getReservations()
+    public function getReservations(Request $request)
     {
-        $reservations = DB::table('reservations')
-            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
-            ->join('people', 'customers.people_id', '=', 'people.id')
-            ->select(
-                'reservations.id',
-                'reservations.reservationDate',
-                'reservations.state_reservation',
-                'people.name',
-                'people.lastName',
-                'people.phone',
-                'customers.id as id_customer',
-                'customers.clientType')
-            ->orderBy('reservations.reservationDate')
-            //->groupBy('people.id', 'reservations.id', 'customers.id')
-            ->get();
-
+        $type_reservations = $request['request'];
+        $reservations = $this->queryReservations($type_reservations);
         return DataTables::of($reservations)
             ->addColumn('state', function ($reservations){
                 if($reservations->state_reservation == 'en espera') return '<span class="label label-warning"> EN ESPERA</span>';
@@ -58,7 +44,7 @@ class APIController extends Controller
             })
             ->addColumn('action', function ($reservations) {
                 return '<div class="table-icons">'.
-                    '<a href="reservation/'. $reservations->id .'" class="btn btn-default btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver Reserva</a>' .
+                    '<a href="/reservation/'. $reservations->id .'" class="btn btn-default btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver Reserva</a>' .
                     //' <a onclick="cancelReservation('. $reservations->id .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Cancelar Reserva</a>'.
                     '</div>';
             })
@@ -93,9 +79,43 @@ class APIController extends Controller
             ->join('orders','orders.id','=','details_orders.orders_id')
             ->join('products','products.id','=','details_orders.products_id')
             ->join('suppliers','suppliers.id','=','orders.suppliers_id')
-            ->select('orders.*','products.*','suppliers.*')
+            ->select('orders.*','products.*','suppliers.*','details_orders.*','details_orders.id')
+
+        //$supplier = Supplier::select('id', 'companyName', 'productSupplied','contactName');
+
+       // $data= DB::table('details_orders')
             ->get();
-        return datatables($query)->toJson();
+        $data=DB::table('details_orders')->get();
+        return DataTables::of($query)
+            ->addColumn('action', function($query) {
+
+                    //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
+                    if($query->CAT_ORDERSTATUS == "recibido")
+                    {
+                        return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-success btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                        '</div>';
+                    }else{
+                    if($query->CAT_ORDERSTATUS == "rechazado")
+                    {
+                        return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-danger btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                        '</div>';
+                    }else{
+                        if($query->CAT_ORDERSTATUS == "cancelado")
+                        {
+                            return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-danger btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                '</div>';
+                        }else{
+                            if($query->CAT_ORDERSTATUS == "devuelto")
+                            {
+                                return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-warning btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                    '</div>';
+                            }
+                        }
+                    }
+                    }
+
+            })
+            ->toJson();
     }
 
     public function getSells()
@@ -106,7 +126,8 @@ class APIController extends Controller
             ->join('suppliers','suppliers.id','=','orders.suppliers_id')
             ->select('orders.*','products.*','suppliers.*')
             ->get();
-        return datatables($query)->toJson();
+        return datatables($query)
+            ->toJson();
     }
 
     public function getKardex()
@@ -134,6 +155,28 @@ class APIController extends Controller
                     '</div>';
             })->make(true);
 
+    }
+
+    public function queryReservations($today=null)
+    {
+        return DB::table('reservations')
+            ->join('customers', 'reservations.customers_id', '=', 'customers.id')
+            ->join('people', 'customers.people_id', '=', 'people.id')
+            ->when($today, function ($query) use ($today) {
+                $query->where('reservations.reservationDate', '=', date('Y-m-d'));
+            })
+            ->select(
+                'reservations.id',
+                'reservations.reservationDate',
+                'reservations.state_reservation',
+                'people.name',
+                'people.lastName',
+                'people.phone',
+                'customers.id as id_customer',
+                'customers.clientType')
+            ->orderBy('reservations.reservationDate')
+            //->groupBy('people.id', 'reservations.id', 'customers.id')
+            ->get();
     }
 
 }

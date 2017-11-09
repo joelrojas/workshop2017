@@ -53,7 +53,7 @@ use DB;
                 ->join('orders','orders.id','=','details_orders.orders_id')
                 ->join('products','products.id','=','details_orders.products_id')
                 ->join('suppliers','suppliers.id','=','orders.suppliers_id')
-                ->select('orders.*','products.*','suppliers.*','details_orders.*')
+                ->select('orders.*','products.*','suppliers.*','CAT_ORDERSTATUS')
                 ->get();
             return view('order.index',['orders'=>$query,'details_orders'=>$details_orders,'suppliers'=>$suppliers]);
         }
@@ -140,6 +140,20 @@ use DB;
             return $supplier;
         }
 
+        public function OrderState($id)
+        {
+            $user = DB::table('details_orders')->where('id', $id)->first();
+            return response()->json($user);
+        }
+        public function StateUpdate(Request $request)
+        {
+            $state=DB::table('details_orders')
+                     ->where('id', $request->id)
+                     ->update(['CAT_ORDERSTATUS' => $request->state,]);
+            $statedata=DB::table('details_orders')
+                     ->where('id',$request->id)->get();
+            return response()->json($statedata);
+        }
         /**
          * Update the specified resource in storage.
          *

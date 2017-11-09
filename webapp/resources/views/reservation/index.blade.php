@@ -152,7 +152,7 @@
             var table = $('#mainTable').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "ajax": "{{ route('api.reservations.index') }}",
+                "ajax": "{{ route('api.reservations.index', ['request' => ($param) ? $param : '' ]) }}",
                 "columns": [
                     { data: 'id', name: 'id'},
                     { data: 'lastName', name: 'lastName'},
@@ -162,7 +162,6 @@
                     { data: 'state', name: 'state'},
                     { data: 'reservationDate', name: 'reservationDate'},
                     { data: 'action', name: 'action', orderable: false, searchable: false }
-                    //{ defaultContent: "<button type=\"button\" class=\"btn btn-primary btn-detail open_modal\"> ver detalle</button> <button class=\"btn btn-danger\"> Cancelar</button>" }
                 ]
             });
       //  });

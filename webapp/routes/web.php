@@ -37,6 +37,7 @@ Route::put('/reservationEdit', 'ReservationController@update');
 Route::get('/getReservation', 'ReservationController@getReservation');
 Route::get('/reservation/{id}/edit', 'ReservationController@edit');
 Route::patch('/reservation/{id}', 'ReservationController@update');
+Route::get('/reservations/today', 'ReservationController@today')->name('reservations.today');
 Route::post('/search/reservation/available', 'ReservationController@searchCatalogTables')->name('search.tables.available');
 //CustomerController
 Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
@@ -66,7 +67,7 @@ Route::get('/supplier/search/product', 'ProductController@searchProduct')->name(
 //Ordenes de compra
 Route::get('/order/dataTable', 'SupplierController@listOrder');
 Route::post('/createOrder','KardexController@createOrder');
-
+Route::post('/EditStateOrder','KardexController@StateUpdate');
 
 //Users
 Route::get('/users', 'UserController@index');
