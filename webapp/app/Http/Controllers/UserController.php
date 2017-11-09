@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\People;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -82,9 +83,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $id_user = Auth::id();
+        $user = DB::table('users')
+                ->where('id', $id_user)
+                ->first();
+
+        $people = DB::table('people')
+                    ->join('users', 'users.people_id', '=', 'people.id')
+                    ->where('people.id', '=', $user->people_id)
+                    ->first();
+
+        return view('user.viewprofile', compact(['user','people']));
     }
 
     /**
@@ -93,9 +104,59 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        return view('user.edit');
+        $id_user = Auth::id();
+        $user = DB::table('users')
+            ->where('id', $id_user)
+            ->first();
+
+        $people = DB::table('people')
+            ->join('users', 'users.people_id', '=', 'people.id')
+            ->where('people.id', '=', $user->people_id)
+            ->first();
+
+        return view('user.editprofile', compact(['user','people']));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $email   = $request->input('email');
+        $username       = $request->input('username');
+        $people_id    = $request->input('idpeople');
+
+        $users = DB::table('users')
+            ->where('people_id', $people_id)
+            ->update([
+                'email'=> $email,
+                'username'=>$username
+            ]);
+
+        $name   = $request->input('name');
+        $lastName       = $request->input('lastName');
+        $phone    = $request->input('phone');
+        $address    =   $request->input('address');
+
+        if($users){
+
+            $people = DB::table('people')
+                ->where('id' , $people_id)
+                ->update([
+                    'name' => $name,
+                    'lastName' => $lastName,
+                    'phone' => $phone,
+                    'address' => $address
+                ]);
+            if($people){
+                return response()->json(['x'=> 'se regssitro users y people' ]);
+            }
+            else{
+                return response()->json(['x'=> 'no se registro people' ]);
+            }
+        }
+        else{
+            return response()->json(['x'=> 'no se regssitro users' ]);
+        }
     }
 
     /**

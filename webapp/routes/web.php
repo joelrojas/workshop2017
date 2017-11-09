@@ -74,7 +74,9 @@ Route::get('/users', 'UserController@index');
 Route::get('/userCreate', 'UserController@create');
 Route::post('/adduser','UserController@store');
 Route::put('/edituser','UserController@update');
-
+Route::get('/viewProfile','UserController@show');
+Route::get('/editProfile','UserController@edit');
+Route::put('/edituserprofile','UserController@updateProfile');
 //Reportes
 Route::get('/taskReport', 'ReportController@task');
 
@@ -87,3 +89,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/download-pdf','TaskController@downloadPDF');
 //Ventas
 Route::get('/sell','KardexController@indexSells');
+//#66615b
