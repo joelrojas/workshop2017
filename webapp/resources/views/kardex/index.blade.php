@@ -55,7 +55,6 @@
                 "ajax": "{{ route('api.kardex.index') }}",
                 "columns":
                     [
-
                         { data: 'dateorder' },
                         { data: 'name' },
                         { data: 'total' },

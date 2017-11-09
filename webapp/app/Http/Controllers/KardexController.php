@@ -24,6 +24,37 @@ use DB;
             return view('order.index',['suppliers'=>$suppliers]);
         }
 
+        public function storeBuy(Request $request)
+        {
+            $sells=DB::table('sells')->insertGetId([
+                'date'          =>$request->date,
+                'total'         =>$request->price,
+                'quantitySell'      =>$request->quantity,
+                'reservations_id' =>$request->idreservation
+            ]);
+            $suppliers_products=DB::table('suppliers_products')
+                ->join('products','products.id','=','suppliers_products.products_id')
+                ->select('suppliers_products.id')
+                ->where('products.id',$request->idproduct)
+                ->get();
+            foreach($suppliers_products as $supplier)
+            {
+                $data=$supplier->id;
+            }
+
+            //echo "<script>console.log( 'Debug Objects: " . $val . "' );</script>";
+            DB::table('details')->insert([
+               'subtotal'       =>$request->price,
+                'quantity'      =>$request->quantity,
+                'sells_id'      =>$sells,
+                'nit'           =>'10900667',
+                'name'          =>'Ricardo',
+                'lastname'      =>'Mollinedo',
+                'suppliers_products_id'=>$data
+            ]);
+            //$products=DB::table('suppliers_')
+
+        }
         public function indexSells()
         {
             return view('sell.index');
@@ -175,5 +206,10 @@ use DB;
         public function destroy($id)
         {
             //
+        }
+
+        public function destroySell(Request $request)
+        {
+            DB::table('details')->where('id','=',$request->id)->delete();
         }
     }

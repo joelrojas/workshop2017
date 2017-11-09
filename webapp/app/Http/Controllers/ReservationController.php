@@ -147,8 +147,11 @@ class ReservationController extends Controller
            ->join('people', 'customers.people_id', '=', 'people.id')
            ->where('reservations.id', '=', $idReservation)
            ->first();
-        return view('reservation.registered', compact('reservation'));
+       $products =DB::table('products')->get();
+        return view('reservation.registered',['reservation'=>$reservation,'products'=>$products]);
     }
+
+
 
     public function edit($id)
     {

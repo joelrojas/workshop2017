@@ -35,3 +35,5 @@ Route::get('/v1/suppliers','APIController@getSuppliers')->name('api.suppliers');
 Route::get('/supplier/{id}/edit','KardexController@edit');
 Route::get('/supplier/{id}/delete','SupplierController@destroy');
 Route::get('/order/{id}/edit','KardexController@OrderState');
+Route::get('/detailsorders/show','APIController@getDetailsSells')->name('api.details.sells');
+Route::get('/sell/{id}/delete','KardexController@destroySell');

@@ -58,12 +58,14 @@ public function listSupplier()
         */
         //$dato="FUNCIONA";
         //echo '<script type="text/javascript">alert("'.$dato.'");</script>';
+
         $supplier_id=DB::table('suppliers')->insertGetId([
             'companyName'     =>$request->companyName,
             'contactName'     =>$request->contactName,
             'address'         =>$request->address,
             'phono'           =>$request->phono,
-            'productSupplied' => "hola2"
+            'productSupplied' =>$request->list,
+            'CAT_STATESUPPLIER'=>$request->state
         ]);
         $auxi=array();
         $auxi=json_decode($request->productSupplied);
@@ -75,16 +77,30 @@ public function listSupplier()
         */
 
         foreach ($auxi as $valor) {
-        $product_id=DB::table('products')->insertGetId([
-                'name'       =>$valor->name,
-                'price'      =>0,
-                'quantity'   =>0,
-                'productType'=>"Alcoholica",
-            ]);
-        DB::table('suppliers_products')->insert([
-           'products_id' => $product_id,
-           'suppliers_id'=> $supplier_id
-        ]);
+            $search=DB::table('products')->select('id')->where('name',$valor->name)->get();
+            $data=0;
+            foreach($search as $value)
+            {
+                $data=$value->id;
+            }
+            if($data== 0){
+                $product_id=DB::table('products')->insertGetId([
+                    'name'       =>$valor->name,
+                    'price'      =>0,
+                    'quantity'   =>0,
+                    'productType'=>"Alcoholica",
+                ]);
+                DB::table('suppliers_products')->insert([
+                    'products_id' => $product_id,
+                    'suppliers_id'=> $supplier_id
+                ]);
+            }else{
+                DB::table('suppliers_products')->insert([
+                    'products_id' => intval($data),
+                    'suppliers_id'=> $supplier_id
+                ]);
+
+            }
         }
 
 

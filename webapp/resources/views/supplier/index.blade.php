@@ -174,7 +174,7 @@
 
 
 
-
+@section('modal')
     <div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static" >
         <div class="modal-dialog">
             <div class="modal-content">
@@ -199,8 +199,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                <label class="control-label" for="inputSuccess2">Producto</label>
-                                <input type="text" class="form-control" name="product" id="productEdit">
+                                    <label class="control-label" for="inputSuccess2">Direccion</label>
+                                    <input type="text" class="form-control" name="address" id="addressEdit">
+
                                 </div>
                             </div>
                             </div>
@@ -214,8 +215,8 @@
                                 </div>
                                 <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="control-label" for="inputSuccess2">Direccion</label>
-                                <input type="text" class="form-control" name="address" id="addressEdit">
+                                <label class="control-label" for="inputSuccess2">Telefono</label>
+                                <input type="text" class="form-control" name="phone" id="phoneEdit">
 
                             </div>
                                 </div>
@@ -223,10 +224,17 @@
                             <div class="row">
                                 <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="control-label" for="inputSuccess2">Telefono</label>
-                                <input type="text" class="form-control" name="phone" id="phoneEdit">
+
+                                <label class="control-label" for="inputSuccess2">Producto</label>
+                                <input type="text" class="form-control" name="phone" id="productEdit">
 
                             </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control form-control-sm" id="productaddlistEdit" size="3" multiple>
+
+                                    </select>
+
                                 </div>
                             </div>
 
@@ -236,6 +244,7 @@
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
                         <button id="EditSupplierButton" type="button" class="btn btn-primary" data-dismiss="modal">Modificar</button>
                     </div>
+        @endsection
 @endsection
 
 @section('modal-head')
@@ -316,6 +325,7 @@
     <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
     <script type="text/javascript">
+
         $('#product').autocomplete({
             source: '{{ route('search.product') }}',
             minlength: 1,
@@ -323,13 +333,23 @@
                // $('#product').val(ui.item.id);
             }
         });
-
+/*
         $("#productaddlist").change(function(){
             var productlabel = document.getElementById("productlabel");
+            var x = document.getElementById('productaddlist').selectedIndex;
+
+            alert(x);
+            $(this).siblings().find('option[value="'+$(this).val()+'"]').remove();
+
             //productlabel.innerText=$('#productaddlist').val();
             // $('input[name=valor1]').val($(this).val());
         });
+  */
+
+
+
         var list=new Array();
+
         function SearchInArray(array,value) {
             var flag;
             var count;
@@ -341,6 +361,44 @@
             });
                 return flag;
         }
+
+
+        $(document).on('change','#productaddlist',function(){
+            $(this).siblings().find('option[value="'+$(this).val()+'"]').remove();
+            //alert($('option[value="'+$(this).val()+'"]').val());
+
+
+            swal({
+                title: '¿Está seguro de eliminar a este proveedor?',
+                text: "'¡No podrás revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3189d6',
+                cancelButtonColor: '#EA4101',
+                confirmButtonText: 'Si, bórralo!',
+                cancelButtonText: 'No, cancelar!',
+            }).then(function () {
+                $erasedata=$('#productaddlist').val();
+                $('option[value="'+$('#productaddlist').val()+'"]').remove();
+                //alert(list);
+                //unset(list[$erasedata]);
+                //alert("NUEVA:"+list);
+                var combo = document.getElementById('productaddlist');
+                //combo[$('option[value="'+$('#productaddlist').val()+'"]')].selected=false;
+                //$('option[value="'+$('#productaddlist').val()+'"]').selected=false;
+                swal({
+                    title: 'Borrado!',
+                    text: 'El dato fue eliminado.',
+                    type: 'success',
+                    timer: '1500',
+
+                })
+
+            });
+
+        });
+
+        var listachar=" ";
         $('#productadd').click(function(){
 
             var testing=SearchInArray(list,$('#product').val());
@@ -349,10 +407,11 @@
             {
                 //alert(list.indexOf($('#product').val()));
                 //alert(list);
-                var html_select = '<option value="'+$('#product').val()+'">'+$('#product').val()+'</option> todito'+'<button>Quitar</button>';
+                var html_select = '<option id="'+$('#product').val()+'" value="'+$('#product').val()+'">'+$('#product').val()+'</option> todito'+'<button>Quitar</button>';
                 //$('#productaddlist').html(html_select);
 
                 $('#productaddlist').append(html_select);
+                listachar+=$('#product').val()+",";
                 list.push($('#product').val());
             }else{
                 swal("El producto ya se encuentra añadido");
@@ -646,7 +705,9 @@
                     'address':$('input[name=address]').val(),
                     //'productSupplied':JSON.stringify($('#productaddlist').val()),
                     'productSupplied':JSON.stringify(itemes),
-                    'phono':$('input[name=phone]').val()
+                    'phono':$('input[name=phone]').val(),
+                    'state':"Activo",
+                    'list':listachar
                 },
                 success:function () {
                     swal('Proveedor creado');
@@ -742,6 +803,7 @@
                 });
             });
         }
+
 
 
 

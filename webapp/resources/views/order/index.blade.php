@@ -39,10 +39,10 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="form-group has-success  has-feedback">
-                        <label for="inputEmail3" >Tipo de producto</label>
-                        <input type="text" class="form-control " name="productType" id="productType">
-                        <label id="type-error" class="error" for="email" style="display:none">el campo esta vacio o tiene un error</label>
+                    <div class="form-group">
+                        <label for="inputEmail3" >Precio</label>
+                        <input type="text" class="form-control " id="orderPrice" name="orderPrice" placeholder="Precio">
+                        <label id="price-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
                     </div>
                 </div>
 
@@ -73,11 +73,7 @@
                     </div>
 
                     <div class="col-sm-4">
-                        <div class="form-group">
-                            <label for="inputEmail3" >Precio</label>
-                            <input type="text" class="form-control " id="orderPrice" name="orderPrice" placeholder="Precio">
-                            <label id="price-error" class="error" for="email" style="display:none">campo vacio,valor negativo o texto no permitidos</label>
-                        </div>
+
                     </div>
 
 
@@ -215,7 +211,7 @@
     });
 
     $('#orderProduct').keyup(function () {
-        if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
+        if($('#orderProduct').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
 
             document.getElementById('createOrderButton').disabled = true;
@@ -237,7 +233,7 @@
 
     });
     //$('#orderQuantity').keyup(blankspacevalidation(this));
-    $('#productType').keyup(function () {
+   /* $('#productType').keyup(function () {
         if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
 
@@ -258,8 +254,9 @@
 
 
     });
+    */
     $('#orderPrice').keyup(function () {
-        if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
+        if($('#orderProduct').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
 
             document.getElementById('createOrderButton').disabled = true;
@@ -282,7 +279,7 @@
 
     });
     $('#orderQuantity').keyup(function () {
-        if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
+        if($('#orderProduct').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
             document.getElementById('createOrderButton').disabled = true;
         }else{
@@ -308,7 +305,7 @@
     });
 
     $('#quantityReceived').keyup(function () {
-        if($('#orderProduct').val()==="" || $('#productType').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
+        if($('#orderProduct').val()==="" || $('#orderPrice').val()==="" || $('#orderQuantity').val()==="" || $('#quantityReceived').val()==="")
         {
             document.getElementById('createOrderButton').disabled = true;
         }else{
@@ -380,12 +377,12 @@
             //    alert(data.length);
                 for(var i=0;i<data.length;++i)
                     //   console.log(data[i]);
-                    html_select += '<option value="'+data[i].name+'">'+data[i].name+'</option>';
+                    html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
                 $('#orderProduct').html(html_select);
             });
 
         }
-    });
+        });
 
 
     /*
@@ -404,24 +401,26 @@
     $('#createOrderButton').click(function () {
 
         var product = document.getElementById("orderProduct").getAttribute("class");
-        var type = document.getElementById("productType").getAttribute("class");
+        //var type = document.getElementById("productType").getAttribute("class");
         var quantity = document.getElementById("orderQuantity").getAttribute("class");
         var price = document.getElementById("orderPrice").getAttribute("class");
 
         var received = document.getElementById("quantityReceived").getAttribute("class");
         //alert(quantity);
-        if(product==="form-control error" ||type==="form-control error" || quantity==="form-control error" || price==="form-control error" || received==="form-control error")
+        if(product==="form-control error" || quantity==="form-control error" || price==="form-control error" || received==="form-control error")
         {
             //  alert("No funciona asi bro disculpa");
             // $.toaster({ priority : 'danger', title : 'Error', message : 'Existe algun campo erroneo'});
             swal('Campo(s) erroneos');
         }else{
+            /*
             if($('#orderQuantity').val()<=$('#quantityReceived').val())
             {
                 var state="Aceptado";
             }else{
                 var state="Rechazado";
             }
+            */
             $.ajax({
                 type:'post',
                 url:'/createOrder',
@@ -430,10 +429,10 @@
                     'productName': $('#orderProduct').val(),
                     'orderQuantity': $('#orderQuantity').val(),
                     'orderPrice': $('#orderPrice').val(),
-                    'productType':$('#productType').val(),
+                    //'productType':$('#productType').val(),
                     'quantityReceived':$('#quantityReceived').val(),
                     'supplier_id':$('#supplier').val(),
-                    'state':state
+                    'state':"Aceptado"
                 },
                 success:function () {
 

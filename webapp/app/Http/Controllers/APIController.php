@@ -171,4 +171,23 @@ class APIController extends Controller
 
     }
 
+    public function getDetailsSells()
+    {
+        $query=DB::table('details')
+                ->join('suppliers_products','suppliers_products.id','=','details.suppliers_products_id')
+                ->join('products','products.id','=','suppliers_products.products_id')
+                ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
+                ->join('sells','sells.id','=','details.sells_id')
+                ->select('products.*','details.id as detailsid','suppliers_products.*','sells.*')
+                ->get();
+        return DataTables::of($query)
+            ->addColumn('action',function ($query){
+                return  '<div class="table-icons">'.
+                    //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
+                    '<a onclick="editSell('. $query->detailsid .')" class="btn btn-primary btn-group-xs btn-fill "><i class="ti ti-marker"></i> Editar</a><br>'.
+                    '<a onclick="deleteSell('. $query->detailsid .')" class="btn btn-danger btn-group-xs btn-fill "><i class="ti ti-trash"></i> Eliminar</a>'.
+                    '</div>';
+            })
+            ->toJson();
+    }
 }

@@ -6,6 +6,16 @@
  * Time: 08:32 PM
  */-->
 @extends('layouts.app')
+@section('css')
+    {{-- Importando el css necesario para esta vista--}}
+    <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
+    <style>
+        .ui-autocomplete {
+            z-index: 5000;
+        }
+    </style>
+@endsection
+
 
 @section('title', 'Información Reserva')
 @section('title-description', 'Detalle de reservas')
@@ -32,9 +42,10 @@
                         <div class="card-content">
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <p class="leads"><b>Codigo de la reserva :</b> {{$reservation->reservations_id}}</p>
+                                    <input value="{{$reservation->reservations_id}}" type="hidden" id="idreservation" name="id">
+                                    <p id="reservation_id" class="leads"><b>Codigo de la reserva :</b> {{$reservation->reservations_id}}</p>
                                     <p class="leads"><b>Estado de la reserva :</b> {{$reservation->state_reservation}}</p>
-                                    <p class="leads"><b>Fecha a reservar :</b> {{ date('d-m-Y', strtotime($reservation->reservationDate)) }}</p>
+                                    <p id="reservation_date" class="leads"><b>Fecha a reservar :</b> {{ date('d-m-Y', strtotime($reservation->reservationDate)) }}</p>
                                     <p class="leads"><b>Fecha que se realizo la reserva :</b> {{ $reservation->created_at }}</p>
                                 </div>
                                 <!--
@@ -70,6 +81,7 @@
                                 </div>
                                 <!--
                                 <div class="col-xs-3">
+
                                     @include('reservation.styles.icon_color_reservation')
                                         <br><i class="ti-user"></i>
                                     </div>
@@ -117,9 +129,14 @@
                 </div>
             </div>
     </div>
-<div class="col-lg-9 offset-1">
+<div class="col-lg-9 ">
+
+    <div class="col-lg-12">
+    <div class="card">
     @include('reservation.styles.information_reservation')
     <a href="/reservation" class="btn btn-block btn-fill btn-primary">ir a lista de reservas</a>
+    </div>
+    </div>
 </div>
 </div>
     <section class="jumbotron">
@@ -170,6 +187,55 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="buy-product" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" class="form-horizontal" data-toggle="validator">
+                    {{ csrf_field() }} {{ method_field('POST') }}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span arria-hidden="true">&times;</span>
+                        </button>
+                        <h3 class="modal-title">Comprar producto</h3>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- <input type="hidden" id="id" name="id"> -->
+                        <!-- <input type="hidden" id="customers_id" name="customers_id"><br> -->
+                        <div class="form-group">
+                            <label for="state_reservation" class="col-md-3 control-label">Producto</label>
+
+                            <div class="col-md-6">
+                            <!-- <select class="form-control" name="product_list" id="product_list">
+                                   @foreach($products as $product)
+
+                                    <option value="{{ $product->id }}">{{ $product->name}}</option>
+                                    @endforeach
+                                 </select>
+                                 -->
+                                <input type="text" id="name_product" name="name_product" class="form-control" required autocomplete="off" >
+                                <span class="help-block with-errors"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description" class="col-md-3 control-label">Cantidad</label>
+                            <div class="col-md-6">
+                                <input type="text" id="quantity_product" name="quantity_product" class="form-control" required autocomplete="off" >
+                                <span class="help-block with-errors"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="addproduct" type="button" class="btn btn-primary btn-save">Enviar</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('js')
     <script src="{{ asset('assets/js/jquery-1.10.2.js')}}" type="text/javascript"></script>
@@ -179,8 +245,57 @@
     <script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
     <script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
     <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 
     <script type="text/javascript">
+        //Script para autocomplete de producto en el modal
+
+        var table = $('#sellsTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": "{{ route('api.details.sells') }}",
+            "columns": [
+                { data: 'id', name: 'id' },
+                { data: 'quantity', name: 'price' },
+                { data: 'name', name: 'quantity' },
+                { data: 'price', name: 'price' },
+                { data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+
+        });
+
+        $('#addproduct').on('click',function () {
+            $.ajax({
+                type: 'POST',
+                url: "/buyproduct",
+                data:{
+                    '_token':$('input[name=_token]').val(),
+                    //'date':$('#reservation_date').val(),
+                    'date':'07-11-2017',
+                    'quantity':$('#quantity_product').val(),
+                    'idproduct':$('#idproduct').val(),
+                    'idreservation':$('#idreservation').val(),
+                    //'productSupplied':JSON.stringify($('#productaddlist').val()),
+                    'price':500
+
+                },
+                success:function () {
+                    swal('Proveedor creado');
+                    table.ajax.reload();
+                }
+            })
+        });
+
+        $('#name_product').autocomplete({
+            source: '{{ route('search.product') }}',
+            minlength: 1,
+            select: function (event, ui) {
+                $('#idproduct').val(ui.item.id);
+
+                // $('#product').val(ui.item.id);
+            }
+        });
 
         $( document ).ready(function() {
             var state_element=document.querySelector('#state_reservation_script');
@@ -202,7 +317,9 @@
             }
         });
 
-
+        $('#add_product').on('click',function () {
+            $('#buy-product').modal('show');
+        });
         function changeStateReservation(id){
             save_method = "edit";
             $('input[name=_method]').val('PATCH');
@@ -262,6 +379,46 @@
                 }
             });
         })
+
+        function deleteSell(id){
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            swal({
+                title: '¿Está seguro de eliminar a esta venta?',
+                text: "'¡No podrás revertir esto!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3189d6',
+                cancelButtonColor: '#EA4101',
+                confirmButtonText: 'Si, bórralo!',
+                cancelButtonText: 'No, cancelar!',
+            }).then(function () {
+
+                $.ajax({
+                    url: "api/sell" + '/' + id +'/' +'delete',
+                    type: "POST",
+                    data: {'_token': csrf_token,
+                    'id':id
+                    },
+                    success: function(data){
+                        table.ajax.reload();
+                        swal({
+                            title: 'Borrado!',
+                            text: 'El dato fue eliminado.',
+                            type: 'success',
+                            timer: '1500'
+                        })
+                    },
+                    error: function() {
+                        swal({
+                            title: '¡Error!',
+                            text: '<b>No se pueden eliminar este catalogo, Intente mas tarde</b>',
+                            type: 'error',
+                            timer: '1500'
+                        });
+                    }
+                });
+            });
+        }
 
     </script>
 @endsection

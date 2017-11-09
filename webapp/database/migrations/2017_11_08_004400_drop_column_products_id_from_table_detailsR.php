@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLastnameToTableDetailsOrdersR extends Migration
+class DropColumnProductsIdFromTableDetailsR extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddLastnameToTableDetailsOrdersR extends Migration
      */
     public function up()
     {
-        Schema::table('details_orders', function (Blueprint $table) {
+        Schema::table('details', function (Blueprint $table) {
             //
-            $table->string('lastname')->nullable();
+            $table->dropColumn('products_id');
         });
     }
 
@@ -26,9 +26,8 @@ class AddLastnameToTableDetailsOrdersR extends Migration
      */
     public function down()
     {
-        Schema::table('details_orders', function (Blueprint $table) {
+        Schema::table('details', function (Blueprint $table) {
             //
-            $table->string('lastname')->nullable();
         });
     }
 }
