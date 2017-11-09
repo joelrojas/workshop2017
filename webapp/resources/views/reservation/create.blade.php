@@ -111,7 +111,7 @@
                         <div align="card-footer">
                             <div class="form-group " align="center">
                                 <button type="submit" class="btn btn-success btn-fill btn-wd">Aceptar</button>
-                                <a href="{{ url('/reservation') }}" class="btn btn-danger btn-fill btn-wd">Salir</a>
+                                <a href="{{ url('/reservations/today') }}" class="btn btn-danger btn-fill btn-wd">Salir</a>
                                 <a href="" class="btn btn-warning btn-fill btn-wd" onclick="resetForm()">Limpiar</a>
                             </div>
                             <br>
