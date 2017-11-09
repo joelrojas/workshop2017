@@ -86,7 +86,7 @@
                                </div>
                                <div class="form-group col-md-4">
                                    <label for="" class="form-control-label">Mesas disponibles</label>
-                                   <select class="form-control" name="name_table" id="name_table">
+                                   <select class="form-control name-table" name="name_table" id="name_table">
                                        <option selected disabled>Seleccione la mesa</option>
                                    </select>
                                </div>
@@ -111,7 +111,7 @@
                         <div align="card-footer">
                             <div class="form-group " align="center">
                                 <button type="submit" class="btn btn-success btn-fill btn-wd">Aceptar</button>
-                                <a href="{{ url('/reservation') }}" class="btn btn-danger btn-fill btn-wd">Salir</a>
+                                <a href="{{ url('/reservations/today') }}" class="btn btn-danger btn-fill btn-wd">Salir</a>
                                 <a href="" class="btn btn-warning btn-fill btn-wd" onclick="resetForm()">Limpiar</a>
                             </div>
                             <br>
@@ -127,29 +127,23 @@
                     <p><b>Registro historico</b></p>
                 </div>
                 <div class="card-content">
-                    <div class="nav-tabs-navigation">
-                        <div class="nav-tabs-wrapper">
-                            <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-                                <li class="active"><a href="#home" data-toggle="tab">Tipo de Cliente</a></li>
-                                <!-- <li><a href="#profile" data-toggle="tab">Productos Preferidos</a></li> -->
-                                <li><a href="#messages" data-toggle="tab">Observaciones</a></li>
-                            </ul>
+                    <div class="card card-circle-chart" data-background-color="blues">
+                        <div class="card-header text-center">
+                            <h5 class="card-title"><b>TIPO DE CLIENTE</b></h5>
+                        </div>
+                        <div class="card-content">
+                            <h5 align="left" ><b>Tipo de cliente:</b>  <span for="typeclient" id="typeclient"></span></h5>
+                            <h5 align="left" ><b>Puntos:</b>  <span for="points" id="points"></span></h5>
+                            <h5 align="left" ><b>Primera visita:</b>  <span for="created_at" id="created_at"></span></h5>
                         </div>
                     </div>
-                    <div id="my-tab-content" class="tab-content text-center">
-                        <div class="tab-pane active" id="home">
-                            <h5 align="left"><b>Tipo de cliente:</b>  <span for="typeclient" id="typeclient"></span></h5>
-
-                            <h5 align="left"><b>Puntos:</b>  <span for="points" id="points"></span></h5>
-                            <h5 align="left"><b>Primera visita:</b>  <span for="created_at" id="created_at"></span></h5>
+                    <div class="card card-circle-char" id="div-observation" style="display: none" data-background-color="orange">
+                        <div class="card-header text-center">
+                            <h5 class="card-title"><b>OBSERVACIONES</b></h5>
                         </div>
-                        <!-- <div class="tab-pane" id="profile">
-                            <p>Here is your profile.</p>
-                        </div> -->
-                        <div class="tab-pane" id="messages">
+                        <div class="card-content">
                             <h5 align="left"><b>Fecha de la reserva:</b>  <span for="date_reservation" id="date_reservation"></span></h5>
                             <h5 align="left"><b>Observación:</b>  <span for="observation" id="observation"></span></h5>
-                            <!-- <h5 align="left"><b>Primera visita:</b>  <span for="created_at" id="created_at"></span></h5> -->
                         </div>
                     </div>
                 </div>
@@ -201,6 +195,7 @@
             });
             $('.datepicker2').datetimepicker({
                 format: "DD/MM/YYYY",
+                minDate: 'moment',
                 icons: {
                     time: "fa fa-clock-o",
                     date: "fa fa-calendar",
@@ -275,7 +270,7 @@
                     if (search) {
                         $('#name_table').html('');
                         $.each(search, function (index, item) {
-                            $('#name_table').append('<option value="' + item.description + '">' + item.description + '</option>')
+                            $('#name_table').append('<option value="' + item.description + '">' + item.description + '</option>');
                         });
                     }
                     else {
@@ -304,27 +299,27 @@
             var typeTable;
             if (idTable == 1) typeTable = 'vip';
             else typeTable = 'normal';
-
             var newtr = '<tr  data-id="' + idTable + '">';
-            newtr = newtr + '<td><input type="hidden" id="id_table" name="id_table[]" value="'+idTable+'"><input  class="form-control"  id="type_table" name="type_table[]" value="' + typeTable + '" /></td>';
-            newtr = newtr + '<td><input  class="form-control" id="name_table" name="name_table[]" value="' + nameTable + '" /></td>';
+            newtr = newtr + '<td ><input type="hidden" id="id_table" name="id_table[]" value="'+idTable+'"><input  class="form-control"  id="type_table" name="type_table[]" value="' + typeTable + '" /></td>';
+            newtr = newtr + '<td class="name_table"><input  class="form-control" id="name_table" name="name_table[]" value="' + nameTable + '" /></td>';
             newtr = newtr + '<td align="center"><button type="button" class="btn btn-danger btn-wd btn-fill remove-item"><i class="ti ti-trash"></i>Eliminar</button></td></tr>';
-
             $('#ProSelected').append(newtr); //Agrego el Producto al tbody de la Tabla con el id=ProSelected
-
-            RefrescaProducto();//Refresco Productos
-
+            $('.name-table').each(function() {
+                $(this).find('option[value="' + $(this).val() + '"]').remove(); // borro la opcion  que selecciono.
+            });
+          //  RefrescaProducto();//Refresco Productos
             $('.remove-item').off().click(function (e) {
                 $(this).parent('td').parent('tr').remove(); //En accion elimino el Producto de la Tabla
+
+                $('#name_table').append('<option value="' + $(this).parents("tr").find(".name_table input").val() +'">' + $(this).parents("tr").find(".name_table input").val() + '</option>');
                 if ($('#ProSelected tr.item').length == 0)
                     $('#ProSelected .no-item').slideDown(300);
-                RefrescaProducto();
+            //    RefrescaProducto();
             });
-            $('.iProduct').off().change(function (e) {
-                RefrescaProducto();
-            });
+            //$('.iProduct').off().change(function (e) {
+               // RefrescaProducto();
+            //});
         }
-
         function RefrescaProducto() {
             var ip = [];
             var i = 0;
@@ -340,7 +335,6 @@
             var ipt = JSON.stringify(ip); //Convierto la Lista de Productos a un JSON para procesarlo en tu controlador
             $('#ListaPro').val(encodeURIComponent(ipt));
         }
-
         // ####################################### Realiza la busqueda del cliente por ci #######################################################
         $('#ci').autocomplete({
             source: '{{ route('search.customer.ci') }}',
@@ -375,9 +369,11 @@
                         document.getElementById('typeclient').innerHTML = data.clientType;
                         document.getElementById('points').innerHTML = data.points;
                         document.getElementById('created_at').innerHTML = data.created_at;
-
-                        document.getElementById('date_reservation').innerHTML = history.created_at;
-                        document.getElementById('observation').innerHTML = history.observation;
+                        if(history){
+                            document.getElementById('div-observation').style.display = ''
+                            document.getElementById('date_reservation').innerHTML = history.created_at;
+                            document.getElementById('observation').innerHTML = history.observation;
+                        }
                     }
                     else {
                         $.toaster({priority: 'danger', title: '¡Atención!', message: 'Usuario Nuevo'});

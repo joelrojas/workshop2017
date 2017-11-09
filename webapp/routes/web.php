@@ -37,6 +37,7 @@ Route::put('/reservationEdit', 'ReservationController@update');
 Route::get('/getReservation', 'ReservationController@getReservation');
 Route::get('/reservation/{id}/edit', 'ReservationController@edit');
 Route::patch('/reservation/{id}', 'ReservationController@update');
+Route::get('/reservations/today', 'ReservationController@today')->name('reservations.today');
 Route::post('/search/reservation/available', 'ReservationController@searchCatalogTables')->name('search.tables.available');
 //CustomerController
 Route::get('/search/customer/phone', 'CustomerController@autocompleteCustomerByPhone')->name('search.customer.phone');
@@ -74,7 +75,9 @@ Route::get('/users', 'UserController@index');
 Route::get('/userCreate', 'UserController@create');
 Route::post('/adduser','UserController@store');
 Route::put('/edituser','UserController@update');
-
+Route::get('/viewProfile','UserController@show');
+Route::get('/editProfile','UserController@edit');
+Route::put('/edituserprofile','UserController@updateProfile');
 //Reportes
 Route::get('/taskReport', 'ReportController@task');
 
@@ -87,3 +90,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/download-pdf','TaskController@downloadPDF');
 //Ventas
 Route::get('/sell','KardexController@indexSells');
+//#66615b

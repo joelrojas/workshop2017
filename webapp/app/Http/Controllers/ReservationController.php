@@ -23,7 +23,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return view('reservation.index');
+        $route = 'api.reservations.index';
+        $param = '';
+        return view('reservation.index', compact(['route', 'param']));
     }
 
     /**
@@ -251,6 +253,12 @@ class ReservationController extends Controller
         }
 
         return response()->json(['search'=>$search ]);
+    }
+
+    public function today()
+    {
+        $param = 'today';
+        return view('reservation.index', compact( 'param'));
     }
 
     public function query_where($table, $column, $operation ='=',$value, $end = '0')

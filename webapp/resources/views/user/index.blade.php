@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('css')
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+@endsection
 @section('menu_task', 'open active')
 @section('title', 'Control de Usuarios')
 @section('title-description', 'Tabla de Usuarios')
@@ -224,7 +227,7 @@
 
 
             <div class="modal-footer">
-                <button id="EditUserButton" type="submit" class="btn btn-info btn-fill pull-right">Guardar</button>
+                <button id="EditUserButton" type="submit" class="btn btn-default btn-group-xs btn-fill">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
         </div>
@@ -237,9 +240,12 @@
     <script src="{{ asset('assets/js/jquery-ui.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/jquery.validate.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
     <script src="js/user.js"></script>
     <!--<script src="js/main.js"></script>-->
     <script type="text/javascript">
@@ -310,7 +316,7 @@
                     { data: 'email' },
                     { data: 'username' },
                     { data: 'userType' },
-                    { defaultContent: "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#myModal'>Editar</button>" + " "+ "<button class='btn btn-primary btn-lg' data-toggle='modal' data-target='#SupplierModalDelete'>Eliminar</button>"}
+                    { defaultContent: "<button class='btn btn-default btn-group-xs btn-fill' data-toggle='modal' data-target='#myModal'><i class='ti ti-marker'></i>Editar</button>" + " "+ "<button class='btn btn-danger btn-group-xs btn-fill ' data-toggle='modal' data-target='#SupplierModalDelete'><i class='ti ti-trash'></i>Eliminar</button>"}
                 ],
 
             });

@@ -88,8 +88,8 @@
 	<!-- Sweet Alert 2 plugin -->
 	<script src="{{ asset('assets/js/sweetalert2.js') }}"></script>
 	<script src="{{ asset('assets/js/paper-dashboard.js?v=1.2.1') }}"></script>
-	<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-	<script src="//cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+	<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('assets/js/dataTables.boostrap4.min.js') }}"></script>
 	<script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
 
 	<script type="text/javascript">

@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/img/favicon.png') }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Paper Dashboard PRO by Creative Tim</title>
+    <title>Club Gitana</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -37,11 +37,11 @@
     <div class="sidebar" data-background-color="brown" data-active-color="danger">
         <div class="logo">
             <a href="http://www.creative-tim.com/" class="simple-text logo-mini">
-                CT
+                CG
             </a>
 
             <a href="http://www.creative-tim.com/" class="simple-text logo-normal">
-                Creative Tim
+                CLUB GITANA
             </a>
         </div>
         <div class="sidebar-wrapper">
@@ -52,7 +52,7 @@
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
 	                        <span>
-								Chet Faker
+								{{ Auth()->user()->email }}
 		                        <b class="caret"></b>
 							</span>
                     </a>
@@ -61,21 +61,15 @@
                     <div class="collapse" id="collapseExample">
                         <ul class="nav">
                             <li>
-                                <a href="#profile">
+                                <a href="{{ url('/viewProfile') }}">
                                     <span class="sidebar-mini">Mp</span>
-                                    <span class="sidebar-normal">My Profile</span>
+                                    <span class="sidebar-normal">Mi Perfil</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#edit">
+                                <a href="{{ url('/editProfile') }}">
                                     <span class="sidebar-mini">Ep</span>
-                                    <span class="sidebar-normal">Edit Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#settings">
-                                    <span class="sidebar-mini">S</span>
-                                    <span class="sidebar-normal">Settings</span>
+                                    <span class="sidebar-normal">Editar Perfil</span>
                                 </a>
                             </li>
                             @if (Route::has('login'))

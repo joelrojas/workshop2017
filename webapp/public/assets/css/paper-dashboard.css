@@ -7926,7 +7926,7 @@ star {
   border: 2px solid #7a9e9f;
 }
 .card[data-background-color="green"] {
-  background: #d5e5a3;
+  background: #7AC29A;
 }
 .card[data-background-color="green"] .category {
   color: #92ac56;
@@ -7978,7 +7978,7 @@ star {
   border: 2px solid #5a283d;
 }
 .card[data-background-color="orange"] {
-  background: #ff8f5e;
+  background: #eb5e28;
 }
 .card[data-background-color="orange"] .category {
   color: #e95e37;
