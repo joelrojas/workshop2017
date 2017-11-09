@@ -66,7 +66,7 @@
                     <div class="row">
                         <div class="col-md-5 selectContainer">
                             <label class="control-label">
-                                Sexo <star>*</star>
+                                Tarea <star>*</star>
                             </label>
                             <select class="form-control" name="multiple" id="multiple"  required="true">
                                 <option value="" disabled="" selected="">Tarea...</option>
