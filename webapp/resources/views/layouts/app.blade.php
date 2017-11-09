@@ -61,21 +61,15 @@
                     <div class="collapse" id="collapseExample">
                         <ul class="nav">
                             <li>
-                                <a href="#profile">
+                                <a href="{{ url('/viewProfile') }}">
                                     <span class="sidebar-mini">Mp</span>
-                                    <span class="sidebar-normal">My Profile</span>
+                                    <span class="sidebar-normal">Mi Perfil</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#edit">
+                                <a href="{{ url('/editProfile') }}">
                                     <span class="sidebar-mini">Ep</span>
-                                    <span class="sidebar-normal">Edit Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#settings">
-                                    <span class="sidebar-mini">S</span>
-                                    <span class="sidebar-normal">Settings</span>
+                                    <span class="sidebar-normal">Editar Perfil</span>
                                 </a>
                             </li>
                             @if (Route::has('login'))
