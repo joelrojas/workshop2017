@@ -111,7 +111,7 @@
                         <div align="card-footer">
                             <div class="form-group " align="center">
                                 <button type="submit" class="btn btn-success btn-fill btn-wd">Aceptar</button>
-                                <a href="{{ url('/reservation') }}" class="btn btn-danger btn-fill btn-wd">Salir</a>
+                                <a href="{{ url('/reservations/today') }}" class="btn btn-danger btn-fill btn-wd">Salir</a>
                                 <a href="" class="btn btn-warning btn-fill btn-wd" onclick="resetForm()">Limpiar</a>
                             </div>
                             <br>
@@ -127,7 +127,7 @@
                     <p><b>Registro historico</b></p>
                 </div>
                 <div class="card-content">
-                    <div class="card card-circle-chart" data-background-color="orange">
+                    <div class="card card-circle-chart" data-background-color="blues">
                         <div class="card-header text-center">
                             <h5 class="card-title"><b>TIPO DE CLIENTE</b></h5>
                         </div>
@@ -135,10 +135,15 @@
                             <h5 align="left" ><b>Tipo de cliente:</b>  <span for="typeclient" id="typeclient"></span></h5>
                             <h5 align="left" ><b>Puntos:</b>  <span for="points" id="points"></span></h5>
                             <h5 align="left" ><b>Primera visita:</b>  <span for="created_at" id="created_at"></span></h5>
-                            <hr>
+                        </div>
+                    </div>
+                    <div class="card card-circle-char" id="div-observation" style="display: none" data-background-color="orange">
+                        <div class="card-header text-center">
+                            <h5 class="card-title"><b>OBSERVACIONES</b></h5>
+                        </div>
+                        <div class="card-content">
                             <h5 align="left"><b>Fecha de la reserva:</b>  <span for="date_reservation" id="date_reservation"></span></h5>
                             <h5 align="left"><b>Observación:</b>  <span for="observation" id="observation"></span></h5>
-
                         </div>
                     </div>
                 </div>
@@ -364,9 +369,11 @@
                         document.getElementById('typeclient').innerHTML = data.clientType;
                         document.getElementById('points').innerHTML = data.points;
                         document.getElementById('created_at').innerHTML = data.created_at;
-
-                        document.getElementById('date_reservation').innerHTML = history.created_at;
-                        document.getElementById('observation').innerHTML = history.observation;
+                        if(history){
+                            document.getElementById('div-observation').style.display = ''
+                            document.getElementById('date_reservation').innerHTML = history.created_at;
+                            document.getElementById('observation').innerHTML = history.observation;
+                        }
                     }
                     else {
                         $.toaster({priority: 'danger', title: '¡Atención!', message: 'Usuario Nuevo'});
@@ -378,6 +385,8 @@
                     }
                 }
             });
+
+
         }
     </script>
 @endsection

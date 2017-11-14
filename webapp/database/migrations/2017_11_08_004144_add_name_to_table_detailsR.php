@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddNitToTableDetailsOrdersR extends Migration
+class AddNameToTableDetailsR extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddNitToTableDetailsOrdersR extends Migration
      */
     public function up()
     {
-        Schema::table('details_orders', function (Blueprint $table) {
+        Schema::table('details', function (Blueprint $table) {
             //
-            $table->string('nit')->nullable();
+            $table->string('name')->nullable();
         });
     }
 
@@ -26,9 +26,9 @@ class AddNitToTableDetailsOrdersR extends Migration
      */
     public function down()
     {
-        Schema::table('details_orders', function (Blueprint $table) {
+        Schema::table('details', function (Blueprint $table) {
             //
-            $table->string('nit')->nullable();
+            $table->string('name')->nullable();
         });
     }
 }

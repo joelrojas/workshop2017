@@ -68,7 +68,8 @@ Route::get('/supplier/search/product', 'ProductController@searchProduct')->name(
 Route::get('/order/dataTable', 'SupplierController@listOrder');
 Route::post('/createOrder','KardexController@createOrder');
 Route::post('/EditStateOrder','KardexController@StateUpdate');
-
+//Ventas
+Route::post('/buyproduct','KardexController@storeBuy');
 //Users
 Route::get('/users', 'UserController@index');
 Route::get('/userCreate', 'UserController@create');
