@@ -90,3 +90,7 @@ Route::get('/download-pdf','TaskController@downloadPDF');
 //Ventas
 Route::get('/sell','KardexController@indexSells');
 //#66615b
+//dashboards
+Route::get('listado_graficas', 'GraficasController@index');
+Route::get('grafica_registros/{anio}/{mes}', 'GraficasController@registros_mes');
+/*Route::get('grafica_publicaciones', 'GraficasController@total_publicaciones');*/
