@@ -94,4 +94,6 @@ Route::get('/sell','KardexController@indexSells');
 //dashboards
 Route::get('listado_graficas', 'GraficasController@index');
 Route::get('grafica_registros/{anio}/{mes}', 'GraficasController@registros_mes');
+//Route::get('grafica_registros/{anio}/{mes}', 'GraficasController@reservation_month');
+//Route::get('listado_graficas', 'GraficasController@comparative_clientType');
 /*Route::get('grafica_publicaciones', 'GraficasController@total_publicaciones');*/

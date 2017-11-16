@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('css')
+
 	<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.css') }}">
 	<style>
 		.ui-autocomplete {
@@ -7,7 +8,9 @@
 		}
 	</style>
 	<link rel="stylesheet" href="{{ asset('assets/css/datepicker3.css') }}">
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 @endsection
 @section('menu_task', 'open active')
 @section('title', 'Asignacion de Tareas')
@@ -57,7 +60,7 @@
 
 <div  class="row" >
 <br/>
-	<div class="box box-primary">
+	<div class="col-md-6">
 		<div class="box-header">
 		</div>
 
@@ -68,10 +71,7 @@
 		</div>
 	</div>
 
-
-
-		<br/>
-	<div class="box box-primary">
+    <div class="col-md-6">
 		<div class="box-header">
 		</div>
 
@@ -83,17 +83,14 @@
 	</div>
 
 
-	<br/>
-	<div class="box box-primary">
-		<div class="box-header">
-		</div>
 
-		<div class="box-body" id="div_grafica_pie">
-		</div>
 
-	    <div class="box-footer">
-		</div>
-	</div>
+
+
+
+
+
+    <div id="container2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
 
 </div>
@@ -115,6 +112,46 @@
         cargar_grafica_barras({{ $anio }},{{ intval($mes) }});
         cargar_grafica_lineas({{ $anio }},{{ intval($mes) }});
         cargar_grafica_pie();
+
+
+        Highcharts.chart('container2', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Clientes Nuevos vs Habituales'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.undefined:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Clientes',
+                colorByPoint: true,
+                data: [{
+                    name: 'Habitual',
+                    y:{{$habitual}}
+                }, {
+                    name: 'Nuevo',
+                    y: {{$nuevo}}
+                }]
+            }]
+        });
 	</script>
 @endsection
 

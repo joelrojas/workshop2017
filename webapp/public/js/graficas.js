@@ -94,7 +94,7 @@ var options={
            
         },
           title: {
-            text: 'Numero de Registros en el Mes',
+            text: 'Numero de Reservas en el Mes',
             x: -20 //center
         },
         subtitle: {
@@ -106,7 +106,7 @@ var options={
         },
         yAxis: {
             title: {
-                text: 'REGISTROS POR DIA'
+                text: 'RESERVAS POR DIA'
             },
             plotLines: [{
                 value: 0,
@@ -115,7 +115,7 @@ var options={
             }]
         },
         tooltip: {
-            valueSuffix: ' registros'
+            valueSuffix: ' reservas'
         },
         legend: {
             layout: 'vertical',
@@ -158,7 +158,7 @@ function cargar_grafica_pie(){
 
 var options={
      // Build the chart
-     
+
             chart: {
                 renderTo: 'div_grafica_pie',
                 plotBackgroundColor: null,
@@ -187,7 +187,7 @@ var options={
                 colorByPoint: true,
                 data: []
             }]
-     
+
 }
 
 $("#div_grafica_pie").html( $("#cargador_empresa").html() );
@@ -201,10 +201,10 @@ var tipos=datos.tipos;
 var totattipos=datos.totaltipos;
 var numeropublicaciones=datos.numerodepubli;
 
-    for(i=0;i<=totattipos-1;i++){  
+    for(i=0;i<=totattipos-1;i++){
     var idTP=parseInt(tipos[i].id);
-    var objeto= {name: tipos[i].titulo, y:numeropublicaciones[idTP] };     
-    options.series[0].data.push( objeto );  
+    var objeto= {name: tipos[i].titulo, y:numeropublicaciones[idTP] };
+    options.series[0].data.push( objeto );
     }
  //options.title.text="aqui e podria cambiar el titulo dinamicamente";
  chart = new Highcharts.Chart(options);

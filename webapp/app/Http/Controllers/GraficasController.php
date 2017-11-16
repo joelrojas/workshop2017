@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class GraficasController extends Controller
 {
@@ -27,14 +28,17 @@ class GraficasController extends Controller
         $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
         $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
         $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
-        $usuarios=User::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
-        $ct=count($usuarios);
+        $people = DB::table('people')
+            ->whereBetween('created_at', [$fecha_inicial,  $fecha_final])
+            ->get();
+        //$usuarios=User::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
+        $ct=count($people);
 
         for($d=1;$d<=$ultimo_dia;$d++){
             $registros[$d]=0;     
         }
 
-        foreach($usuarios as $usuario){
+        foreach($people as $usuario){
         $diasel=intval(date("d",strtotime($usuario->created_at) ) );
         $registros[$diasel]++;    
         }
@@ -43,37 +47,70 @@ class GraficasController extends Controller
         return   json_encode($data);
     }
 
-/*
-    public function total_publicaciones(){
-        $tipospublicacion=TipoPublicaciones::all();
-        $ctp=count($tipospublicacion);
-        $publicaciones=Publicaciones::all();
-        $ct =count($publicaciones);
+    public function reservation_month($anio,$mes)
+    {
+        $primer_dia=1;
+        $ultimo_dia=$this->getUltimoDiaMes($anio,$mes);
+        $fecha_inicial=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$primer_dia) );
+        $fecha_final=date("Y-m-d H:i:s", strtotime($anio."-".$mes."-".$ultimo_dia) );
+        $usuarios=User::whereBetween('created_at', [$fecha_inicial,  $fecha_final])->get();
+        $ct=count($usuarios);
 
-        for($i=0;$i<=$ctp-1;$i++){
-         $idTP=$tipospublicacion[$i]->id;
-         $numerodepubli[$idTP]=0;
-        }
-
-        for($i=0;$i<=$ct-1;$i++){
-         $idTP=$publicaciones[$i]->idTipopublicacion;
-         $numerodepubli[$idTP]++;
-
-        }
-
-        $data=array("totaltipos"=>$ctp,"tipos"=>$tipospublicacion, "numerodepubli"=>$numerodepubli);
-        return json_encode($data);
+        for($d=1;$d<=$ultimo_dia;$d++){
+        $registros[$d]=0;
     }
-*/
+
+        foreach($usuarios as $usuario){
+            $diasel=intval(date("d",strtotime($usuario->created_at) ) );
+            $registros[$diasel]++;
+        }
+
+        $data=array("totaldias1"=>$ultimo_dia, "registrosdia1" =>$registros);
+        return   json_encode($data);
+    }
+
+
+
+    /*
+        public function total_publicaciones(){
+            $tipospublicacion=TipoPublicaciones::all();
+            $ctp=count($tipospublicacion);
+            $publicaciones=Publicaciones::all();
+            $ct =count($publicaciones);
+
+            for($i=0;$i<=$ctp-1;$i++){
+             $idTP=$tipospublicacion[$i]->id;
+             $numerodepubli[$idTP]=0;
+            }
+
+            for($i=0;$i<=$ct-1;$i++){
+             $idTP=$publicaciones[$i]->idTipopublicacion;
+             $numerodepubli[$idTP]++;
+
+            }
+
+            $data=array("totaltipos"=>$ctp,"tipos"=>$tipospublicacion, "numerodepubli"=>$numerodepubli);
+            return json_encode($data);
+        }
+    */
 
     public function index()
     {
         $anio=date("Y");
         $mes=date("m");
-        return view("report.listado_graficas")
+        $habitual = DB::table('customers')
+            ->select('customers.*')
+            ->where('clientType', 'habitual')
+            ->count();
+        $nuevo = DB::table('customers')
+            ->select('customers.*')
+            ->where('clientType', 'nuevo')
+            ->count();
+        return view("report.listado_graficas", compact(['habitual','nuevo']))
                ->with("anio",$anio)
                ->with("mes",$mes);
     }
+
 
     /**
      * Show the form for creating a new resource.
