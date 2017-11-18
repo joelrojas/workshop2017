@@ -72,14 +72,61 @@ class APIController extends Controller
             ->get();
         return datatables($query)->toJson();
     }
+    /*
+    public function getOrders()
+    {
+        $query = DB::table('orders')
+            ->join('orders','orders.suppliers_products_id','=','suppliers_products.id')
+            ->join('products','products.id','=','suppliers_products.products_id')
+            ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
+            ->select('orders.*','products.*','suppliers.*','orders.id')
 
+            //$supplier = Supplier::select('id', 'companyName', 'productSupplied','contactName');
+
+            // $data= DB::table('details_orders')
+            ->get();
+        //$data=DB::table('details_orders')->get();
+        return DataTables::of($query)
+            ->addColumn('action', function($query) {
+
+                //'<a href="#" class="btn btn-info btn-group-xs btn-fill"><i class="ti ti-eye"></i> Ver</a>'.
+                if($query->CAT_ORDERSTATUS == "recibido")
+                {
+                    return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-success btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                        '</div>';
+                }else{
+                    if($query->CAT_ORDERSTATUS == "rechazado")
+                    {
+                        return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-danger btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                            '</div>';
+                    }else{
+                        if($query->CAT_ORDERSTATUS == "cancelado")
+                        {
+                            return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-danger btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                '</div>';
+                        }else{
+                            if($query->CAT_ORDERSTATUS == "devuelto")
+                            {
+                                return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-warning btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                    '</div>';
+                            }
+                        }
+                    }
+                }
+
+            })
+            ->toJson();
+
+    }
+    */
     public function getOrders()
     {
         $query = DB::table('details_orders')
             ->join('orders','orders.id','=','details_orders.orders_id')
             ->join('products','products.id','=','details_orders.products_id')
-            ->join('suppliers','suppliers.id','=','orders.suppliers_id')
-            ->select('orders.*','products.*','suppliers.*','details_orders.*','details_orders.id')
+            ->join('suppliers_products','orders.suppliers_products_id','=','suppliers_products.id')
+            ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
+            ->select('orders.*','products.*','orders.id as idorder','suppliers.*','details_orders.*','details_orders.id')
 
         //$supplier = Supplier::select('id', 'companyName', 'productSupplied','contactName');
 
@@ -107,8 +154,8 @@ class APIController extends Controller
                         }else{
                             if($query->CAT_ORDERSTATUS == "devuelto")
                             {
-                                return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-warning btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
-                                    '</div>';
+                                    return  '<div class="table-icons">'.'<a onclick="editSupplier('. $query->id .')" class="btn btn-warning btn-fill btn-wd">'.$query->CAT_ORDERSTATUS.'</a>'.
+                                        '</div>';
                             }
                         }
                     }
@@ -120,6 +167,7 @@ class APIController extends Controller
 
     public function getSells()
     {
+
         $query = DB::table('details_sells')
             ->join('orders','orders.id','=','details_orders.orders_id')
             ->join('products','products.id','=','details_orders.products_id')
@@ -128,10 +176,12 @@ class APIController extends Controller
             ->get();
         return datatables($query)
             ->toJson();
+
     }
 
     public function getKardex()
     {
+
         $query = DB::table('details_orders')
             ->join('orders','orders.id','=','details_orders.orders_id')
             ->join('products','products.id','=','details_orders.products_id')
@@ -141,7 +191,8 @@ class APIController extends Controller
             ->select('orders.*','products.*','suppliers.*')
             ->get();
         return datatables($query)->make(true);
-    }
+
+        }
 
     public function getSuppliers()
     {
@@ -186,7 +237,7 @@ class APIController extends Controller
                 ->join('products','products.id','=','suppliers_products.products_id')
                 ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
                 ->join('sells','sells.id','=','details.sells_id')
-                ->select('products.*','details.id as detailsid','suppliers_products.*','sells.*')
+                ->select('products.*','details.id as detailsid','suppliers_products.*','sells.*','details.quantity as quan')
                 ->get();
         return DataTables::of($query)
             ->addColumn('action',function ($query){

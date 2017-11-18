@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-sm-4">
                 <div class="form-group">
-
+                    <input type="hidden" name="country" id="idsuppro">
                     <label class="control-label">Proveedor <star>*</star></label>
                     <select class="form-control form-control-sm" id="supplier">
                         <option id="firstoption">Seleccione proveedor</option>
@@ -125,6 +125,7 @@
 </div>
 
 
+
 <div class="modal fade" id="modal-form" tabindex="1" role="dialog" aria-hidden="true" data-backdrop="static" >
     <div class="modal-dialog">
         <div class="modal-content">
@@ -140,9 +141,9 @@
                 <div class="modal-body">
                     <form role="form">
                         <div class="row">
+                            <div class="form-group">
                             <div class="col-sm-6">
                                 <input type="hidden" name="country" id="idstate">
-                                <div class="form-group">
                                     <select class="form-control form-control-sm" id="statelist" >
                                     <option value="recibido">Recibido</option>
                                     <option value="devuelto">Devuelto</option>
@@ -153,8 +154,9 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group">
+
                             <div class="col-sm-6">
-                                <div class="form-group">
                                 <label for="comment">Comentario:</label>
                                 <textarea class="form-control" rows="5" id="comment"></textarea>
                                 </div>
@@ -333,10 +335,10 @@
          "ajax": "{{ route('api.orders.index') }}",
          "columns":
          [
-            { data: 'id' },
+            { data: 'idorder' },
             { data: 'name' },
-            { data: 'total' },
-            { data: 'quantityOrder' },
+            { data: 'subtotal' },
+            { data: 'quantity' },
             { data: 'companyName' },
             { data: 'action', name: 'action', orderable: false, searchable: false}
          ]
@@ -375,9 +377,12 @@
             var html_select;
             $.get('api/order/'+project_id+'/levels',function (data) {
             //    alert(data.length);
+
+                $('#idsuppro').val(data.sup_pro_id);
                 for(var i=0;i<data.length;++i)
+                    //alert(data[i].sup_pro_id);
                     //   console.log(data[i]);
-                    html_select += '<option value="'+data[i].id+'">'+data[i].name+'</option>';
+                    html_select += '<option value="'+data[i].idproduct+'">'+data[i].name+'</option>';
                 $('#orderProduct').html(html_select);
             });
 
@@ -427,6 +432,7 @@
                 data:{
                     '_token': $('input[name=_token]').val(),
                     'productName': $('#orderProduct').val(),
+                    'products_id':$('#orderProduct').val(),
                     'orderQuantity': $('#orderQuantity').val(),
                     'orderPrice': $('#orderPrice').val(),
                     //'productType':$('#productType').val(),
@@ -436,7 +442,7 @@
                 },
                 success:function () {
 
-                    swal('Se creo la orden correctamente' +'<br>'+ 'Estado de compra: '+state);
+                    swal('Se creo la orden correctamente' +'<br>');
                     table.ajax.reload();
                 }
             })

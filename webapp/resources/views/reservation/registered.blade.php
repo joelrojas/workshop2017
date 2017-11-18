@@ -257,15 +257,19 @@
             "ajax": "{{ route('api.details.sells') }}",
             "columns": [
                 { data: 'id', name: 'id' },
-                { data: 'quantity', name: 'price' },
+                { data: 'quan', name: 'quan' },
                 { data: 'name', name: 'quantity' },
                 { data: 'price', name: 'price' },
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
 
         });
-
+        var flag=0;
         $('#addproduct').on('click',function () {
+            //alert(flag);
+            flag++;
+            //alert('flag:'+flag);
+            //alert($('#idproduct').val());
             $.ajax({
                 type: 'POST',
                 url: "/buyproduct",
@@ -277,12 +281,14 @@
                     'idproduct':$('#idproduct').val(),
                     'idreservation':$('#idreservation').val(),
                     //'productSupplied':JSON.stringify($('#productaddlist').val()),
-                    'price':500
+                    'price':500,
+                    'flag':flag
 
                 },
                 success:function () {
                     swal('Proveedor creado');
                     table.ajax.reload();
+                    flag=false;
                 }
             })
         });
