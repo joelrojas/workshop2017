@@ -135,7 +135,7 @@
             <h3 class="card-title" ><b>Compras</b></h3>
                 </div>
                 <div class="col-lg-6">
-                <a onclick="addToCart()" class="btn btn-group btn-default btn-wd btn-fill pull-right" style="margin-top: -8px" id="add_product"><i class="ti-settings"></i> AÑADIR PRODUCTO A LA FACTURA</a>
+                <a class="btn btn-group btn-default btn-wd btn-fill pull-right" style="margin-top: -8px" id="add_product"><i class="ti-settings"></i> AÑADIR PRODUCTO A LA FACTURA</a>
                 </div>
             <hr>
             </div>

@@ -90,6 +90,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/download-pdf','TaskController@downloadPDF');
 //Ventas
 Route::get('/sell','KardexController@indexSells');
+Route::get('/bill','KardexController@showBill');
 //#66615b
 //dashboards
 Route::get('listado_graficas', 'GraficasController@index');

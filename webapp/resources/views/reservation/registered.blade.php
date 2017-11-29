@@ -134,7 +134,10 @@
     <div class="col-lg-12">
     <div class="card">
     @include('reservation.styles.information_reservation')
+
     <a href="/reservation" class="btn btn-block btn-fill btn-primary">ir a lista de reservas</a>
+    <a href="/bill" id="BillButton" class="btn btn-block btn-fill btn-primary">imprimir factura</a>
+
     </div>
     </div>
 </div>
@@ -258,16 +261,20 @@
             "columns": [
                 { data: 'id', name: 'id' },
                 { data: 'quan', name: 'quan' },
-                { data: 'name', name: 'quantity' },
+                { data: 'productname', name: 'productname' },
                 { data: 'price', name: 'price' },
                 { data: 'action', name: 'action', orderable: false, searchable: false}
             ]
 
         });
         var flag=0;
+
+
         $('#addproduct').on('click',function () {
+
+            flag+=1;
             //alert(flag);
-            flag++;
+
             //alert('flag:'+flag);
             //alert($('#idproduct').val());
             $.ajax({
@@ -286,12 +293,34 @@
 
                 },
                 success:function () {
-                    swal('Proveedor creado');
+                    swal('Producto añadido');
                     table.ajax.reload();
-                    flag=false;
+
                 }
             })
         });
+
+        $('#BillButton').on('click',function(){
+            //alert($('#idstate').val());
+            $.ajax({
+                type: 'POST',
+                url: '/EditStateOrder',
+                data:{
+                    '_token': $('input[name=_token]').val(),
+                    'id':$('#idstate').val(),
+                    'state':$('#statelist').val()
+                },
+                success:function (dato) {
+                    swal('Modificado con Exito');
+
+                    table.ajax.reload();
+                    //  $.toaster({ priority : 'success', title : 'Modificado', message : 'Se modificaron los datos correctamente'});
+                }
+
+            })
+        });
+
+
 
         $('#name_product').autocomplete({
             source: '{{ route('search.product') }}',

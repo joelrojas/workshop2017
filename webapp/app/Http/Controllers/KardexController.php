@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Supplier;
 use Illuminate\Http\Request;
 use DB;
+use App\Sell;
     class KardexController extends Controller
     {
         /**
@@ -24,6 +25,25 @@ use DB;
             return view('order.index',['suppliers'=>$suppliers]);
         }
 
+        public function showBill()
+        {
+            $query=DB::table('details')
+                ->join('suppliers_products','suppliers_products.id','=','details.suppliers_products_id')
+                ->join('products','products.id','=','suppliers_products.products_id')
+                ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
+                ->join('sells','sells.id','=','details.sells_id')
+                ->select('details.subtotal as sumatotal','products.*','details.id as detailsid','suppliers_products.*','sells.*','details.quantity as quan','products.name as productname','details.subtotal as subtotal1')
+                ->get();
+            $total=DB::table('details')
+                ->join('suppliers_products','suppliers_products.id','=','details.suppliers_products_id')
+                ->join('products','products.id','=','suppliers_products.products_id')
+                ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
+                ->join('sells','sells.id','=','details.sells_id')
+                ->selectRaw('sum(subtotal) as sum')
+                ->get();
+            return view('reservation.bill',['products'=>$query,'total'=>$total]);
+        }
+
         public function getKardex()
         {
             $suppliers=DB::table('suppliers')->get();
@@ -41,24 +61,42 @@ use DB;
 
         public function storeBuy(Request $request)
         {
-             $sells=DB::table('sells')->insertGetId([
+
+            if($request->flag==1){
+                $sells=DB::table('sells')->insertGetId([
                     'date'          =>$request->date,
                     'total'         =>0,
                     'quantitySell'    =>0,
                     'reservations_id' =>$request->idreservation
                 ]);
+                //dd("ID".$sells);
+            }else{
+                $s = Sell::all()->last();
+                $sells=$s->id;
+                //dd("ID CON OTROS".$sells);
+            }
 
-
+/*
+            $sells=DB::table('sells')->insertGetId([
+                'date'          =>$request->date,
+                'total'         =>0,
+                'quantitySell'    =>0,
+                'reservations_id' =>$request->idreservation
+            ]);
+     */
             $sell_q=$request->quantity;
             $suppliers_products=DB::table('suppliers_products')
                 ->join('products','products.id','=','suppliers_products.products_id')
-                ->select('suppliers_products.id')
+                ->select('suppliers_products.id','products.price')
                 ->where('products.id',$request->idproduct)
                 ->get();
+
             foreach($suppliers_products as $supplier)
             {
                 $data=$supplier->id;
+                $price_product=$supplier->price;
             }
+            //dd($price_product);
 
             $orders=DB::table('details_orders')
                 ->where('products_id',$request->idproduct)
@@ -66,32 +104,51 @@ use DB;
             //dd('<script type="text/javascript">'.'alert("yay")'.'<script>');
             $rest=0;
             $cont=0;
+            DB::table('details')->insert([
+                'subtotal'      =>$price_product,
+                'quantity'      =>$request->quantity,
+                'sells_id'      =>$sells,
+                'suppliers_products_id'=>$data
+            ]);
+
             foreach($orders as $order)
             {
+
+
                 $cont++;
                 //$rest=$sell_q-$order->quantity;
                 $sell_q=$sell_q-$order->quantity;
                 $rest=$sell_q;
-               /*
+            /*
                 if($rest<0)
                 {
                     $rest=$rest*-1;
                 }
                 */
+                //dd('cantidad'.$rest);
                 if($rest>=0)
                //if($rest>=0)
                 {
+                    //dd('HOLA AMIGUITO');
                     $total=$rest-$order->quantity;
                     if($total<0)
                     {
                         $total=$total*-1;
                     }
+                    DB::table('kard_sells')->insert([
+                        'total'      =>$order->subtotal,
+                        'quantity'      =>$order->quantity,
+                        'date'          =>date("d/m/Y"),
+                        'suppliers_products_id'=>$data
+                    ]);
+                    /*
                     DB::table('details')->insert([
                         'subtotal'      =>$order->subtotal,
                         'quantity'      =>$order->quantity,
                         'sells_id'      =>$sells,
                         'suppliers_products_id'=>$data
                     ]);
+                    */
 
                 }else{
 
@@ -99,55 +156,7 @@ use DB;
                 }
 
             }
-           /*
-            $price_b=DB::table('details_orders')
-                ->where('')
-                */
-            //echo "<script>console.log( 'Debug Objects: " . $val . "' );</script>";
 
-
-
-
-
-
-
-
-
-
-            /*
-            if($request->flag)
-            {
-
-
-            $sells=DB::table('sells')->insertGetId([
-                'date'          =>$request->date,
-                'total'         =>0,
-                'quantitySell'    =>0,
-                'reservations_id' =>$request->idreservation
-            ]);
-
-            }
-            $suppliers_products=DB::table('suppliers_products')
-                ->join('products','products.id','=','suppliers_products.products_id')
-                ->select('suppliers_products.id')
-                ->where('products.id',$request->idproduct)
-                ->get();
-                foreach($suppliers_products as $supplier)
-                {
-                    $data=$supplier->id;
-                }
-
-            //echo "<script>console.log( 'Debug Objects: " . $val . "' );</script>";
-            DB::table('details')->insert([
-                'subtotal'       =>$request->price,
-                'quantity'      =>$request->quantity,
-                'sells_id'      =>$sells,
-                'nit'           =>'10900667',
-                'name'          =>'Ricardo',
-                'lastname'      =>'Mollinedo',
-                'suppliers_products_id'=>$data
-            ]);
-            */
         }
         public function indexSells()
         {
@@ -192,19 +201,16 @@ use DB;
                 ->join('products','products.id','=','suppliers_products.products_id')
                 ->where('products_id','=',$request->products_id)
                 ->where('suppliers_id','=',$request->supplier_id)
-                ->select('suppliers_products.id','products.quantity as quant')
+                ->select('suppliers_products.id','products.quantity as quant','products.id as idproduct')
                 ->get();
             foreach($suppliers_products as $suppro)
             {
                 $idsuppro=$suppro->id;
                 $quantity=$suppro->quant;
+                $idproduct=$suppro->idproduct;
             }
 
-            DB::table('products')
-                ->where('id', $request->products_id)
-                ->update([
-                    'quantity' => $request->orderQuantity + $quantity,
-            ]);
+
 
 
             $orders=DB::table('orders')->insertGetId([
@@ -223,6 +229,16 @@ use DB;
                  'quantityReceived'=>$request->quantityReceived,
                  'CAT_ORDERSTATUS'=>'recibido'
             ]);
+
+            $mainprice = DB::table('products')->where('id',$idproduct)->first();
+            dd($mainprice);
+            DB::table('products')
+                ->where('id', $request->products_id)
+                ->update([
+                    'quantity' => $request->orderQuantity + $quantity,
+                    'price' => $mainprice->price
+                ]);
+
             /*
             $product=$request->productName;
             $idprod=DB::table('products')
@@ -276,6 +292,7 @@ use DB;
                    'CAT_ORDERSTATUS'=>$request->state
                 ]);
             */
+
         }
 
 

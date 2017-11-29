@@ -237,7 +237,7 @@ class APIController extends Controller
                 ->join('products','products.id','=','suppliers_products.products_id')
                 ->join('suppliers','suppliers.id','=','suppliers_products.suppliers_id')
                 ->join('sells','sells.id','=','details.sells_id')
-                ->select('products.*','details.id as detailsid','suppliers_products.*','sells.*','details.quantity as quan')
+                ->select('products.*','details.id as detailsid','suppliers_products.*','sells.*','details.quantity as quan','products.name as productname')
                 ->get();
         return DataTables::of($query)
             ->addColumn('action',function ($query){
